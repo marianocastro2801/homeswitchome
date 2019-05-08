@@ -15,6 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/about', function () {
-    return 123;
+Route::get('/crearsubasta', function () {
+    return view('crearSubasta');
 });
