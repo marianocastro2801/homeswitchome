@@ -18,3 +18,6 @@ Route::get('/', function () {
 Route::get('/crearsubasta', function () {
     return view('crearSubasta');
 });
+
+Route::post('/crearsubasta/validar', 'SubastasController@validar');
+
