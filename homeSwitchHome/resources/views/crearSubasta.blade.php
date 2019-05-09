@@ -4,56 +4,45 @@
 
 
 @section('content')
-<p>Buscar como obtener variables</p>
+		
 
-<h1>Crear subasta para el hospedaje con titutlo</h1>
+		<div id="container">
+			<div id="main">
 
-<div class="container">
-<form>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">Email</label>
-      <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Password</label>
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="inputAddress">Address</label>
-    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-  </div>
-  <div class="form-group">
-    <label for="inputAddress2">Address 2</label>
-    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputCity">City</label>
-      <input type="text" class="form-control" id="inputCity">
-    </div>
-    <div class="form-group col-md-4">
-      <label for="inputState">State</label>
-      <select id="inputState" class="form-control">
-        <option selected>Choose...</option>
-        <option>...</option>
-      </select>
-    </div>
-    <div class="form-group col-md-2">
-      <label for="inputZip">Zip</label>
-      <input type="text" class="form-control" id="inputZip">
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="gridCheck">
-      <label class="form-check-label" for="gridCheck">
-        Check me out
-      </label>
-    </div>
-  </div>
-  <button type="submit" class="btn btn-primary">Sign in</button>
-</form>
-</div>
+			<div  id="cent" class="text-center">
+				<h1>Crear nueva subasta para el hospedaje TITULO</h1>
+				<div id="centrado" class="col-md-8 text-center border rounded shadow-sm">
+			<form action="crearsubasta/validar" method="post">
+				{{ csrf_field() }}
+			    <div class="form-group">
+			      	<label for="montoBase">Monto base</label>
+		     		 <input type="text" class="@error('montoBase') is-invalid @enderror form-control form-control-sm" name="montoBase" id="montoBase" placeholder="Monto base de la subasta">
+			    </div>
+			  	<div class="form-group">
+			      	<label for="fechaInicio">Fecha inicial</label>
+		      		<input type="date" class="form-control form-control-sm" name="fechaInicio" id="fechaInicio">
+				</div>
+			  	<div class="form-group">
+			      	<label for="fechaFin">Fecha inicial</label>
+	      			<input type="date" class="form-control form-control-sm" name="fechaFin" id="fechaFin">
+			  	</div>
+			  	<div class="form-group">
+			  		<button type="submit" class="btn btn-primary">Crear subasta</button>
+			  		<a class="btn btn-secondary my-2 my-sm-0" href="{{ url('/') }}">Cancelar</a>
+				</div>
+			</form>
+			@if ($errors->any())
+			    <div class="alert alert-danger">
+			        <ul>
+			            @foreach ($errors->all() as $error)
+			                <li>{{ $error }}</li>
+			            @endforeach
+			        </ul>
+			    </div>
+			@endif
+		</div>
+		</div>
+			</div>
+		</div>
+	
 @endsection
