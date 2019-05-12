@@ -15,9 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/crearsubasta', function () {
-    return view('crearSubasta');
-});
+Route::get('/crearsubasta/{id}', ['as' => 'crearsubasta', 'uses' => 'SubastasController@crearSubasta']);
 
 Route::post('/crearsubasta/validar', 'SubastasController@validar');
 
+Route::get('/cargardetallesubasta/{id}', [ 'as' => 'cargardetallesubasta', 
+	'uses' => 'SubastasController@detalleSubasta']);
+
+Route::post('/pujarsubasta', 'SubastasController@pujar');
