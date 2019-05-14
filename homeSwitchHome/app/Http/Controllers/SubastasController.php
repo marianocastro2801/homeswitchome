@@ -47,7 +47,7 @@ class SubastasController extends Controller
     	$subasta->monto_base = $request->input('montoBase');
     	$subasta->fecha_inicio = $fechaInicio;
         $subasta->fecha_fin = $fechaFin;
-    	$subasta->id_hospedaje = 1;
+    	$subasta->id_hospedaje = $request->input('idHospedaje');
 
     	$subasta->save();
 
@@ -76,19 +76,33 @@ class SubastasController extends Controller
 
         if(is_null($maximaPuja)){
             $data['maximoUsuario'] = 'no hay usuario';
-            $data['montoMaximo'] = 'nadie pujó todavía';
+            $data['montoMaximo'] = 0;
         }
         else {
             $maximoUsuario = DB::table('usuarios')
                     ->where('id', $maximaPuja->id_usuario)
                     ->first();
             $data['maximoUsuario'] = $maximoUsuario->email;
-            $data['montoMaximo'] = '$'.$maximaPuja->puja;               
+            $data['montoMaximo'] = $maximaPuja->puja;               
         }
         return view('detalleSubasta', $data);
     }
 
     public function pujar(Request $request){
-        return $request->input('valorPuja');
+
+        if($request->input('montoMaximo') == 0)
+            $request->validate([
+                'valorPuja' => 'required|numeric|bail|gt:montoBase'],
+                ['valorPuja.required' => 'Por favor ingrese un monto a pujar', 
+                 'valorPuja.numeric' => 'Por favor ingrese un valor numérico',
+                  'valorPuja.gt' => 'El valor debe ser mas grande que la puja máxima']);
+        else
+            $request->validate([
+                'valorPuja' => 'required|numeric|bail|gt:montoMaximo'],
+                ['valorPuja.required' => 'Por favor ingrese un monto a pujar',
+                 'valorPuja.numeric' => 'Por favor ingrese un valor numérico',
+                'valorPuja.gt' => 'El valor debe ser mas grande que la puja máxima']);
+        
+        return $request->input('montoMaximo');
     }
 }
