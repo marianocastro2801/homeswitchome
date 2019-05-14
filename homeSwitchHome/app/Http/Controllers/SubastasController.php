@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Subasta;
+use App\Participa;
 
 class SubastasController extends Controller
 {
@@ -102,7 +103,26 @@ class SubastasController extends Controller
                 ['valorPuja.required' => 'Por favor ingrese un monto a pujar',
                  'valorPuja.numeric' => 'Por favor ingrese un valor numérico',
                 'valorPuja.gt' => 'El valor debe ser mas grande que la puja máxima']);
+
+        $puja = new Participa;
+        $puja->puja = $request->input('valorPuja');
+        $puja->id_subasta = $request->input('idSubasta');
+        $puja->id_usuario = 1;
+
+        $puja->save();
+
         
-        return $request->input('montoMaximo');
+        $id = $request->input('idSubasta');
+        return redirect()->route('cargardetallesubasta', [$id]);
+    }
+
+    public function listarSubastas(Request $request){
+
+        //return $request->route('nombreParametro');
+
+        $data['subastas'] = DB::table('subastas')->get();
+        
+
+        return view('/layouts/listarSubastas', $data);
     }
 }

@@ -31,6 +31,7 @@
 	<input type="hidden"   name="montoMaximo" value="{{$montoMaximo}}">
 	<input type="hidden"   name="maximoUsuario" value="{{$maximoUsuario}}">
 	<input type="hidden"   name="montoBase" value="{{$montoBase}}">
+	<input type="hidden"   name="idSubasta" value="{{$idSubasta}}">
 	 <button class="btn btn-primary" type='submit'>Pujar</button>
 </form>
 @if ($errors->any())
