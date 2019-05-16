@@ -15,7 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::get('/crearsubasta/{id}', ['as' => 'crearsubasta', 'uses' => 'SubastasController@crearSubasta']);
 
 Route::post('/crearsubasta/validar', 'SubastasController@validar');
@@ -26,3 +25,9 @@ Route::get('/cargardetallesubasta/{id}', [ 'as' => 'cargardetallesubasta',
 Route::get('/listarsubastas', 'SubastasController@listarSubastas');
 
 Route::post('/pujarsubasta', 'SubastasController@pujar');
+
+Route::post('/cerrarsubasta', 'SubastasController@cerrarSubasta');
+
+Route::get('/crearhospedaje', 'HospedajeController@crearhospedaje');
+
+Route::post('/crearhospedaje/validar', 'HospedajeController@validar');

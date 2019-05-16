@@ -21,8 +21,7 @@ class SubastasController extends Controller
         $data['fechaFinHospedaje'] = $hospedaje->fecha_fin;          
 
         return view('crearSubasta', $data);            
-    }  
-
+    } 
 
     public function validar(Request $request){
 
@@ -33,7 +32,7 @@ class SubastasController extends Controller
 
         $request->validate([
             'montoBase' => 'required|numeric',
-            'fechaInicio' => 'required|after:fechaInicioHospedaje',
+            'fechaInicio' => 'required|after_or_equal:fechaInicioHospedaje',
             'fechaFin' => 'before:fechaFinHospedaje'],
             ['montoBase.required' => 'Por favor ingrese un monto base', 
              'montoBase.numeric' => 'Por favor ingrese un valor numérico',
@@ -63,7 +62,7 @@ class SubastasController extends Controller
         $data['tituloHospedaje'] = $hospedaje->titulo;
         $data['maximasPersonas'] = $hospedaje->cantidad_maxima_personas; 
         $data['descripcion'] = $hospedaje->descripcion;    
-        $data['nombreImagen'] = 'Logo.png';   
+        $data['nombreImagen'] = $hospedaje->imagen;   
         $data['idSubasta'] = $subasta->id;
         $data['montoBase'] = $subasta->monto_base;
         $data['fechaInicio'] = $subasta->fecha_inicio;
@@ -125,4 +124,6 @@ class SubastasController extends Controller
 
         return view('/layouts/listarSubastas', $data);
     }
+
+    
 }
