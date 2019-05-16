@@ -15,6 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/sesion', function () {
+    return view('iniciarSesion');
+});
+
+Route::post('/sesion/iniciar', 'SesionController@iniciar');
+
 Route::get('/crearsubasta/{id}', ['as' => 'crearsubasta', 'uses' => 'SubastasController@crearSubasta']);
 
 Route::post('/crearsubasta/validar', 'SubastasController@validar');

@@ -10685,12 +10685,13 @@ body {
 }
 
 #footer {
-  position: relative;
-  padding: 10px;
+  position: absolute;
+  width: 100%;
+  padding: 5px;
   height: 40px;
+  bottom: 0px;
   color: #fff;
   background: #212529;
-  margin-top: -40px;
   clear: both;
 }
 

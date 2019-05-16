@@ -68,11 +68,14 @@ class SubastasController extends Controller
         $data['fechaInicio'] = $subasta->fecha_inicio;
         $data['fechaFin'] = $subasta->fecha_fin;
 
+
         $maximaPuja = DB::table('participas')
-                    ->select('id_usuario', DB::raw('MAX(puja) as puja'))
+                    ->select('id_usuario','puja')
                     ->where('id_subasta', $subasta->id)
-                    ->groupBy('id_subasta')
-                    ->first();
+                    ->whereRaw('puja = (SELECT MAX(puja) as puja FROM participas
+                                WHERE id_subasta = ?)', [$subasta->id])
+                    ->first();     
+        
 
         if(is_null($maximaPuja)){
             $data['maximoUsuario'] = 'no hay usuario';
@@ -81,7 +84,7 @@ class SubastasController extends Controller
         else {
             $maximoUsuario = DB::table('usuarios')
                     ->where('id', $maximaPuja->id_usuario)
-                    ->first();
+                    ->first();       
             $data['maximoUsuario'] = $maximoUsuario->email;
             $data['montoMaximo'] = $maximaPuja->puja;               
         }
@@ -106,7 +109,7 @@ class SubastasController extends Controller
         $puja = new Participa;
         $puja->puja = $request->input('valorPuja');
         $puja->id_subasta = $request->input('idSubasta');
-        $puja->id_usuario = 1;
+        $puja->id_usuario = session('idUsuario');
 
         $puja->save();
 
@@ -125,5 +128,7 @@ class SubastasController extends Controller
         return view('/layouts/listarSubastas', $data);
     }
 
-    
+    public function cerrarSubasta(Request $request){
+        
+    }
 }
