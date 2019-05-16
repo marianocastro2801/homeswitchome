@@ -94,6 +94,15 @@
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
             </div>
+
+            <div>
+                @if(session('exito'))
+                    <div class="alert alert-success">
+                    {{ session('exito') }}
+                    </div>
+                @endif
+            </div>
+
         </div>
     </body>
 </html>

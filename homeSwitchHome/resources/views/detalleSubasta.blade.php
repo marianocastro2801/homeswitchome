@@ -11,7 +11,7 @@
  <p>Fecha inicio subasta: {{ $fechaInicio->format('d-m-Y') }}</p>  
  <p>Fecha fin subasta: {{ $fechaFin->format('d-m-Y') }}</p> 
  <p>Monto base subasta: ${{ $montoBase }}</p>  
- <img src="/images/{{ $nombreImagen }}"> //Esta imagen es el logo porque todavia nome puedo cargar imagenes a la base de datos sin el "crear subasta". Cuando este lo cambio
+ <img src="/images/{{ $nombreImagen }}">
 
 <p>Maxima puja: 
 	@if($montoMaximo == 0)
