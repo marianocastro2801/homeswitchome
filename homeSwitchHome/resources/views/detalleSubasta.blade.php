@@ -1,7 +1,7 @@
 <?php 	
 	namespace App\Http\Controllers;
   	use Carbon\Carbon;
-	$fechaInicio = Carbon::create($fechaInicio); 
+	$fechaInicio = Carbon::create($fechaInicio); 	
 	$fechaFin = Carbon::create($fechaFin);
 ?>
 
@@ -9,11 +9,10 @@
 
 
 @section('content')
-
 	<div class="container">		
 		<br>
-			<div class="media">	
-				<img class="align-self-start mr-3" src="/images/{{ $nombreImagen }}" alt="Generic placeholder image"> <!--Esta imagen es el logo porque todavia nome puedo cargar imagenes a la base de datos sin el "crear subasta". Cuando este lo cambio-->
+			<div class="media">
+				<img class="align-self-start mr-3" width="400" height="300" src="/images/<?php echo $nombreImagen; ?>" alt="Generic placeholder image"> <!--Esta imagen es el logo porque todavia nome puedo cargar imagenes a la base de datos sin el "crear subasta". Cuando este lo cambio-->
 				<div class="media-body">
 					<div class="col-md-8">
 						<div class="card">
