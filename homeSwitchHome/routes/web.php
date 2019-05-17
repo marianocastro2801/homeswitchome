@@ -32,14 +32,12 @@ Route::get('/listarsubastas', 'SubastasController@listarSubastas');
 
 Route::post('/pujarsubasta', 'SubastasController@pujar');
 
-<<<<<<< HEAD
 Route::get('/login', function () {
     return view('logIn');
 });
-=======
+
 Route::post('/cerrarsubasta', 'SubastasController@cerrarSubasta');
 
 Route::get('/crearhospedaje', 'HospedajeController@crearhospedaje');
 
 Route::post('/crearhospedaje/validar', 'HospedajeController@validar');
->>>>>>> origin/master
