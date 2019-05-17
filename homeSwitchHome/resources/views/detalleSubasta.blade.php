@@ -5,7 +5,6 @@
 	$fechaFin = Carbon::create($fechaFin);
 ?>
 
-
 @extends('layouts.baseapp')
 
 
