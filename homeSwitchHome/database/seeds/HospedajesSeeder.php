@@ -20,10 +20,10 @@ class HospedajesSeeder extends Seeder
             'descripcion' => 'Los huespedes que buscan exclusividad pueden sumergirse en el ambiente discreto y distinguido del mejor boutique hotel de lujo en el centro de la ciudad,que cuenta con 12 espectaculares habitaciones y suites de ensueño.',
             'fecha_inicio' => '2019-6-04',
             'fecha_fin' => '2019-12-04',
-            'imagen' => '',
+            'imagen' => 'hotel1.jpg',
             'id_localidad' => '1900',
         ]);
-       /*DB::table('hospedajes')->insert([
+       DB::table('hospedajes')->insert([
             'id' => '2',
             'tipo_hospedaje' => 'Departamento',
             'cantidad_maxima_personas' => '4',
@@ -31,7 +31,7 @@ class HospedajesSeeder extends Seeder
             'descripcion' => 'Los huespedes que buscan exclusividad pueden sumergirse en el ambiente discreto y distinguido del mejor departamento de lujo en el centro de la ciudad,que cuenta con 12 espectaculares habitaciones y suites de ensueño.',
             'fecha_inicio' => '2019-5-04',
             'fecha_fin' => '2019-10-04',
-            'imagen' => '',
+            'imagen' => 'depto1.jpg',
             'id_localidad' => '1900',
         ]);
         DB::table('hospedajes')->insert([
@@ -42,7 +42,7 @@ class HospedajesSeeder extends Seeder
             'descripcion' => 'Los huespedes que buscan exclusividad pueden sumergirse en el ambiente discreto y distinguido del mejor complejo de cabañas de lujo en el centro de la ciudad,que cuenta con 12 espectaculares habitaciones y suites de ensueño.',
             'fecha_inicio' => '2019-5-17',
             'fecha_fin' => '2020-1-01',
-            'imagen' => '',
+            'imagen' => 'cabana1.jpg',
             'id_localidad' => '1878',
         ]);
         DB::table('hospedajes')->insert([
@@ -53,7 +53,7 @@ class HospedajesSeeder extends Seeder
             'descripcion' => 'Los huespedes que buscan exclusividad pueden sumergirse en el ambiente discreto y distinguido del mejor complejo de cabañas de lujo en el centro de la ciudad,que cuenta con 12 espectaculares habitaciones y suites de ensueño.',
             'fecha_inicio' => '2019-6-20',
             'fecha_fin' => '2019-12-30',
-            'imagen' => '',
+            'imagen' => 'cabana2.jpg',
             'id_localidad' => '1878',
         ]);
         DB::table('hospedajes')->insert([
@@ -63,8 +63,8 @@ class HospedajesSeeder extends Seeder
             'titulo' => 'Cabañas Deco',
             'descripcion' => 'Los huespedes que buscan exclusividad pueden sumergirse en el ambiente discreto y distinguido del mejor complejo de cabañas de lujo en el centro de la ciudad,que cuenta con 12 espectaculares habitaciones y suites de ensueño.',
             'fecha_inicio' => '2019-9-04',
-            'fecha_fin' => '2019-5-04',
-            'imagen' => '',
+            'fecha_fin' => '2020-5-04',
+            'imagen' => 'cabana3.jpg',
             'id_localidad' => '1902',
         ]);
         DB::table('hospedajes')->insert([
@@ -75,7 +75,7 @@ class HospedajesSeeder extends Seeder
             'descripcion' => 'Los huespedes que buscan exclusividad pueden sumergirse en el ambiente discreto y distinguido del mejor boutique hotel de lujo en el centro de la ciudad,que cuenta con 12 espectaculares habitaciones y suites de ensueño.',
             'fecha_inicio' => '2019-6-04',
             'fecha_fin' => '2020-6-04',
-            'imagen' => '',
+            'imagen' => 'hotel2.jpg',
             'id_localidad' => '1902',
         ]);
         DB::table('hospedajes')->insert([
@@ -86,8 +86,8 @@ class HospedajesSeeder extends Seeder
             'descripcion' => 'Los huespedes que buscan exclusividad pueden sumergirse en el ambiente discreto y distinguido del mejor boutique hotel de lujo en el centro de la ciudad,que cuenta con 12 espectaculares habitaciones y suites de ensueño.',
             'fecha_inicio' => '2019-6-04',
             'fecha_fin' => '2019-7-04',
-            'imagen' => '1900',
-            'id_localidad' => '',
+            'imagen' => 'hotel3.jpg',
+            'id_localidad' => '1900',
         ]);
         DB::table('hospedajes')->insert([
             'id' => '8',
@@ -97,7 +97,7 @@ class HospedajesSeeder extends Seeder
             'descripcion' => 'Los huespedes que buscan exclusividad pueden sumergirse en el ambiente discreto y distinguido del mejor departamento de lujo en el centro de la ciudad,que cuenta con 12 espectaculares habitaciones y suites de ensueño.',
             'fecha_inicio' => '2019-6-14',
             'fecha_fin' => '2019-10-14',
-            'imagen' => '',
+            'imagen' => 'depto2.jpg',
             'id_localidad' => '1880',
         ]);
         DB::table('hospedajes')->insert([
@@ -108,9 +108,9 @@ class HospedajesSeeder extends Seeder
             'descripcion' => 'Los huespedes que buscan exclusividad pueden sumergirse en el ambiente discreto y distinguido del mejor departamento de lujo en el centro de la ciudad,que cuenta con 12 espectaculares habitaciones y suites de ensueño.',
             'fecha_inicio' => '2019-6-04',
             'fecha_fin' => '2019-12-04',
-            'imagen' => '',
+            'imagen' => 'depto3.jpg',
             'id_localidad' => '1880',
-        ]);*/
+        ]);
     }
 }
 	

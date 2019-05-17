@@ -1,5 +1,10 @@
 <?php
 
+/*
+    composer dump-autoload
+    php artisan db:seed
+*/
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

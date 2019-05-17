@@ -1,8 +1,5 @@
 <?php
-/*
-    composer dump-autoload
-    php artisan db:seed
-*/
+
     
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +17,7 @@ class LocalidadsSeeder extends Seeder
         	'id' => '1900',
         	'nombre' => 'La Plata',
         ]);
-       /* DB::table('localidads')->insert([
+       	DB::table('localidads')->insert([
         	'id' => '1878',
         	'nombre' => 'Quilmes',
         ]);
@@ -39,7 +36,7 @@ class LocalidadsSeeder extends Seeder
         DB::table('localidads')->insert([
         	'id' => '1880',
         	'nombre' => 'Berazategui',
-        ]);*/
+        ]);
     }
 }
 	

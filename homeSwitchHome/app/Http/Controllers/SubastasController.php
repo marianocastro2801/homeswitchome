@@ -63,7 +63,7 @@ class SubastasController extends Controller
         $data['tituloHospedaje'] = $hospedaje->titulo;
         $data['maximasPersonas'] = $hospedaje->cantidad_maxima_personas; 
         $data['descripcion'] = $hospedaje->descripcion;    
-        $data['nombreImagen'] = 'Logo.png';   
+        $data['nombreImagen'] = $hospedaje->imagen;   
         $data['idSubasta'] = $subasta->id;
         $data['montoBase'] = $subasta->monto_base;
         $data['fechaInicio'] = $subasta->fecha_inicio;
