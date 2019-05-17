@@ -26,3 +26,7 @@ Route::get('/cargardetallesubasta/{id}', [ 'as' => 'cargardetallesubasta',
 Route::get('/listarsubastas', 'SubastasController@listarSubastas');
 
 Route::post('/pujarsubasta', 'SubastasController@pujar');
+
+Route::get('/login', function () {
+    return view('logIn');
+});
