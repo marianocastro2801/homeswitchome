@@ -15,6 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/sesion', function () {
+    return view('iniciarSesion');
+});
+
+Route::post('/sesion/iniciar', 'SesionController@iniciar');
 
 Route::get('/crearsubasta/{id}', ['as' => 'crearsubasta', 'uses' => 'SubastasController@crearSubasta']);
 
@@ -27,6 +32,14 @@ Route::get('/listarsubastas', 'SubastasController@listarSubastas');
 
 Route::post('/pujarsubasta', 'SubastasController@pujar');
 
+<<<<<<< HEAD
 Route::get('/login', function () {
     return view('logIn');
 });
+=======
+Route::post('/cerrarsubasta', 'SubastasController@cerrarSubasta');
+
+Route::get('/crearhospedaje', 'HospedajeController@crearhospedaje');
+
+Route::post('/crearhospedaje/validar', 'HospedajeController@validar');
+>>>>>>> origin/master
