@@ -14,7 +14,7 @@
 	<div class="container">		
 		<br>
 			<div class="media">	
-				<img class="align-self-start mr-3" width="400" height="300" src="/images/{{ $nombreImagen }}" alt="Generic placeholder image"> <!--Esta imagen es el logo porque todavia nome puedo cargar imagenes a la base de datos sin el "crear subasta". Cuando este lo cambio-->
+				<img class="align-self-start mr-3" width="400" height="300" src="/public/images/Logo.png" alt="Generic placeholder image"> <!--Esta imagen es el logo porque todavia nome puedo cargar imagenes a la base de datos sin el "crear subasta". Cuando este lo cambio-->
 				<div class="media-body">
 					<div class="col-md-8">
 						<div class="card">
