@@ -6,7 +6,7 @@
 			{{ csrf_field() }}
 			<input type="text" name="nombreUsuario" class="text-center form-control">
 			<br>
-			<button type="submit" class="btn btn-lg btn-primary btn-block">
+			<button type="submit" class="btn btn-lg btn-success btn-block">
 				Iniciar
 			</button>
 		</form>
