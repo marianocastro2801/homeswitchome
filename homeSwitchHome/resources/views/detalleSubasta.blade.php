@@ -17,6 +17,15 @@
 					<div class="col-md-8">
 						<div class="card">
 						  <h3 class="mt-0  card-header card-primary no-margin" style="text-align:center"><b>{{ $tituloHospedaje }}</b><span class="fa fa-map pull-right"></span></h3>
+						  
+
+						  <form action="/cerrarsubasta" method="post">
+						  {{ csrf_field() }}
+						  <input type="hidden"   name="idSubasta" value="{{$idSubasta}}">
+						  <button type="submit" class="btn btn-primary">Cerrar subasta</button>
+						  </form>
+
+
 						  <div class="card-block" style="margin: 15px">
 									<p><b>Maximas personas hospedaje:</b> {{ $maximasPersonas }}</p> 
 									<p><b>Descripción hospedaje:</b> {{ $descripcion }}</p> 

@@ -20,6 +20,7 @@ class SesionController extends Controller
         	'email' => $usuario->email, 
         	'esPremium' => $usuario->es_premium, 
         	'numeroTarjeta' => $usuario->numero_tarjeta, 
+            'creditos' => $usuario->creditos,
         	'fechaNacimiento' => $usuario->fecha_nacimiento]);
 
 

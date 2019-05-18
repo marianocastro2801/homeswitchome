@@ -85,10 +85,3 @@
       @endif
 
 </form>
-
-
-<form action="/cerrarSubasta" method="post">
-  {{ csrf_field() }}
-  <button type="submit" class="btn btn-primary">Cerrar subasta</button>
-  
-</form>
