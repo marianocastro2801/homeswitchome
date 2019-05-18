@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Validator;
 use Carbon\Carbon;
 use App\Subasta;
 use App\Participa;
@@ -24,11 +25,10 @@ class SubastasController extends Controller
     } 
 
     public function validar(Request $request){
-
         $fechaInicio = Carbon::create($request->input('fechaInicio'));
         $fechaFin = Carbon::create($request->input('fechaInicio'))->addDays(7)->format('Y-m-d');
-
         $request['fechaFin'] = $fechaFin;
+
 
         $request->validate([
             'montoBase' => 'required|numeric',
@@ -40,6 +40,21 @@ class SubastasController extends Controller
              'fechaInico.after' => 'La fecha de inicio debe estar dentro del rango libre del Hospedaje',
              'fechaFin.before' => 'La fecha de fin debe estar dentro del rango libre del Hospedaje'
                ]);
+
+        $subastas = DB::table('subastas')
+                    ->where('id_hospedaje', $request->input('idHospedaje'))
+                    ->get();
+
+        foreach ($subastas as $subasta) {
+            $fechaInicioSubasta = $subasta->fecha_inicio;
+            $fechaFinSubasta = $subasta->fecha_fin;
+            $request['fechaInicioSubasta'] = $fechaInicioSubasta;
+            $request['fechaFinSubasta'] = $fechaFinSubasta;
+
+            $request->validate([
+            'fechaInicio' => 'date_overlap:'.$fechaFinSubasta.','.$fechaFin.','.$fechaInicioSubasta],
+            ['fechaInicio.date_overlap' => 'La fecha se superpone con otra subasta' ]); 
+        }
 
         
 
