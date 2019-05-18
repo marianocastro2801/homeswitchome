@@ -31,14 +31,15 @@ class SubastasController extends Controller
 
 
         $request->validate([
-            'montoBase' => 'required|numeric',
+            'montoBase' => 'required|numeric|gt:0',
             'fechaInicio' => 'required|after_or_equal:fechaInicioHospedaje',
-            'fechaFin' => 'before:fechaFinHospedaje'],
+            'fechaFin' => 'before_or_equal:fechaFinHospedaje'],
             ['montoBase.required' => 'Por favor ingrese un monto base', 
              'montoBase.numeric' => 'Por favor ingrese un valor numérico',
+             'montoBase.gt' => 'Por favor ingrese un monto mayor a 0',
              'fechaInicio.required' => 'Por favor ingrese una fecha de inicio',
-             'fechaInico.after' => 'La fecha de inicio debe estar dentro del rango libre del Hospedaje',
-             'fechaFin.before' => 'La fecha de fin debe estar dentro del rango libre del Hospedaje'
+             'fechaInicio.after_or_equal' => 'La fecha de inicio debe estar dentro del rango libre del Hospedaje',
+             'fechaFin.before_or_equal' => 'La fecha de fin debe estar dentro del rango libre del Hospedaje'
                ]);
 
         $subastas = DB::table('subastas')
@@ -108,18 +109,45 @@ class SubastasController extends Controller
 
     public function pujar(Request $request){
 
+        $subasta = DB::table('subastas')
+                                ->where('id', $request->input('idSubasta'))
+                                ->first();
+
+        $request['creditos'] = session('creditos');
+        $request['nombreUsuario'] = session('nombreUsuario');
+        $request['nombreInvalido'] = 'Carlos';
+        $request['diferencia'] = Carbon::create($subasta->created_at)->diffInDays(Carbon::now());
+
+
+
+
+
+        $request->validate([
+                'creditos' => 'gt: 0',
+                'diferencia' => 'lt:3'],
+                ['creditos.gt' => 'No posee créditos para poder pujar',
+                'diferencia.lt' => 'La subasta ya terminó'
+                    ]);
+
         if($request->input('montoMaximo') == 0)
             $request->validate([
-                'valorPuja' => 'required|numeric|bail|gt:montoBase'],
+                'valorPuja' => 'required|numeric|bail|gt:montoBase',
+                'nombreUsuario' => 'different:nombreInvalido'
+                ],
                 ['valorPuja.required' => 'Por favor ingrese un monto a pujar', 
                  'valorPuja.numeric' => 'Por favor ingrese un valor numérico',
-                  'valorPuja.gt' => 'El valor debe ser mas grande que la puja máxima']);
+                  'valorPuja.gt' => 'El valor debe ser mas grande que la puja máxima',
+                  'nombreUsuario.different' => 'No posee créditos en la tarjeta'
+              ]);
         else
             $request->validate([
-                'valorPuja' => 'required|numeric|bail|gt:montoMaximo'],
+                'valorPuja' => 'required|numeric|bail|gt:montoMaximo',
+                'nombreUsuario' => 'different:nombreInvalido'
+                ],
                 ['valorPuja.required' => 'Por favor ingrese un monto a pujar',
                  'valorPuja.numeric' => 'Por favor ingrese un valor numérico',
-                'valorPuja.gt' => 'El valor debe ser mas grande que la puja máxima']);
+                 'valorPuja.gt' => 'El valor debe ser mas grande que la puja máxima',
+                 'nombreUsuario.different' => 'No posee créditos en la tarjeta']);
 
         $puja = new Participa;
         $puja->puja = $request->input('valorPuja');
@@ -137,13 +165,36 @@ class SubastasController extends Controller
 
         //return $request->route('nombreParametro');
 
-        $data['subastas'] = DB::table('subastas')->get();
+        $data['subastas'] = DB::table('subastas')->whereNull('ganador')->get();
         
 
         return view('/layouts/listarSubastas', $data);
     }
 
     public function cerrarSubasta(Request $request){
+
+        $subasta = DB::table('subastas')
+                                ->where('id', $request->input('idSubasta'))
+                                ->first();     
+
+        $request['diferencia'] = Carbon::create($subasta->created_at)->diffInDays(Carbon::now());
         
+        $request->validate([
+                'diferencia' => 'gte:3'],
+                ['diferencia.gte' => 'La subasta todavía no terminó'
+                    ]); 
+
+        $maximaPuja = DB::table('participas')
+                    ->select('id_usuario','puja')
+                    ->where('id_subasta', $subasta->id)
+                    ->whereRaw('puja = (SELECT MAX(puja) as puja FROM participas
+                                WHERE id_subasta = ?)', [$subasta->id])
+                    ->first();      
+
+        DB::table('subastas')
+            ->where('id', $subasta->id)
+            ->update(['monto_maximo' => $maximaPuja->puja, 'ganador' => $maximaPuja->id_usuario]);
+
+        return redirect()->back();    
     }
 }
