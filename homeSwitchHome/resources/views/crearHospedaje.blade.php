@@ -5,83 +5,105 @@
 
 ?>  
 
-
-<form action="/crearhospedaje/validar" method="post" enctype="multipart/form-data">
-        {{ csrf_field() }}
-
-<label for="titulo">Titulo: </label>
-<input type="text" name="titulo" id="titulo" placeholder="Ingrese el titulo del hospedaje" >
-
-<br>
-
-<label for="descripcion" >Descripcion: </label>
-<textarea name="descripcion" id="descripcion"  placeholder="Ingrese una descripción"></textarea>
-
-<br>
-
-<label for="cantidadPersonas">Cantidad de personas maximas: </label>
-<select name="cantidadPersonas" id="cantidadPersonas">
-<option value="">Seleccione</option>
-@for($i = 1; $i <= 10; $i++)
-<option value="{{ $i }}">{{ $i }}</option>
-@endfor
-</select>
-
-<br>
-
-<label for="tipoHospedaje">Tipo hospedaje: </label>
-<select name="tipoHospedaje" id="tipoHospedaje">
-<option value="">Seleccione</option>
-<option value="casa">Casa</option>
-<option value="hotel">Hotel</option>
-<option value="duplex">Duplex</option>
-<option value="resort">Resort</option>
-</select>
-
-<br>
-
-<label for="localidad">Localidad: </label>
-<select name="localidad" id="localidad">
-<option value="">Seleccione</option>
-@foreach($localidades as $localidad)
-<option value="{{ $localidad->id }}">{{ $localidad->nombre }}</option>
-@endforeach
-</select>
-
-<br>
-
-<p>Fechas en la que el hospedaje estará libre para crear subastas</p>
-
-<label for="fechaInicio">Fecha inicial: </label>
-<input type="date" name="fechaInicio" id="fechaInicio"  placeholder="Ingrese una descripción">
-
-<br>
-
-<label for="fechaInicio">Fecha final: </label>
-<input type="date" name="fechaFin" id="fechaFin">
-
-<br>              
-
-<label for="imagen" > Imagen: </label>
-<input name="imagen" id="imagen" type="file">
-
-<br>
-
-<button type="submit" class="btn btn-primary">Guardar</button>
-<a class="btn btn-secondary my-2 my-sm-0" href="{{ url('/') }}">Cancelar</a>
-
-<br>
-<br>
-<br>
-
-@if ($errors->any())
-          <div class="alert alert-danger">
-              <ul>
-                  @foreach ($errors->all() as $error)
-                      <li>{{ $error }}</li>
+@extends('layouts.baseapp')
+@section('content')
+<div class="container">
+  <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <div class="panel panel-primary" style="margin-bottom: 55px">
+        <div class="panel-heading text-center">
+          <h3 class="panel-title">Crear Hospedaje</h3>
+        </div>
+        <div class="panel-body" style="background: #f3f3f3"> 
+          <form action="/crearhospedaje/validar" method="post" enctype="multipart/form-data">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                {{ csrf_field() }}
+                <label for="titulo">Titulo: </label>
+                <input class="form-control" type="text" name="titulo" id="titulo" placeholder="Ingrese el titulo del hospedaje" >
+              </div>
+              <br>
+                <br>
+                <div class="form-group col-md-6">
+                <label for="cantidadPersonas">Cantidad de personas maximas: </label>
+                <select class="form-control" name="cantidadPersonas" id="cantidadPersonas">
+                  <option value="">Seleccione</option>
+                  @for($i = 1; $i <= 10; $i++)
+                    <option value="{{ $i }}">{{ $i }}</option>
+                  @endfor
+                </select>
+              </div>  
+                <br>
+                <br>
+                <div class="form-group col-md-12">
+                <label for="descripcion" >Descripcion: </label>
+                <textarea class="form-control" name="descripcion" id="descripcion"  placeholder="Ingrese una descripción"></textarea>
+              </div>
+                <br>
+                <br>
+                <div class="form-group col-md-6">
+                <label for="tipoHospedaje">Tipo hospedaje: </label>
+                  <select class="form-control" name="tipoHospedaje" id="tipoHospedaje">
+                  <option value="">Seleccione</option>
+                  <option value="casa">Casa</option>
+                  <option value="hotel">Hotel</option>
+                  <option value="duplex">Duplex</option>
+                  <option value="resort">Resort</option>
+                </select>
+              </div>
+                <br>
+                <br>
+                <div class="form-group col-md-6">
+                <label for="localidad">Localidad: </label>
+                <select class="form-control" name="localidad" id="localidad">
+                  <option value="">Seleccione</option>
+                  @foreach($localidades as $localidad)
+                    <option value="{{ $localidad->id }}">{{ $localidad->nombre }}</option>
                   @endforeach
-              </ul>
+                </select>
+              </div>
+                <br>
+                <br>
+                <div class="form-group col-md-6">
+                <label for="fechaInicio">Fecha inicial: </label>
+                <input class="form-control" type="date" name="fechaInicio" id="fechaInicio"  placeholder="Ingrese una descripción">
+              </div>
+                <br>
+                <br>
+                <div class="form-group col-md-6">
+                <label for="fechaInicio">Fecha final: </label>
+                <input class="form-control" type="date" name="fechaFin" id="fechaFin">
+              </div>
+                <br>
+                <br>
+                <div class="form-group col-md-12">              
+                <label for="imagen" > Imagen: </label>
+                <input name="imagen" id="imagen" type="file">
+              </div>
+                <br>
+                <br>
+              </div>
+              <div class="panel-footer" style="background: #cdcdcd">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a class="btn btn-secondary btn-danger my-2 my-sm-0" href="{{ url('/') }}">Cancelar</a>
+              </div>
           </div>
-      @endif
+            </form>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+        @if ($errors->any())
+          <div class="alert alert-danger">
+            <ul>
+              @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+              @endforeach
+            </ul>
+          </div>
+        @endif
 
-</form>
+@endsection
