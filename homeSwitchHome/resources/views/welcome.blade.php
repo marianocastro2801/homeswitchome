@@ -19,5 +19,3 @@
     </div>
 
 @endsection
-@section('content')
-@endsection

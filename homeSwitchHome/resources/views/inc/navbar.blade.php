@@ -27,10 +27,11 @@
     </div>
       <div style="float:right">
         <div class="btn-group">
-          <button type="button" class="btn btn-info dropdown-toggle" style="margin-top: 5px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            NOMBRE-DEL-USUARIO
+          <button type="button" class="btn btn-info dropdown-toggle btn-lg"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                {{ session('nombreUsuario') }}
+                {{ session('apellidoUsuario') }}
           </button>
-          <div class="dropdown-menu">
+          <div class="dropdown-menu" >
             <a class="dropdown-item" href="#"><span class="glyphicon glyphicon-user" style="margin-right: 10px"></span>Mi Perfil</a>
             <a class="dropdown-item" href="#"><span class="glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Contactos</a>
             <a class="dropdown-item" href="#"><span class="glyphicon glyphicon-question-sign" style="margin-right: 10px"></span>FAQ</a>
@@ -41,3 +42,10 @@
       </div>
   </div>
 </nav>
+<div>
+  @if(session('exito'))
+    <div class="alert alert-success">
+      {{ session('exito') }}
+    </div>
+  @endif
+</div>
