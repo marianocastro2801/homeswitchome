@@ -34,20 +34,22 @@
 									<p><b>Usuario:</b> 
 										 	{{$maximoUsuario}}
 									</p>
-									<form class='form' method='post' action='/pujarsubasta'>
-										{{ csrf_field() }}
-										<input type="text"   name="valorPuja" placeholder="Ingrese monto a pujar">
-										<input type="hidden"   name="montoMaximo" value="{{$montoMaximo}}">
-										<input type="hidden"   name="maximoUsuario" value="{{$maximoUsuario}}">
-										<input type="hidden"   name="montoBase" value="{{$montoBase}}">
-										<input type="hidden"   name="idSubasta" value="{{$idSubasta}}">
-										 <button class="btn btn-success" type='submit'>Pujar</button>
-									</form>	
-									<form action="/cerrarsubasta" method="post">
-										{{ csrf_field() }}
-										<input type="hidden"   name="idSubasta" value="{{$idSubasta}}">
-										<button type="submit" class="btn btn-danger">Cerrar subasta</button>
-									</form>
+										<form class='form' method='post' action='/pujarsubasta'>
+											{{ csrf_field() }}
+											<div class="col-xs-5">
+												<input type="text"  class="form-control" name="valorPuja" placeholder="$">
+												<input type="hidden"   name="montoMaximo" value="{{$montoMaximo}}">
+												<input type="hidden"   name="maximoUsuario" value="{{$maximoUsuario}}">
+												<input type="hidden"   name="montoBase" value="{{$montoBase}}">
+											<input type="hidden"   name="idSubasta" value="{{$idSubasta}}">
+											</div>
+											<button class="btn btn-success" type='submit'>Pujar</button>
+										</form>	
+										<form action="/cerrarsubasta" method="post">
+											{{ csrf_field() }}
+											<input type="hidden"   name="idSubasta" value="{{$idSubasta}}">
+											<button type="submit" class="float-right btn btn-danger">Cerrar subasta</button>
+										</form>
 									@if ($errors->any())
 									    <div class="alert alert-danger">
 									        <ul>
