@@ -2,16 +2,13 @@
 use Illuminate\Support\Facades\DB;
 
 ?>
-<style type="text/css">
-	#bodybody{
-		margin-bottom: 60px;
-		margin-top: 60px;
-	}
-</style>
+
 @extends('layouts.baseapp')
 
 @section('content')
-	<div id="cent" style="margin-bottom: 60px;margin-top: 55px;">
+	<div class="container col-md-12" style="margin-bottom: 50px" >
+		<div class="col-md-4"></div>
+		<div class=" col-md-4 col-centered">
 		@foreach($subastas as $subasta)
 			<div class="panel panel-primary">
 		  		<div class="panel-heading">
@@ -32,5 +29,6 @@ use Illuminate\Support\Facades\DB;
 				</div>
 			</div>
 		@endforeach
+		</div>
 	</div>
 @endsection
