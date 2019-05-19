@@ -15,20 +15,20 @@ use Illuminate\Support\Facades\DB;
 		@foreach($subastas as $subasta)
 			<div class="panel panel-primary">
 		  		<div class="panel-heading">
-		    		<h3 class="panel-title">
-		    			<?php 
+		    		<h3 class="panel-title text-center">
+		    			<b><?php 
 							$tituloHospedaje = DB::table('hospedajes')
 							->select('titulo')
 			                ->where('id', $subasta->id_hospedaje)
 			                ->first();
 			                echo $tituloHospedaje->titulo;    
-			   			?>
+			   			?></b>
 			   		</h3>
 			   	</div>
 		  		<div class="panel-body">
-				    <p>Monto base de la subasta: ${{ $subasta->monto_base }}</p>
-					<p>Fecha inicio hospedaje: {{ $subasta->fecha_inicio }}</p>
-					<p>Fecha fin hospedaje: {{ $subasta->fecha_fin }}</p>
+				    <p><b>Monto base de la subasta:</b> ${{ $subasta->monto_base }}</p>
+					<p><b>Fecha inicio hospedaje:</b> {{ Carbon\Carbon::parse($subasta->fecha_inicio)->format('d-m-Y') }} </p>
+					<p><b>Fecha fin hospedaje:</b> {{ Carbon\Carbon::parse($subasta->fecha_fin)->format('d-m-Y') }}</p>
 				</div>
 			</div>
 		@endforeach
