@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         $this->call(LocalidadsSeeder::class);
         $this->call(HospedajesSeeder::class);
+        //$this->call(UsuariosDemoSeeder::class); cuando este cargado UsuariosDemoSeeder.php 
+        
     }
 }

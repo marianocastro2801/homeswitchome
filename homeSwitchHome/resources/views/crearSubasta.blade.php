@@ -7,15 +7,6 @@
 		<div class="container">
 			<div id="main" >
 				<div class="col-md-6">
-					<div class="alert alert-info text-center">
-						<p>
-							Hospedaje activo desde la fecha
-							{{ Carbon\Carbon::parse($fechaInicioHospedaje)->format('d-m-Y') }}
-							hasta
-							{{ Carbon\Carbon::parse($fechaFinHospedaje)->format('d-m-Y') }}.
-							
-						</p>
-					</div>
 					<div id="" class="card">	
 						<div class="mt-0 card-header card-primary no-margin text-center">
 							<h1>Crear nueva subasta para el hospedaje {{$titulo}}</h1>
@@ -51,6 +42,16 @@
 								</div>
 							</div>
 						</div>
+					</div>
+					<br>
+					<div class="alert alert-info text-center">
+						<p>
+							Hospedaje activo desde la fecha
+							{{ Carbon\Carbon::parse($fechaInicioHospedaje)->format('d-m-Y') }}
+							hasta
+							{{ Carbon\Carbon::parse($fechaFinHospedaje)->format('d-m-Y') }}.
+							
+						</p>
 					</div>
 				</div>
 			</div>

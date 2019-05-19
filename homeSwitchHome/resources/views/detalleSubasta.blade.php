@@ -12,20 +12,11 @@
 	<div class="container">		
 		<br>
 			<div class="media">
-				<img class="align-self-start mr-3" width="400" height="300" src="/images/<?php echo $nombreImagen; ?>" alt="Generic placeholder image"> <!--Esta imagen es el logo porque todavia nome puedo cargar imagenes a la base de datos sin el "crear subasta". Cuando este lo cambio-->
+				<img class="align-self-start mr-3" width="400" height="300" src="/images/<?php echo $nombreImagen; ?>" alt="Generic placeholder image">
 				<div class="media-body">
 					<div class="col-md-8">
 						<div class="card">
 						  <h3 class="mt-0  card-header card-primary no-margin" style="text-align:center"><b>{{ $tituloHospedaje }}</b><span class="fa fa-map pull-right"></span></h3>
-						  
-
-						  <form action="/cerrarsubasta" method="post">
-						  {{ csrf_field() }}
-						  <input type="hidden"   name="idSubasta" value="{{$idSubasta}}">
-						  <button type="submit" class="btn btn-primary">Cerrar subasta</button>
-						  </form>
-
-
 						  <div class="card-block" style="margin: 15px">
 									<p><b>Maximas personas hospedaje:</b> {{ $maximasPersonas }}</p> 
 									<p><b>Descripción hospedaje:</b> {{ $descripcion }}</p> 
@@ -44,14 +35,21 @@
 										 	{{$maximoUsuario}}
 									</p>
 										<form class='form' method='post' action='/pujarsubasta'>
-										{{ csrf_field() }}
-										<input type="text"   name="valorPuja" placeholder="Ingrese monto a pujar">
-										<input type="hidden"   name="montoMaximo" value="{{$montoMaximo}}">
-										<input type="hidden"   name="maximoUsuario" value="{{$maximoUsuario}}">
-										<input type="hidden"   name="montoBase" value="{{$montoBase}}">
-										<input type="hidden"   name="idSubasta" value="{{$idSubasta}}">
-										 <button class="btn btn-primary" type='submit'>Pujar</button>
-									</form>
+											{{ csrf_field() }}
+											<div class="col-xs-5">
+												<input type="text"  class="form-control" name="valorPuja" placeholder="$">
+												<input type="hidden"   name="montoMaximo" value="{{$montoMaximo}}">
+												<input type="hidden"   name="maximoUsuario" value="{{$maximoUsuario}}">
+												<input type="hidden"   name="montoBase" value="{{$montoBase}}">
+											<input type="hidden"   name="idSubasta" value="{{$idSubasta}}">
+											</div>
+											<button class="btn btn-success" type='submit'>Pujar</button>
+										</form>	
+										<form action="/cerrarsubasta" method="post">
+											{{ csrf_field() }}
+											<input type="hidden"   name="idSubasta" value="{{$idSubasta}}">
+											<button type="submit" class="float-right btn btn-danger">Cerrar subasta</button>
+										</form>
 									@if ($errors->any())
 									    <div class="alert alert-danger">
 									        <ul>
