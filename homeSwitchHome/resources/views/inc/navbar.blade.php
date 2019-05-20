@@ -6,25 +6,30 @@
 </style>
 
 <nav class="navbar navbar-expand-sm container-fluid navbar-static-top navbar-dark bg-dark" >
-  <a class="navbar-brand" href="#"><img src="/images/Logo.png" width="35" height="25" class="d-inline-block align-top">
+  <a class="navbar-brand" href="/"><img src="/images/Logo.png" width="35" height="25" class="d-inline-block align-top">
    homeSwitchHome</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">    
-   <!-- <div >
+   <div >
       <ul class="navbar-nav" >
-        <li class="nav-item">
+   <!--      <li class="nav-item">
           <a class="nav-link itemnav" href="#">Localidades<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item itemnav">
           <a class="nav-link" href="#">HotSale</a>
-        </li>
+        </li>-->
         <li class="nav-item itemnav">
-          <a class="nav-link" href="#">Subastas</a>
+          <a class="nav-link" href="/listarsubastas">Subastas</a>
         </li>
+        @if (session('nombre') == 'Andrea')
+          <li class="nav-item itemnav">
+            <a class="nav-link" href="/listarhospedajes">Hospedaje</a>
+          </li>
+        @endif
       </ul>
-    </div>-->
+    </div>
       <div style="float:right">
         <div class="btn-group">
           <button type="button" class="btn btn-info dropdown-toggle btn-lg"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
