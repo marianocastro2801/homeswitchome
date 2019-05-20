@@ -7,14 +7,15 @@ use Carbon\Carbon;
 
 @section('content')
 <div class="conteiner col-md-12" style="margin-bottom: 50px">
-	<h1 class="col-md-12 text-center bg-info" style=" margin-bottom: 30px"> {{ $tituloHospedaje }}  </h1>
-	<div>
+<div>
 	    @if(session('exito'))
 	        <div class="alert alert-success">
 	            {{ session('exito') }}
 	        </div>
 	    @endif
-	</div>
+</div>
+	<h1 class="col-md-12 text-center bg-info" style=" margin-bottom: 30px"> {{ $tituloHospedaje }}  </h1>
+	
 	<div class="col-md-2"></div>
 	<div class="col-md-8">
 		<div class="card bg-info" >
@@ -48,5 +49,6 @@ use Carbon\Carbon;
 		</div>
 	</div>
 </div>
+
 @endsection
 
