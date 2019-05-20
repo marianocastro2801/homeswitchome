@@ -18,6 +18,6 @@
         @endif
     </div>
 
-    @include('layouts.listarSubastas')
+    <!--@_include('layouts.listarSubastas') CAUSA PROBLEMAS -->
 
 @endsection
