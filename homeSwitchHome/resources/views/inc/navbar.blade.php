@@ -23,7 +23,7 @@
         <li class="nav-item itemnav">
           <a class="nav-link" href="/listarsubastas">Subastas</a>
         </li>
-        @if (session('nombre') == 'Andrea')
+        @if (Session('nombreUsuario') == 'Andrea')
           <li class="nav-item itemnav">
             <a class="nav-link" href="/listarhospedajes">Hospedaje</a>
           </li>

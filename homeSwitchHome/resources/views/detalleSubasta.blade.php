@@ -34,7 +34,7 @@
 									<p><b>Usuario:</b> 
 										 	{{$maximoUsuario}}
 									</p>
-									@if(session('nombre') != 'Andrea')
+									@if( Session('nombreUsuario') != 'Andrea')
 										<form class='form' method='post' action='/pujarsubasta'>
 											{{ csrf_field() }}
 											<div class="col-xs-5">
@@ -47,7 +47,7 @@
 											<button class="btn btn-success" type='submit'>Pujar</button>
 										</form>	
 									@endif
-										@if (session('nombre') == 'Andrea')
+										@if(Session('nombreUsuario')=='Andrea')
 										<form action="/cerrarsubasta" method="post">
 											{{ csrf_field() }}
 											<input type="hidden"   name="idSubasta" value="{{$idSubasta}}">
