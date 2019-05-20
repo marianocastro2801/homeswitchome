@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
@@ -149,6 +149,7 @@ class SubastasController extends Controller
                  'valorPuja.gt' => 'El valor debe ser mas grande que la puja máxima',
                  'nombreUsuario.different' => 'No posee créditos en la tarjeta']);
 
+
         $puja = new Participa;
         $puja->puja = $request->input('valorPuja');
         $puja->id_subasta = $request->input('idSubasta');
@@ -191,9 +192,21 @@ class SubastasController extends Controller
                                 WHERE id_subasta = ?)', [$subasta->id])
                     ->first();      
 
-        DB::table('subastas')
+        if(is_null($maximaPuja)){
+            DB::table('subastas')
+            ->where('id', $subasta->id)
+            ->update(['monto_maximo' => 0, 'ganador' => 0]);          
+        }
+        else {
+            DB::table('subastas')
             ->where('id', $subasta->id)
             ->update(['monto_maximo' => $maximaPuja->puja, 'ganador' => $maximaPuja->id_usuario]);
+        }
+
+        DB::table('usuarios')
+                    ->where('id', $maximaPuja->id_usuario)
+                    ->decrement('creditos'); 
+        
 
         return redirect()->back();    
     }

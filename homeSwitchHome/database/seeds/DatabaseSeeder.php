@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         $this->call(LocalidadsSeeder::class);
         $this->call(HospedajesSeeder::class);
-        //$this->call(UsuariosDemoSeeder::class); cuando este cargado UsuariosDemoSeeder.php 
-        
+        $this->call(UsuariosDemoSeeder::class);
+        $this->call(SubastasSeeder::class);
+        $this->call(ParticipassSeeder::class);
     }
 }
