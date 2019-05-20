@@ -12,7 +12,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">    
-    <div >
+   <!-- <div >
       <ul class="navbar-nav" >
         <li class="nav-item">
           <a class="nav-link itemnav" href="#">Localidades<span class="sr-only">(current)</span></a>
@@ -24,7 +24,7 @@
           <a class="nav-link" href="#">Subastas</a>
         </li>
       </ul>
-    </div>
+    </div>-->
       <div style="float:right">
         <div class="btn-group">
           <button type="button" class="btn btn-info dropdown-toggle btn-lg"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
