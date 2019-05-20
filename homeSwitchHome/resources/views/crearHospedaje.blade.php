@@ -45,10 +45,12 @@
                 <label for="tipoHospedaje">Tipo hospedaje: </label>
                   <select class="form-control" name="tipoHospedaje" id="tipoHospedaje">
                   <option value="">Seleccione</option>
-                  <option value="casa">Casa</option>
-                  <option value="hotel">Hotel</option>
-                  <option value="duplex">Duplex</option>
-                  <option value="resort">Resort</option>
+                  <option value="Casa">Casa</option>
+                  <option value="Hotel">Hotel</option>
+                  <option value="Cabaña">Cabaña</option>
+                  <option value="Departamento">Departamento</option>
+                  <option value="Duplex">Duplex</option>
+                  <option value="Resort">Resort</option>
                 </select>
               </div>
                 <br>

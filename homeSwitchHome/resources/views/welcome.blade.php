@@ -18,4 +18,6 @@
         @endif
     </div>
 
+    @include('layouts.listarSubastas')
+
 @endsection
