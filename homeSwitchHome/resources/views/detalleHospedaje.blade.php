@@ -18,7 +18,7 @@ use Carbon\Carbon;
 	
 	<div class="col-md-2"></div>
 	<div class="col-md-8">
-		<div class="card bg-info" >
+		<div class="card text-white bg-dark" >
 			<img src="/images/{{ $nombreImagen }}" height="500">
 			<div class="card-body">	
 				<div class="card-text"></div>
@@ -36,14 +36,15 @@ use Carbon\Carbon;
 				<h4>Fecha fin {{ $fechaFin }} </h4>   
 				</div>
 				<div>
-				<a class="btn btn-success float-left" style="margin-left: 20px; margin-bottom: 20px" href="{{ url('/modificarHospedaje/'.$idHospedaje) }}"> Modificar hospedaje</a>
-
 				<form action="/eliminarHospedaje" method="post">
 					{{ csrf_field() }}
 					<button class="btn btn-danger float-right" style="margin-right: 20px; margin-bottom: 20px" >Eliminar hospedaje</button>
 					<input type="hidden" name="idHospedaje" value="{{ $idHospedaje }}">
 
 				</form>
+				<a class="btn btn-warning float-right" style="margin-right: 20px; margin-bottom: 20px" href="{{ url('/modificarHospedaje/'.$idHospedaje) }}"> Modificar hospedaje</a>
+				<a class="btn btn-success float-right" style="margin-right: 20px; margin-bottom: 20px" href="{{ url('/crearsubasta/'.$idHospedaje) }}"> Crear Subasta</a>
+				
 				</div>
 			</div>
 		</div>

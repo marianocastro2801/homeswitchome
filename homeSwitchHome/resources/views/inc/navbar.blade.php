@@ -20,14 +20,17 @@
         <li class="nav-item itemnav">
           <a class="nav-link" href="#">HotSale</a>
         </li>-->
-        <li class="nav-item itemnav">
-          <a class="nav-link" href="/listarsubastas">Subastas</a>
-        </li>
         @if (Session('nombreUsuario') == 'Andrea')
           <li class="nav-item itemnav">
-            <a class="nav-link" href="/listarhospedajes">Hospedaje</a>
+            <a class="nav-link" href="/listarhospedajes">Ver Hospedajes</a>
+          </li>
+          <li class="nav-item itemnav">
+            <a class="nav-link" href="/crearhospedaje">Crear Hospedajes</a>
           </li>
         @endif
+        <li class="nav-item itemnav">
+          <a class="nav-link" href="/listarsubastas">Ver Subastas</a>
+        </li>
       </ul>
     </div>
       <div style="float:right">
@@ -41,7 +44,7 @@
             <a class="dropdown-item" href="#"><span class="glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Contactos</a>
             <a class="dropdown-item" href="#"><span class="glyphicon glyphicon-question-sign" style="margin-right: 10px"></span>FAQ</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#"><span class="glyphicon glyphicon-off" style="margin-right: 10px"></span>Cerrar sesion</a>
+            <a class="dropdown-item" href="/sesion"><span class="glyphicon glyphicon-off" style="margin-right: 10px"></span>Cerrar sesion</a>
           </div>
       </div>
       </div>
