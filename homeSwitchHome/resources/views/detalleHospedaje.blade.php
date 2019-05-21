@@ -44,6 +44,15 @@ use Carbon\Carbon;
 				</form>
 				<a class="btn btn-warning float-right" style="margin-right: 20px; margin-bottom: 20px" href="{{ url('/modificarHospedaje/'.$idHospedaje) }}"> Modificar hospedaje</a>
 				<a class="btn btn-success float-right" style="margin-right: 20px; margin-bottom: 20px" href="{{ url('/crearsubasta/'.$idHospedaje) }}"> Crear Subasta</a>
+				@if ($errors->any())
+		          <div class="alert alert-danger">
+		            <ul>
+		              @foreach ($errors->all() as $error)
+		                <li>{{ $error }}</li>
+		              @endforeach
+		            </ul>
+		          </div>
+		        @endif
 				
 				</div>
 			</div>

@@ -67,7 +67,7 @@ class SubastasController extends Controller
 
     	$subasta->save();
 
-    	return redirect('/');
+    	return redirect('/listarsubastas');
     }
 
     public function detalleSubasta($idSubasta){
@@ -115,11 +115,8 @@ class SubastasController extends Controller
 
         $request['creditos'] = session('creditos');
         $request['nombreUsuario'] = session('nombreUsuario');
-        $request['nombreInvalido'] = 'Carlos';
+        //$request['nombreInvalido'] = 'Carlos';
         $request['diferencia'] = Carbon::create($subasta->created_at)->diffInDays(Carbon::now());
-
-
-
 
 
         $request->validate([
@@ -131,8 +128,9 @@ class SubastasController extends Controller
 
         if($request->input('montoMaximo') == 0)
             $request->validate([
-                'valorPuja' => 'required|numeric|bail|gt:montoBase',
-                'nombreUsuario' => 'different:nombreInvalido'
+                'valorPuja' => 'required|numeric|bail|gt:montoBase'
+                //Queda comentado hasta saber si el credito tarjeta es en pujar o cerrar
+                //,'nombreUsuario' => 'different:nombreInvalido'
                 ],
                 ['valorPuja.required' => 'Por favor ingrese un monto a pujar', 
                  'valorPuja.numeric' => 'Por favor ingrese un valor numérico',
@@ -141,8 +139,9 @@ class SubastasController extends Controller
               ]);
         else
             $request->validate([
-                'valorPuja' => 'required|numeric|bail|gt:montoMaximo',
-                'nombreUsuario' => 'different:nombreInvalido'
+                'valorPuja' => 'required|numeric|bail|gt:montoMaximo'
+                //Queda comentado hasta saber si el credito tarjeta es en pujar o cerrar
+                //,'nombreUsuario' => 'different:nombreInvalido'
                 ],
                 ['valorPuja.required' => 'Por favor ingrese un monto a pujar',
                  'valorPuja.numeric' => 'Por favor ingrese un valor numérico',
@@ -164,9 +163,10 @@ class SubastasController extends Controller
 
     public function listarSubastas(Request $request){
 
-        //return $request->route('nombreParametro');
-
-        $data['subastas'] = DB::table('subastas')->whereNull('ganador')->get();
+        $data['subastas'] = DB::table('subastas')
+                            ->whereNull('ganador')
+                            ->orderBy('created_at', 'desc')
+                            ->get();
         
 
         return view('/layouts/listarSubastas', $data);
@@ -176,8 +176,9 @@ class SubastasController extends Controller
 
         $subasta = DB::table('subastas')
                                 ->where('id', $request->input('idSubasta'))
-                                ->first();     
+                                ->first();
 
+        $request['usuarioInvalido'] = 2; 
         $request['diferencia'] = Carbon::create($subasta->created_at)->diffInDays(Carbon::now());
         
         $request->validate([
@@ -185,27 +186,40 @@ class SubastasController extends Controller
                 ['diferencia.gte' => 'La subasta todavía no terminó'
                     ]); 
 
-        $maximaPuja = DB::table('participas')
+        // Codigo para obtener el maximo de algo
+        // $pujas = DB::table('participas')
+        //             ->select('id_usuario','puja')
+        //             ->where('id_subasta', $subasta->id)
+        //             ->whereRaw('puja = (SELECT MAX(puja) as puja FROM participas
+        //                         WHERE id_subasta = ?)', [$subasta->id])
+        //             ->get();
+
+        $pujas = DB::table('participas')
                     ->select('id_usuario','puja')
                     ->where('id_subasta', $subasta->id)
-                    ->whereRaw('puja = (SELECT MAX(puja) as puja FROM participas
-                                WHERE id_subasta = ?)', [$subasta->id])
-                    ->first();      
+                    ->orderBy('puja', 'desc')
+                    ->get();      
 
-        if(is_null($maximaPuja)){
+        if(is_null($pujas)){
             DB::table('subastas')
             ->where('id', $subasta->id)
             ->update(['monto_maximo' => 0, 'ganador' => 0]);          
         }
         else {
-            DB::table('subastas')
-            ->where('id', $subasta->id)
-            ->update(['monto_maximo' => $maximaPuja->puja, 'ganador' => $maximaPuja->id_usuario]);
-        }
+            foreach ($pujas as $puja){
+                if($puja->id_usuario != $request->input('usuarioInvalido')){
+                    DB::table('subastas')
+                    ->where('id', $subasta->id)
+                    ->update(['monto_maximo' => $puja->puja, 'ganador' => $puja->id_usuario]);
 
-        DB::table('usuarios')
-                    ->where('id', $maximaPuja->id_usuario)
+                    DB::table('usuarios')
+                    ->where('id', $puja->id_usuario)
                     ->decrement('creditos'); 
+
+                    break;
+                }
+            }
+        }
         
 
         return redirect()->back();    
