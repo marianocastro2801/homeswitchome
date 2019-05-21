@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', 'SubastasController@listarSubastasInicio');
 
 Route::get('/sesion', function () {
     return view('iniciarSesion');

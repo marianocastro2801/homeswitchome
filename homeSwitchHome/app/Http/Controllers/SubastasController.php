@@ -224,4 +224,27 @@ class SubastasController extends Controller
 
         return redirect()->back();    
     }
+    
+    public function listarSubastasInicio(Request $request){
+
+        $subasta1= DB::table('subastas')->where('id', 1)->first();
+        $hospedaje1 = DB::table('hospedajes')->where('id', $subasta1->id_hospedaje)->first();
+        $subasta2 = DB::table('subastas')->where('id', 2)->first();
+        $hospedaje2 = DB::table('hospedajes')->where('id', $subasta2->id_hospedaje)->first();
+        
+
+        $data['tituloHospedaje1'] = $hospedaje1->titulo;    
+        $data['nombreImagen1'] = $hospedaje1->imagen;   
+        $data['idSubasta1'] = $subasta1->id;
+        $data['montoBase1'] = $subasta1->monto_base;
+        $data['fechaInicio1'] = $subasta1->fecha_inicio;
+
+        $data['tituloHospedaje2'] = $hospedaje2->titulo;  
+        $data['nombreImagen2'] = $hospedaje2->imagen;   
+        $data['idSubasta2'] = $subasta2->id;
+        $data['montoBase2'] = $subasta2->monto_base;
+        $data['fechaInicio2'] = $subasta2->fecha_inicio;
+
+        return view('welcome', $data);
+    }
 }
