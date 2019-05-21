@@ -157,7 +157,7 @@ class HospedajeController extends Controller
             ->where('id', $request->input('idHospedaje'))
             ->update(['titulo' => $request->input('titulo'),
                       'descripcion' => $request->input('descripcion'),
-                      'cantidad_maxima_personas' => $request->input('descripcion'),
+                      'cantidad_maxima_personas' => $request->input('cantidadPersonas'),
                       'tipo_hospedaje' => $request->input('tipoHospedaje'), 
                       'descripcion' => $request->input('descripcion'),
                       'id_localidad' => $request->input('localidad'), 
@@ -170,7 +170,7 @@ class HospedajeController extends Controller
             ->where('id', $request->input('idHospedaje'))
             ->update(['titulo' => $request->input('titulo'),
                       'descripcion' => $request->input('descripcion'),
-                      'cantidad_maxima_personas' => $request->input('descripcion'),
+                      'cantidad_maxima_personas' => $request->input('cantidadPersonas'),
                       'tipo_hospedaje' => $request->input('tipoHospedaje'), 
                       'descripcion' => $request->input('descripcion'),
                       'id_localidad' => $request->input('localidad'), 

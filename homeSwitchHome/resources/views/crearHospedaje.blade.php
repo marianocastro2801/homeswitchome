@@ -80,15 +80,15 @@
                 <br>
                 <div class="form-group col-md-12">              
                 <label for="imagen" > Imagen: </label>
-                <input name="imagen" id="imagen" type="file">
+                <input name="imagen" class="float-right" id="imagen" type="file">
               </div>
                 <br>
                 <br>
               </div>
-              <div class="panel-footer" style="background: #cdcdcd">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <a class="btn btn-secondary btn-danger my-2 my-sm-0" href="{{ url('/') }}">Cancelar</a>
-              </div>
+              
+                <button type="submit" class="float-left btn btn-primary">Guardar</button>
+                <a class="btn btn-secondary float-right btn-danger my-2 my-sm-0" href="{{ url('/') }}">Cancelar</a>
+              
           </div>
             </form>
           

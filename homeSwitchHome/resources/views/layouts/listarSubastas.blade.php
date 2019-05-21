@@ -26,6 +26,9 @@ use Illuminate\Support\Facades\DB;
 				    <p><b>Monto base de la subasta:</b> ${{ $subasta->monto_base }}</p>
 					<p><b>Fecha inicio hospedaje:</b> {{ Carbon\Carbon::parse($subasta->fecha_inicio)->format('d-m-Y') }} </p>
 					<p><b>Fecha fin hospedaje:</b> {{ Carbon\Carbon::parse($subasta->fecha_fin)->format('d-m-Y') }}</p>
+					<a class="btn btn-info float-right" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}"> 
+                                    Ver detalles Hospedaje
+                            </a>
 				</div>
 			</div>
 		@endforeach
