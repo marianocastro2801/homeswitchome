@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use App\Hospedaje;
 
@@ -69,7 +70,9 @@ class HospedajeController extends Controller
     public function listarHospedajes(Request $request){
         //return $request->route('nombreParametro');
 
-        $data['hospedajes'] = DB::table('hospedajes')->get();
+        $data['hospedajes'] = DB::table('hospedajes')
+                              ->orderBy('created_at', 'desc')
+                              ->get();
         
 
         return view('/layouts/listarHospedajes', $data);
@@ -96,6 +99,11 @@ class HospedajeController extends Controller
      }
 
      public function eliminarHospedaje(Request $request){
+
+        $request->validate([
+                'idHospedaje' => 'not_in:4'],
+                ['idHospedaje.not_in' => 'No puede eliminarse el hospedaje porque posee reservas']);
+
 
         DB::table('hospedajes')->where('id', $request->input('idHospedaje'))->delete();
 
@@ -124,10 +132,22 @@ class HospedajeController extends Controller
         return view('modificarHospedaje', $data);
     }
 
+
      public function validarModificacion(Request $request){
 
+
+        $request['cantidadSubastas'] = DB::table('subastas')
+                                        ->where('id_hospedaje', $request->input('idHospedaje'))
+                                        ->count();                           
+
         $request->validate([
-            'titulo' => 'required|bail|unique:hospedajes,titulo',
+                'cantidadSubastas' => 'lt: 1',
+                'idHospedaje' => 'not_in:4'],
+                ['idHospedaje.not_in' => 'No puede modificarse el hospedaje porque posee reservas',
+                'cantidadSubastas.lt' => 'No puede modificarse el hospedaje porque posee subastas']);
+
+        $request->validate([
+            'titulo' => 'required|bail|unique:hospedajes,titulo,'.$request->input('idHospedaje'),
             'descripcion' => 'required',
             'cantidadPersonas' => 'required',
             'tipoHospedaje' => 'required',

@@ -2,7 +2,6 @@
 use Illuminate\Support\Facades\DB;
 
 ?>
-
 @extends('layouts.baseapp')
 
 @section('content')
@@ -27,7 +26,7 @@ use Illuminate\Support\Facades\DB;
 					<p><b>Fecha inicio hospedaje:</b> {{ Carbon\Carbon::parse($subasta->fecha_inicio)->format('d-m-Y') }} </p>
 					<p><b>Fecha fin hospedaje:</b> {{ Carbon\Carbon::parse($subasta->fecha_fin)->format('d-m-Y') }}</p>
 					<a class="btn btn-info float-right" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}"> 
-                                    Ver detalles Hospedaje
+                                    Ver detalles subasta
                             </a>
 				</div>
 			</div>
