@@ -58,9 +58,7 @@ use Carbon\Carbon;
 
 				<h4>Ubicado en {{ $localidad }} </h4>   
 
-				<h4>Fecha de Inicio {{ $fechaInicio }} </h4>   
-
-				<h4>Fecha fin {{ $fechaFin }} </h4>   
+				<h4>Fecha de disponibilidad desde {{ Carbon::parse($fechaInicio)->format('d-m-Y') }} hasta {{ Carbon::parse($fechaFin)->format('d-m-Y') }} </h4>   
 
 			</div>
 			<div>

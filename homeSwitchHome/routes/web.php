@@ -27,7 +27,7 @@ Route::post('/crearsubasta/validar', 'SubastasController@validar');
 Route::get('/cargardetallesubasta/{id}', [ 'as' => 'cargardetallesubasta', 
 	'uses' => 'SubastasController@detalleSubasta']);
 
-Route::get('/listarsubastas', 'SubastasController@listarSubastas');
+// Route::get('/listarsubastas', 'SubastasController@listarSubastas');
 
 Route::post('/pujarsubasta', 'SubastasController@pujar');
 

@@ -8,6 +8,7 @@
 <nav class="navbar navbar-expand-sm container-fluid navbar-static-top navbar-dark bg-dark" >
   <a class="navbar-brand" href="/"><img src="/images/Logo.png" width="35" height="25" class="d-inline-block align-top">
    homeSwitchHome</a>
+   @if(!(Request::is('sesion')))
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -28,9 +29,6 @@
             <a class="nav-link" href="/crearhospedaje">Crear Hospedajes</a>
           </li>
         @endif
-        <li class="nav-item itemnav">
-          <a class="nav-link" href="/listarsubastas">Ver Subastas</a>
-        </li>
       </ul>
     </div>
       <div style="float:right">
@@ -49,6 +47,7 @@
       </div>
       </div>
   </div>
+  @endif
 </nav>
 <div>
 </div>

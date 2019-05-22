@@ -12,16 +12,24 @@ use App\Participa;
 class SubastasController extends Controller
 {
     public function crearSubasta($idHospedaje){
+        
         $hospedaje = DB::table('hospedajes')
                     ->where('id', $idHospedaje)
                     ->first();
 
+        $subastas = DB::table('subastas')
+                    ->where('id_hospedaje', $idHospedaje)
+                    ->whereNull('ganador')
+                    ->orderBy('fecha_inicio')
+                    ->get();            
+
         $data['titulo'] = $hospedaje->titulo;
         $data['idHospedaje'] = $hospedaje->id;
         $data['fechaInicioHospedaje'] = $hospedaje->fecha_inicio;   
-        $data['fechaFinHospedaje'] = $hospedaje->fecha_fin;          
+        $data['fechaFinHospedaje'] = $hospedaje->fecha_fin; 
+        $data['subastas'] = $subastas;         
 
-        return view('crearSubasta', $data);            
+        return view('crearSubasta', $data);
     } 
 
     public function validar(Request $request){
@@ -44,6 +52,7 @@ class SubastasController extends Controller
 
         $subastas = DB::table('subastas')
                     ->where('id_hospedaje', $request->input('idHospedaje'))
+                    ->whereNull('ganador')
                     ->get();
 
         foreach ($subastas as $subasta) {
@@ -54,7 +63,7 @@ class SubastasController extends Controller
 
             $request->validate([
             'fechaInicio' => 'date_overlap:'.$fechaFinSubasta.','.$fechaFin.','.$fechaInicioSubasta],
-            ['fechaInicio.date_overlap' => 'La fecha se superpone con otra subasta' ]); 
+            ['fechaInicio.date_overlap' => 'La fecha ingresada se superpone con otra subasta' ]); 
         }
 
         
@@ -67,13 +76,20 @@ class SubastasController extends Controller
 
     	$subasta->save();
 
-    	return redirect('/listarsubastas');
+    	return redirect('/');
     }
 
     public function detalleSubasta($idSubasta){
 
         $subasta = DB::table('subastas')->where('id', $idSubasta)->first();
         $hospedaje = DB::table('hospedajes')->where('id', $subasta->id_hospedaje)->first();
+
+        $data['diferencia'] = 3 - Carbon::create($subasta->created_at)->diffInDays(Carbon::now());
+        
+        if($data['diferencia'] <= 0)
+            $data['diferencia'] = 'La subasta ya terminó';
+        else
+            $data['diferencia'] = 'Faltan '.$data['diferencia'].' días para que la subasta termine';
                 
         $data['tituloHospedaje'] = $hospedaje->titulo;
         $data['maximasPersonas'] = $hospedaje->cantidad_maxima_personas; 
@@ -161,16 +177,16 @@ class SubastasController extends Controller
         return redirect()->route('cargardetallesubasta', [$id]);
     }
 
-    public function listarSubastas(){
+    // public function listarSubastas(){
 
-        $data['subastas'] = DB::table('subastas')
-                            ->whereNull('ganador')
-                            ->orderBy('created_at', 'desc')
-                            ->get();
+    //     $data['subastas'] = DB::table('subastas')
+    //                         ->whereNull('ganador')
+    //                         ->orderBy('created_at', 'desc')
+    //                         ->get();
         
 
-        return view('/layouts/listarSubastas', $data);
-    }
+    //     return view('/layouts/listarSubastas', $data);
+    // }
 
     public function cerrarSubasta(Request $request){
 
@@ -200,32 +216,33 @@ class SubastasController extends Controller
                     ->orderBy('puja', 'desc')
                     ->get();           
 
-        if(empty($pujas->all())){
-            DB::table('subastas')
-            ->where('id', $subasta->id)
-            ->update(['monto_maximo' => 0, 'ganador' => 0]);          
-        }
-        else {
-            foreach ($pujas as $puja){
-                $usuario = DB::table('usuarios')
-                    ->where('id', $puja->id_usuario)
-                    ->first(); 
+        DB::table('subastas')
+        ->where('id', $subasta->id)
+        ->update(['monto_maximo' => 0, 'ganador' => 0]);
 
-                if(($usuario->id != $request->input('usuarioInvalido') &&  ($usuario->creditos > 0))){
-                    DB::table('subastas')
-                    ->where('id', $subasta->id)
-                    ->update(['monto_maximo' => $puja->puja, 'ganador' => $puja->id_usuario]);
+        $request->session()->flash('exito', 'La subasta se cerro con exito sin ganadores. La subasta se ha agregado a la lista de candidatos de Hotsale');
 
-                    DB::table('usuarios')
-                    ->where('id', $puja->id_usuario)
-                    ->decrement('creditos'); 
+        foreach ($pujas as $puja){
+            $usuario = DB::table('usuarios')
+                ->where('id', $puja->id_usuario)
+                ->first(); 
 
-                    break;
-                }
+            if(($usuario->id != $request->input('usuarioInvalido') &&  ($usuario->creditos > 0))){
+                DB::table('subastas')
+                ->where('id', $subasta->id)
+                ->update(['monto_maximo' => $puja->puja, 'ganador' => $puja->id_usuario]);
+
+                DB::table('usuarios')
+                ->where('id', $puja->id_usuario)
+                ->decrement('creditos'); 
+
+                $request->session()->flash('exito', 'La subasta se cerro con exito, el ganador es '.$usuario->email);
+
+                break;
             }
         }
         
 
-        return redirect('/listarsubastas');    
+        return redirect('/');    
     }
 }
