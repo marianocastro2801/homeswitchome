@@ -5,24 +5,12 @@ use Illuminate\Support\Facades\DB;
 
 
 @extends('layouts.baseapp')
-
 @section('content')
 
 <div class="containes col-md-12" style="margin-bottom: 50px">
-         <h1 class="col-md-12 text-center bg-info" style=" margin-bottom: 30px;border-radius: 25px;border-style: double;"> Hospedajes </h1>
-
-            
-            
-                    @if(session('exito'))
-                    <div class="col-md-12">            
-                        <div class="alert alert-success">
-                            <button class="close" data-dismiss="alert"><span>&times;</span></button>
-                            {{ session('exito') }}
-                        </div>
-                    </div>
-                    @endif
-            
+         <h1 class="col-md-12 text-center bg-info" style=" margin-bottom: 30px;border-radius: 25px;border-style: double;"> Hospedajes </h1>         
            
+            @include('inc.mensajeExito')
         
             @foreach($hospedajes as $hospedaje)
                 <div class="col-md-4" style="margin-bottom: 30px;">
@@ -31,11 +19,12 @@ use Illuminate\Support\Facades\DB;
                             <img src="/images/{{ $hospedaje->imagen }}" style="border-radius: 25px;margin: 15px" width="350" height="270"  ></li>  
                         <hr/>
                         <div class="card-body" style="margin-left: 20px">
-                            <h5 class="card-title">
+                            
+                            <h4 class="card-title">
                         	    
-                                    Titulo: {{ $hospedaje->titulo }}
+                                    {{ $hospedaje->titulo }}
                                 
-                            </h5>
+                            </h4>
                         
                                 <p class="card-text">
                                     Tipo: {{ $hospedaje->tipo_hospedaje }}

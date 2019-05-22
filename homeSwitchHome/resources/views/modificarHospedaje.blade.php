@@ -9,22 +9,7 @@ use Carbon\Carbon;
 @section('content')
 <div class="conteiner col-md-12" style="margin-bottom: 50px">
   <div>
-          @if(session('exito'))
-              <div class="alert alert-success">
-                  <button class="close" data-dismiss="alert"><span>&times;</span></button>
-                  {{ session('exito') }}
-              </div>
-          @endif
-          @if ($errors->any())
-                <div class="alert alert-danger">
-                  <ul>
-                    <button class="close" data-dismiss="alert"><span>&times;</span></button>
-                    @foreach ($errors->all() as $error)
-                      <li>{{ $error }}</li>
-                    @endforeach
-                  </ul>
-                </div>
-          @endif
+          @include('inc.mensajeError')
   </div>
   <h1 class="col-md-12 text-center bg-info" style="border-radius: 25px;border-style: double; margin-bottom: 30px"> Modificar </h1>
   

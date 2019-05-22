@@ -30,15 +30,7 @@
 										  		<a class="btn btn-secondary my-2 my-sm-0" href="{{ url('/cargardetallehospedaje'.$idHospedaje) }}">Cancelar</a>
 											</div>
 									</form>
-									@if ($errors->any())
-						    		<div class="alert alert-danger">
-						        		<ul>
-								            @foreach ($errors->all() as $error)
-								                <li>{{ $error }}</li>
-								            @endforeach
-								        </ul>
-						    		</div>
-									@endif
+									@include('inc.mensajeError')
 								</div>
 							</div>
 						</div>

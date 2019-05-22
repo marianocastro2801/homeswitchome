@@ -9,16 +9,7 @@
 
 
 @section('content')
-	@if ($errors->any())
-		<div class="alert alert-danger">
-		    <ul>
-		    	<button class="close" data-dismiss="alert"><span>&times;</span></button>
-		        @foreach ($errors->all() as $error)
-		           	<li>{{ $error }}</li>
-			    @endforeach
-			</ul>
-		</div>
-	@endif
+	@include('inc.mensajeError')
 	<div class="container" style="margin-bottom: 60px">		
 		<br>
 			<div class="media" >

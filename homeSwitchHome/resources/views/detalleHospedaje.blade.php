@@ -14,30 +14,7 @@ use Carbon\Carbon;
 	<h1 class="col-md-12 text-center bg-info" style="border-radius: 25px;border-style: double; margin-bottom: 30px"> {{ $tituloHospedaje }}  </h1>
 
 
-    @if(session('exito'))
-	    <div class="col-md-12">
-	        <div class="alert alert-success">
-	        	<button class="close" data-dismiss="alert"><span>&times;</span></button>
-	            {{ session('exito') }}
-	        </div>
-		</div>
-	@endif
-
-	
-	@if ($errors->any())
-		<div class="col-md-12">
-	        <div class="alert alert-danger">
-		        <ul>
-		            @foreach ($errors->all() as $error)
-	    	   			<button class="close" data-dismiss="alert"><span>&times;</span></button>
-		                <li>{{ $error }}</li>
-		            @endforeach
-		        </ul>
-		    </div>
-		</div>
-	@endif	
-
-
+    @include('inc.mensajeExito')
 	<div class="col-md-2"></div>
 
 
@@ -49,16 +26,24 @@ use Carbon\Carbon;
 
 				<p>
 					<h3>Descripcion</h3> 
-					<h4>{{ $descripcion }}</h4> 
+					<p>{{ $descripcion }}</p> 
 				</p>
 
-				<h4>Cantidad maxima de personas {{ $maximasPersonas }} </h4>
+				<hr>
+				
+				<h3>Información</h3>
 
-				<h4>Hospedaje tipo {{ $tipoHospedaje }} </h4>
+				<p>Cantidad maxima de personas: {{ $maximasPersonas }} </p>
 
-				<h4>Ubicado en {{ $localidad }} </h4>   
+				<p>Hospedaje tipo: {{ $tipoHospedaje }} </p>
 
-				<h4>Fecha de disponibilidad desde {{ Carbon::parse($fechaInicio)->format('d-m-Y') }} hasta {{ Carbon::parse($fechaFin)->format('d-m-Y') }} </h4>   
+				<p>Ubicado en: {{ $localidad }} </p>
+
+				<hr>
+				
+				<h3>Disponibilidad</h3>   
+
+				<p>Disponibile desde {{ Carbon::parse($fechaInicio)->format('d-m-Y') }} hasta {{ Carbon::parse($fechaFin)->format('d-m-Y') }} </p>   
 
 			</div>
 			<div>

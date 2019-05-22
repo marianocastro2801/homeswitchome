@@ -13,16 +13,9 @@ use Illuminate\Support\Facades\DB;
 		<p>{{ session('numeroTarjeta') }}</p>
 		<p>{{ session('fechaNacimiento') }}</p>
 	-->
-        @if(session('exito'))
-        
-            <div class="alert alert-success">
-              <button class="close" data-dismiss="alert"><span>&times;</span></button>
-                {{ session('exito') }}
-            </div>
-            
-        @endif
-	
     
+    @include('inc.mensajeError')
+	  
 
     <!--@_include('layouts.listarSubastas') CAUSA PROBLEMAS -->
     <div class="container bg-dark" style="margin-bottom: 55px; border-radius:25px">
