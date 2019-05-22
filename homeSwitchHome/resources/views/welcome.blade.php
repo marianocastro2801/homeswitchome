@@ -23,8 +23,8 @@ use Illuminate\Support\Facades\DB;
         
       <div class="row colgroup">
 	    	<div class="colgroup col-md-12">
-				<h1 class="jumbotron display-4 font-italic text-dark text-center" style="border-style: double;"><FONT SIZE=7><img src="/images/Texto.png"></FONT></h1>
-				<p class="lead my-3 text-white" style="padding-right: 90px; padding-left: 90px; padding-bottom: 30px">	Una pagina web dedicada unicamente a  ofrecete la oportunidad de tener tu alojamiento en un condominio dentro de desarrollos de alta calidad, los cuales son de una gama de amenidades en populares destinos vacacionales en toda la Argentina.</p>
+				<h1 class="jumbotron display-4 text-dark text-center" style="border-style: double;"><img src="/images/Texto.png"></h1>
+				<p class="lead my-3 text-white font-italic" style="padding-right: 90px; padding-left: 90px; padding-bottom: 30px">	Una empresa dedicada unicamente a  ofrecete la oportunidad de tener tu alojamiento en un condominio dentro de desarrollos de alta calidad, los cuales son de una gama de amenidades en populares destinos vacacionales en toda la Argentina.</p>
 			 <hr>
       </div>
 			
@@ -36,18 +36,31 @@ use Illuminate\Support\Facades\DB;
                             ->where('id', $subasta->id_hospedaje)
                             ->first(); 
         ?>
-        <div class="col-md-6">
-          <div class="card flex-md-row mb-4 box-shadow h-md-250 bg-info">
-            <div class="card-body d-flex flex-column align-items-start">
-              <strong class="d-inline-block">Subastas</strong>
-              <h3>
+        <div class="col-md-12">
+          <div class="card flex-md-row mb-4 box-shadow h-md-250 bg-info" style="padding: 20px; margin: 20px; border-radius: 30px">
+            <div class="card-body d-flex flex-column align-items-start" style="margin-left: 40px">
+              <strong class="d-inline-block">Subasta</strong>
+              
+              <div class="colgroup" style="margin-left: -15px ;margin-bottom: -15px; margin-top: 5px">
+                <div class="col-md-6 colgroup">
+                  <span class="glyphicon glyphicon-log-in"></span> {{ Carbon\Carbon::parse($subasta->fecha_inicio)->format('d-m-Y') }} 
+                </div>
+                <div class="col-md-6 colgroup">
+                  <span class="glyphicon glyphicon-log-out"></span> {{ Carbon\Carbon::parse($subasta->fecha_fin)->format('d-m-Y') }}
+                </div>
+              </div>
+              
+              <h1>
                 <a class="text-dark" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}">{{ $hospedaje->titulo  }}</a>
-              </h3>
-              <div class="mb-1 text-muted">Comienzo de la estadía: {{ Carbon\Carbon::parse($subasta->fecha_inicio)->format('d-m-Y') }}</div>
+              </h1>
+              
               <p class="card-text mb-auto text-dark">Monto Base: ${{ $subasta->monto_base }}</p>
-              <a href="{{ url('/cargardetallesubasta/'.$subasta->id) }}" class="text-warning">Ver detalle</a>
+              <br>
+              <p class="card-text mb-auto text-dark">  <span class="glyphicon glyphicon-map-marker">  </span>  <span class="glyphicon glyphicon-phone-alt">  </span>  <span class="glyphicon glyphicon-bed">  </span>  <span class=" glyphicon glyphicon-signal">  </span> </p>
+              
+              <a href="{{ url('/cargardetallesubasta/'.$subasta->id) }}" class="text-white">Ver detalle</a>
             </div>
-            <img class="card-img-right flex-auto d-none d-md-block" width="280" height="200" src="/images/{{ $hospedaje->imagen }}" alt="Card image cap">  
+            <img class="card-img-right flex-auto d-none d-md-block" style="border-radius: 25px" width="280" height="200" src="/images/{{ $hospedaje->imagen }}" alt="Card image cap">  
           </div>
         </div>
         @endforeach

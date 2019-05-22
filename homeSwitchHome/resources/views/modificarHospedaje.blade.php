@@ -95,8 +95,11 @@ use Carbon\Carbon;
             <br>
 
             <input type="hidden" name="idHospedaje" value="{{ $idHospedaje }}">
+  
+            <a style="margin-left: 40px" class="btn btn-secondary float-right btn-danger my-2 my-sm-0" href="{{ url('/listarhospedajes') }}">Cancelar</a>
 
             <button type="submit" class="float-right btn btn-success">Modificar</button>
+
 
       </form>
 

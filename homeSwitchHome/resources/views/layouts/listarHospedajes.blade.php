@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\DB;
                         
                             <img src="/images/{{ $hospedaje->imagen }}" style="border-radius: 25px;margin: 15px" width="350" height="270"  ></li>  
                         <hr/>
-                        <div class="card-body" style="margin-left: 20px">
+                        <div class="card-body" style="margin: 10px">
                             
                             <h4 class="card-title">
                         	    
@@ -32,10 +32,10 @@ use Illuminate\Support\Facades\DB;
                             
                         	
                                 <p class="card-text">
-                                    Cantidad de personas: {{ $hospedaje->cantidad_maxima_personas }}
+                                    Capacidad maxima: {{ $hospedaje->cantidad_maxima_personas }}
                                 </p>
                                 	
-                        
+                        <hr/>
                             <a class="btn btn-info float-right" href="{{ url('/cargardetallehospedaje/'.$hospedaje->id) }}"> 
                                     <span class="glyphicon glyphicon-share-alt"></span> Ver detalles Hospedaje
                             </a>
