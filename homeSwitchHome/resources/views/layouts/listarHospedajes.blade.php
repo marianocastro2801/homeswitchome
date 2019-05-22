@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\DB;
                         
                             <img src="/images/{{ $hospedaje->imagen }}" style="border-radius: 25px;margin: 15px" width="350" height="270"  ></li>  
                         <hr/>
-                        <div class="card-body">
+                        <div class="card-body" style="margin-left: 20px">
                             <h5 class="card-title">
                         	    
                                     Titulo: {{ $hospedaje->titulo }}
@@ -48,7 +48,7 @@ use Illuminate\Support\Facades\DB;
                                 	
                         
                             <a class="btn btn-info float-right" href="{{ url('/cargardetallehospedaje/'.$hospedaje->id) }}"> 
-                                    Ver detalles Hospedaje
+                                    <span class="glyphicon glyphicon-share-alt"></span> Ver detalles Hospedaje
                             </a>
                         </div>
                     </div>
