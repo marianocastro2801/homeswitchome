@@ -134,7 +134,7 @@ class SubastasController extends Controller
                 ],
                 ['valorPuja.required' => 'Por favor ingrese un monto a pujar', 
                  'valorPuja.numeric' => 'Por favor ingrese un valor numérico',
-                  'valorPuja.gt' => 'El valor debe ser mas grande que la puja máxima',
+                  'valorPuja.gt' => 'El valor debe ser mas grande que la puja base',
                   'nombreUsuario.different' => 'No posee créditos en la tarjeta'
               ]);
         else
@@ -161,7 +161,7 @@ class SubastasController extends Controller
         return redirect()->route('cargardetallesubasta', [$id]);
     }
 
-    public function listarSubastas(Request $request){
+    public function listarSubastas(){
 
         $data['subastas'] = DB::table('subastas')
                             ->whereNull('ganador')
@@ -198,16 +198,20 @@ class SubastasController extends Controller
                     ->select('id_usuario','puja')
                     ->where('id_subasta', $subasta->id)
                     ->orderBy('puja', 'desc')
-                    ->get();      
+                    ->get();           
 
-        if(is_null($pujas)){
+        if(empty($pujas->all())){
             DB::table('subastas')
             ->where('id', $subasta->id)
             ->update(['monto_maximo' => 0, 'ganador' => 0]);          
         }
         else {
             foreach ($pujas as $puja){
-                if($puja->id_usuario != $request->input('usuarioInvalido')){
+                $usuario = DB::table('usuarios')
+                    ->where('id', $puja->id_usuario)
+                    ->first(); 
+
+                if(($usuario->id != $request->input('usuarioInvalido') &&  ($usuario->creditos > 0))){
                     DB::table('subastas')
                     ->where('id', $subasta->id)
                     ->update(['monto_maximo' => $puja->puja, 'ganador' => $puja->id_usuario]);
@@ -222,29 +226,6 @@ class SubastasController extends Controller
         }
         
 
-        return redirect()->back();    
-    }
-    
-    public function listarSubastasInicio(Request $request){
-
-        $subasta1= DB::table('subastas')->where('id', 1)->first();
-        $hospedaje1 = DB::table('hospedajes')->where('id', $subasta1->id_hospedaje)->first();
-        $subasta2 = DB::table('subastas')->where('id', 2)->first();
-        $hospedaje2 = DB::table('hospedajes')->where('id', $subasta2->id_hospedaje)->first();
-        
-
-        $data['tituloHospedaje1'] = $hospedaje1->titulo;    
-        $data['nombreImagen1'] = $hospedaje1->imagen;   
-        $data['idSubasta1'] = $subasta1->id;
-        $data['montoBase1'] = $subasta1->monto_base;
-        $data['fechaInicio1'] = $subasta1->fecha_inicio;
-
-        $data['tituloHospedaje2'] = $hospedaje2->titulo;  
-        $data['nombreImagen2'] = $hospedaje2->imagen;   
-        $data['idSubasta2'] = $subasta2->id;
-        $data['montoBase2'] = $subasta2->monto_base;
-        $data['fechaInicio2'] = $subasta2->fecha_inicio;
-
-        return view('welcome', $data);
+        return redirect('/listarsubastas');    
     }
 }

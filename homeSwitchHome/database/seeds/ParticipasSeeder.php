@@ -14,7 +14,7 @@ class ParticipasSeeder extends Seeder
     {
         DB::table('participas')->insert([
             'id' => '1',
-            'puja' => '16000'
+            'puja' => '16000',
             'id_usuario' => '3',
             'id_subasta' => '1'
         ]);

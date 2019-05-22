@@ -67,7 +67,7 @@ class HospedajeController extends Controller
 	    return redirect('/')->with('exito', 'El hospedaje se creo exitosamente');
     }
 
-    public function listarHospedajes(Request $request){
+    public function listarHospedajes(){
         //return $request->route('nombreParametro');
 
         $data['hospedajes'] = DB::table('hospedajes')
@@ -100,15 +100,14 @@ class HospedajeController extends Controller
 
      public function eliminarHospedaje(Request $request){
 
-        $request->validate([
-                'idHospedaje' => 'not_in:4'],
-                ['idHospedaje.not_in' => 'No puede eliminarse el hospedaje porque posee reservas']);
-
+        if($request->input('idHospedaje') == 4)
+            $request->session()->flash('exito', 'El hospedaje se elimino exitosamente y se norificará a los usuarios');
+        else  
+            $request->session()->flash('exito', 'El hospedaje se elimino exitosamente');
 
         DB::table('hospedajes')->where('id', $request->input('idHospedaje'))->delete();
 
-        return redirect('/listarhospedajes')->with('exito', 'El hospedaje se creo exitosamente');
-
+        return redirect('/listarhospedajes');
      }
 
      public function modificarHospedaje($idHospedaje){
@@ -143,8 +142,8 @@ class HospedajeController extends Controller
         $request->validate([
                 'cantidadSubastas' => 'lt: 1',
                 'idHospedaje' => 'not_in:4'],
-                ['idHospedaje.not_in' => 'No puede modificarse el hospedaje porque posee reservas',
-                'cantidadSubastas.lt' => 'No puede modificarse el hospedaje porque posee subastas']);
+                ['idHospedaje.not_in' => 'No puede modificarse el hospedaje porque tiene reservas asociadas',
+                'cantidadSubastas.lt' => 'No puede modificarse el hospedaje porque tiene subastas asociadas']);
 
         $request->validate([
             'titulo' => 'required|bail|unique:hospedajes,titulo,'.$request->input('idHospedaje'),

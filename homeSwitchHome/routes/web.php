@@ -12,7 +12,7 @@
 */
 
 
-Route::get('/', 'SubastasController@listarSubastasInicio');
+Route::get('/', 'SesionController@listarInicio');
 
 Route::get('/sesion', function () {
     return view('iniciarSesion');
