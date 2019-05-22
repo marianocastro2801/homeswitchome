@@ -50,6 +50,7 @@
 											<button class="btn btn-success" type='submit'>Pujar</button>
 										</form>	
 									@endif
+									<p>{{ $diferencia }}</p>
 									@if(Session('nombreUsuario')=='Andrea')
 										<form action="/cerrarsubasta" method="post">
 											{{ csrf_field() }}

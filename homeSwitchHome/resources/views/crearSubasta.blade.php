@@ -27,7 +27,7 @@
 												<input type="hidden" name="idHospedaje" value="{{$idHospedaje}}">
 											<div class="form-group">
 										  		<button type="submit" class="btn btn-primary">Crear subasta</button>
-										  		<a class="btn btn-secondary my-2 my-sm-0" href="{{ url('/') }}">Cancelar</a>
+										  		<a class="btn btn-secondary my-2 my-sm-0" href="{{ url('/cargardetallehospedaje'.$idHospedaje) }}">Cancelar</a>
 											</div>
 									</form>
 									@if ($errors->any())
@@ -46,12 +46,18 @@
 					<br>
 					<div class="alert alert-info text-center">
 						<p>
-							Hospedaje activo desde la fecha
+							Hospedaje esta disponible desde la fecha
 							{{ Carbon\Carbon::parse($fechaInicioHospedaje)->format('d-m-Y') }}
 							hasta
 							{{ Carbon\Carbon::parse($fechaFinHospedaje)->format('d-m-Y') }}.
 							
 						</p>
+						<p>
+							Fechas ocupadas:
+						</p>
+						@foreach($subastas as $subasta)
+							<div>Comienza {{ Carbon\Carbon::parse($subasta->fecha_inicio)->format('d-m-Y') }} y termina {{ Carbon\Carbon::parse($subasta->fecha_fin)->format('d-m-Y') }}</div>
+						@endforeach						
 					</div>
 				</div>
 			</div>

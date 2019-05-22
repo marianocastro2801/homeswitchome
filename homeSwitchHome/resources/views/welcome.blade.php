@@ -54,7 +54,7 @@ use Illuminate\Support\Facades\DB;
               <h3>
                 <a class="text-dark" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}">{{ $hospedaje->titulo  }}</a>
               </h3>
-              <div class="mb-1 text-muted">{{ $subasta->fecha_inicio }}</div>
+              <div class="mb-1 text-muted">Comienzo de la estadía: {{ Carbon\Carbon::parse($subasta->fecha_inicio)->format('d-m-Y') }}</div>
               <p class="card-text mb-auto text-dark">Monto Base: ${{ $subasta->monto_base }}</p>
               <a href="{{ url('/cargardetallesubasta/'.$subasta->id) }}" class="text-warning">Ver detalle</a>
             </div>
