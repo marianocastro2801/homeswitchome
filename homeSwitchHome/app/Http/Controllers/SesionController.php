@@ -13,18 +13,21 @@ class SesionController extends Controller
         $usuario = DB::table('usuarios')
                     ->where('nombre', $request->input('nombreUsuario'))
                     ->first();
+        if(empty($usuario))
+            return redirect('/sesion');
+        else{
+            session(['idUsuario' => $usuario->id, 
+            	'nombreUsuario' => $usuario->nombre, 
+            	'apellidoUsuario' => $usuario->apellido, 
+            	'email' => $usuario->email, 
+            	'esPremium' => $usuario->es_premium, 
+            	'numeroTarjeta' => $usuario->numero_tarjeta, 
+                'creditos' => $usuario->creditos,
+            	'fechaNacimiento' => $usuario->fecha_nacimiento]);
 
-        session(['idUsuario' => $usuario->id, 
-        	'nombreUsuario' => $usuario->nombre, 
-        	'apellidoUsuario' => $usuario->apellido, 
-        	'email' => $usuario->email, 
-        	'esPremium' => $usuario->es_premium, 
-        	'numeroTarjeta' => $usuario->numero_tarjeta, 
-            'creditos' => $usuario->creditos,
-        	'fechaNacimiento' => $usuario->fecha_nacimiento]);
 
-
-        return redirect('/');            
+            return redirect('/');   
+        }         
     }
 
     public function obtenerListas(){
