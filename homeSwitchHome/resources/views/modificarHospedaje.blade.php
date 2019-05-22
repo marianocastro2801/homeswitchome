@@ -8,7 +8,7 @@ use Carbon\Carbon;
 
 @section('content')
 <div class="conteiner col-md-12" style="margin-bottom: 50px">
-  <h1 class="col-md-12 text-center bg-info" style=" margin-bottom: 30px"> Modificar </h1>
+  <h1 class="col-md-12 text-center bg-info" style="border-radius: 25px;border-style: double; margin-bottom: 30px"> Modificar </h1>
   <div>
           @if(session('exito'))
               <div class="alert alert-success">
@@ -18,7 +18,7 @@ use Carbon\Carbon;
   </div>
   <div class="col-md-2"></div>
   <div class="col-md-8">
-    <div class="card" style="background: #c6c6c6"  > 
+    <div class="card" style="background: #c6c6c6;border-radius: 25px;border-style: double;"  > 
       <form action="/validarModificacion" style="margin: 30px" method="post" enctype="multipart/form-data">
             	{{ csrf_field() }}
               <p><b>Titulo</b></p>

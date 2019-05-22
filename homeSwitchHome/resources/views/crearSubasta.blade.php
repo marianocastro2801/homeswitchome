@@ -7,8 +7,8 @@
 		<div class="container">
 			<div id="main" >
 				<div class="col-md-6">
-					<div id="" class="card">	
-						<div class="mt-0 card-header card-primary no-margin text-center">
+					<div id="" class="card" style="border-radius: 25px;">	
+						<div class="mt-0 card-header card-primary no-margin text-center" style="border-radius: 25px;">
 							<h1>Crear nueva subasta para el hospedaje {{$titulo}}</h1>
 							<div class="card-block">
 								<div class="text-center rounded">
