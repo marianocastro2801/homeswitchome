@@ -42,10 +42,10 @@ use Carbon\Carbon;
 
 
 	<div class="col-md-8">
-		<div class="card text-white bg-dark" >
-			<img src="/images/{{ $nombreImagen }}" height="500">
-			<div class="card-body">	
-				<div class="card-text"></div>
+		<div class="card text-white bg-dark" style="border-radius: 35px;" >
+			<img src="/images/{{ $nombreImagen }}" style="margin-right: 20px;margin-left: 20px; margin-top: 20px; padding: 20px;border-radius: 40px;" width="750" height="400">
+			<div class="card-body" style="margin-right: 20px; margin-left: 20px"	>	
+				<hr>
 
 				<p>
 					<h3>Descripcion</h3> 
