@@ -8,19 +8,10 @@
 @extends('layouts.baseapp')
 @section('content')
 <div class="container">
-      @if ($errors->any())
-        <div class="col-md-12">
-          <div class="alert alert-danger">
-            <ul>
-              <button class="close" data-dismiss="alert"><span>&times;</span></button>
-              @foreach ($errors->all() as $error)
 
-                <li>{{ $error }}</li>
-              @endforeach
-            </ul>
-          </div>
-        </div>
-      @endif
+  <div class="col-md-12">
+    @include('inc.mensajeError')
+  </div>
   <div class="col-md-3"></div>
     <div class="col-md-6">
       <div class="panel panel-primary" style="margin-bottom: 55px">
