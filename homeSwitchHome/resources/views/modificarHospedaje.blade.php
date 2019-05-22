@@ -8,14 +8,26 @@ use Carbon\Carbon;
 
 @section('content')
 <div class="conteiner col-md-12" style="margin-bottom: 50px">
-  <h1 class="col-md-12 text-center bg-info" style="border-radius: 25px;border-style: double; margin-bottom: 30px"> Modificar </h1>
   <div>
           @if(session('exito'))
               <div class="alert alert-success">
+                  <button class="close" data-dismiss="alert"><span>&times;</span></button>
                   {{ session('exito') }}
               </div>
           @endif
+          @if ($errors->any())
+                <div class="alert alert-danger">
+                  <ul>
+                    <button class="close" data-dismiss="alert"><span>&times;</span></button>
+                    @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                    @endforeach
+                  </ul>
+                </div>
+          @endif
   </div>
+  <h1 class="col-md-12 text-center bg-info" style="border-radius: 25px;border-style: double; margin-bottom: 30px"> Modificar </h1>
+  
   <div class="col-md-2"></div>
   <div class="col-md-8">
     <div class="card" style="background: #c6c6c6;border-radius: 25px;border-style: double;"  > 
@@ -103,15 +115,7 @@ use Carbon\Carbon;
 
       </form>
 
-      @if ($errors->any())
-                <div class="alert alert-danger">
-                  <ul>
-                    @foreach ($errors->all() as $error)
-                      <li>{{ $error }}</li>
-                    @endforeach
-                  </ul>
-                </div>
-      @endif
+      
     </div>
   </div>
 </div>

@@ -13,18 +13,22 @@ use Illuminate\Support\Facades\DB;
 		<p>{{ session('numeroTarjeta') }}</p>
 		<p>{{ session('fechaNacimiento') }}</p>
 	-->
-
-	<div>
         @if(session('exito'))
+        
             <div class="alert alert-success">
+              <button class="close" data-dismiss="alert"><span>&times;</span></button>
                 {{ session('exito') }}
             </div>
+            
         @endif
-    </div>
+	
+    
 
     <!--@_include('layouts.listarSubastas') CAUSA PROBLEMAS -->
     <div class="container bg-dark" style="margin-bottom: 55px; border-radius:25px">
-	    <div class="row colgroup">
+	    
+        
+      <div class="row colgroup">
 	    	<div class="colgroup col-md-8">
 				<h1 class="jumbotron display-4 font-italic text-dark text-center bg-info" style="border-style: double;"><FONT SIZE=7>Bienvenido HomeSWITCHHome</FONT></h1>
 				<p class="lead my-3 text-white" style="padding-right: 90px; padding-left: 20px;">	Una pagina web dedicada unicamente a  ofrecete la oportunidad de tener tu alojamiento en un condominio dentro de desarrollos de alta calidad, los cuales son de una gama de amenidades en populares destinos vacacionales en toda la Argentina.</p>

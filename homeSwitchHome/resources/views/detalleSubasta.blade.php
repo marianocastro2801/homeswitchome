@@ -9,6 +9,16 @@
 
 
 @section('content')
+	@if ($errors->any())
+		<div class="alert alert-danger">
+		    <ul>
+		    	<button class="close" data-dismiss="alert"><span>&times;</span></button>
+		        @foreach ($errors->all() as $error)
+		           	<li>{{ $error }}</li>
+			    @endforeach
+			</ul>
+		</div>
+	@endif
 	<div class="container" style="margin-bottom: 60px">		
 		<br>
 			<div class="media" >
@@ -58,17 +68,7 @@
 											<button type="submit" class="float-right btn btn-danger">Cerrar subasta</button>
 										</form>
 									@endif
-									@if ($errors->any())
-										<br>
-									    <div class="alert alert-danger">
-									        <ul>
-									            @foreach ($errors->all() as $error)
-									            	<button class="close" data-dismiss="alert"><span>&times;</span></button>
-									                <li>{{ $error }}</li>
-									            @endforeach
-									        </ul>
-									    </div>
-									@endif
+								
 								</div>
 							</div>
 					</div>
