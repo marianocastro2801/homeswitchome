@@ -14,7 +14,7 @@ class SubastasSeeder extends Seeder
     {
         //Lista de subastas para poder mostrar
 
-        //Subasta con fecha de creación hoy para poder cerrar en la demo, mostrar que al cerrar
+        //Subasta con fecha de creación 19 de mayo para poder cerrar en la demo, mostrar que al cerrar
         //se descuenta el crédito al usuario 3 (Leonel Mandarino) y no puede puajar
         DB::table('subastas')->insert([
         	'id' => '1',

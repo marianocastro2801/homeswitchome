@@ -21,6 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(HospedajesSeeder::class);
         $this->call(UsuariosDemoSeeder::class);
         $this->call(SubastasSeeder::class);
-        $this->call(ParticipassSeeder::class);
+        $this->call(ParticipasSeeder::class);
     }
 }

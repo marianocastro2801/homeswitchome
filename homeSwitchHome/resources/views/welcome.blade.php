@@ -1,5 +1,8 @@
 @extends('layouts.baseapp')
 @section('content')
+<?php
+use Illuminate\Support\Facades\DB;
+?>
 
 	<!--
 		<p>{{ session('idUsuario') }}</p>
@@ -38,34 +41,27 @@
 			</div>
 		</div>
 		  <div class="row mb-2">
+        @foreach($subastas as $subasta)
+        <?php 
+              $hospedaje = DB::table('hospedajes')
+                            ->where('id', $subasta->id_hospedaje)
+                            ->first(); 
+        ?>
         <div class="col-md-6">
           <div class="card flex-md-row mb-4 box-shadow h-md-250 bg-info">
             <div class="card-body d-flex flex-column align-items-start">
               <strong class="d-inline-block">Subastas</strong>
               <h3>
-                <a class="text-dark" href="{{ url('/cargardetallesubasta/'.$idSubasta1) }}">{{ $tituloHospedaje1  }}</a>
+                <a class="text-dark" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}">{{ $hospedaje->titulo  }}</a>
               </h3>
-              <div class="mb-1 text-muted">{{ $fechaInicio1 }}</div>
-              <p class="card-text mb-auto text-dark">Monto Base: ${{ $montoBase1 }}</p>
-              <a href="{{ url('/cargardetallesubasta/'.$idSubasta1) }}" class="text-warning">Ver detalle</a>
+              <div class="mb-1 text-muted">{{ $subasta->fecha_inicio }}</div>
+              <p class="card-text mb-auto text-dark">Monto Base: ${{ $subasta->monto_base }}</p>
+              <a href="{{ url('/cargardetallesubasta/'.$subasta->id) }}" class="text-warning">Ver detalle</a>
             </div>
-            <img class="card-img-right flex-auto d-none d-md-block" width="280" height="200" src="/images/{{ $nombreImagen1 }}" alt="Card image cap">  
+            <img class="card-img-right flex-auto d-none d-md-block" width="280" height="200" src="/images/{{ $hospedaje->imagen }}" alt="Card image cap">  
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="card flex-md-row mb-4 box-shadow h-md-250 bg-info">
-            <div class="card-body d-flex flex-column align-items-start">
-              <strong class="d-inline-block">Subastas</strong>
-              <h3>
-                <a class="text-dark" href="{{ url('/cargardetallesubasta/'.$idSubasta2) }}">{{ $tituloHospedaje2  }}</a>
-              </h3>
-              <div class="mb-1 text-muted">{{ $fechaInicio2 }}</div>
-              <p class="card-text mb-auto text-dark">Monto Base: ${{ $montoBase2 }}</p>
-              <a href="{{ url('/cargardetallesubasta/'.$idSubasta2) }}" class="text-warning">Ver detalle</a>
-            </div>
-            <img class="card-img-right flex-auto d-none d-md-block" width="280" height="200" src="/images/{{ $nombreImagen2 }}" alt="Card image cap">
-          </div>
-        </div>
+        @endforeach
       </div>
     </div>
 	</div>
