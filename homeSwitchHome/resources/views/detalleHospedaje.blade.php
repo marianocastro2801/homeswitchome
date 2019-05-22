@@ -65,14 +65,14 @@ use Carbon\Carbon;
 
 				<form action="/eliminarHospedaje" method="post">
 					{{ csrf_field() }}
-					<button class="btn btn-danger float-right" style="margin-right: 20px; margin-bottom: 20px" >Eliminar hospedaje</button>
+					<button class="btn btn-danger float-right" style="margin-right: 20px; margin-bottom: 20px" ><span class="glyphicon glyphicon-trash"></span> Eliminar hospedaje</button>
 					<input type="hidden" name="idHospedaje" value="{{ $idHospedaje }}">
 
 				</form>
 
-				<a class="btn btn-warning float-right" style="margin-right: 20px; margin-bottom: 20px" href="{{ url('/modificarHospedaje/'.$idHospedaje) }}"> Modificar hospedaje</a>
+				<a class="btn btn-warning float-right" style="margin-right: 20px; margin-bottom: 20px" href="{{ url('/modificarHospedaje/'.$idHospedaje) }}"><span class="glyphicon glyphicon-pencil"></span> Modificar hospedaje</a>
 
-				<a class="btn btn-success float-right" style="margin-right: 20px; margin-bottom: 20px" href="{{ url('/crearsubasta/'.$idHospedaje) }}"> Crear Subasta</a>
+				<a class="btn btn-success float-right" style="margin-right: 20px; margin-bottom: 20px" href="{{ url('/crearsubasta/'.$idHospedaje) }}"><span class="glyphicon glyphicon-plus"></span> Crear Subasta</a>
 			
 				
 			</div>

@@ -23,10 +23,11 @@
 		<br>
 			<div class="media" >
 				<img class="align-self-start mr-3" width="400" height="300" style="border-radius: 25px;" src="/images/<?php echo $nombreImagen; ?>" alt="Generic placeholder image">
-				<div class="media-body" style="margin-left: 30px">
+				<div class="media-body" style="border-radius: 30px; margin-left: 30px">
 					<div class="col-md-12">
-						<div class="card" >
-						  <h3 class="mt-0  card-header bg-info no-margin" style="text-align:center"><b>{{ $tituloHospedaje }}</b><span class="fa fa-map pull-right"></span></h3>
+						<div class="card" style="border-radius: 30px;" >
+							<div class="card-header bg-info " style="border-radius: 30px; margin-top: -1px">
+						  		<h3 class="mt-0" style="text-align:center;"><b>{{ $tituloHospedaje }}</b></h3></div>
 						  <div class="card-block" style="margin: 15px">
 									<p><b>Maximas personas hospedaje:</b> {{ $maximasPersonas }}</p> 
 									<p><b>Descripción hospedaje:</b> {{ $descripcion }}</p>
@@ -50,17 +51,19 @@
 									@if( Session('nombreUsuario') != 'Andrea')
 										<form class='form' method='post' action='/pujarsubasta'>
 											{{ csrf_field() }}
-											<div class="col-xs-5">
-												<input type="text"  class="form-control" name="valorPuja" placeholder="$">
+											<div class="col-group col-md-12">
+												<span class="col-md-1 col-group glyphicon glyphicon-usd" style="margin-top: 10px"></span>
+												<input type="text"  class="form-control col-md-6 col-group" name="valorPuja" placeholder="Ingrese monto">
 												<input type="hidden"   name="montoMaximo" value="{{$montoMaximo}}">
 												<input type="hidden"   name="maximoUsuario" value="{{$maximoUsuario}}">
 												<input type="hidden"   name="montoBase" value="{{$montoBase}}">
-											<input type="hidden"   name="idSubasta" value="{{$idSubasta}}">
+												<input type="hidden"   name="idSubasta" value="{{$idSubasta}}">
+												<button class="col-md-4 col-group btn btn-success" type='submit'>Pujar</button>
 											</div>
-											<button class="btn btn-success" type='submit'>Pujar</button>
 										</form>	
 									@endif
-									<p>{{ $diferencia }}</p>
+									<br>
+									<p style="padding-top: 35px" class="text-center">{{ $diferencia }}</p>
 									@if(Session('nombreUsuario')=='Andrea')
 										<form action="/cerrarsubasta" method="post">
 											{{ csrf_field() }}
