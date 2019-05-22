@@ -14,7 +14,7 @@
 			<div class="media" >
 				<img class="align-self-start mr-3" width="400" height="300" style="border-radius: 25px;" src="/images/<?php echo $nombreImagen; ?>" alt="Generic placeholder image">
 				<div class="media-body" style="margin-left: 30px">
-					<div class="col-md-8">
+					<div class="col-md-12">
 						<div class="card" >
 						  <h3 class="mt-0  card-header bg-info no-margin" style="text-align:center"><b>{{ $tituloHospedaje }}</b><span class="fa fa-map pull-right"></span></h3>
 						  <div class="card-block" style="margin: 15px">
@@ -58,9 +58,11 @@
 										</form>
 									@endif
 									@if ($errors->any())
+										<br>
 									    <div class="alert alert-danger">
 									        <ul>
 									            @foreach ($errors->all() as $error)
+									            	<button class="close" data-dismiss="alert"><span>&times;</span></button>
 									                <li>{{ $error }}</li>
 									            @endforeach
 									        </ul>
