@@ -4,30 +4,32 @@ use Illuminate\Support\Facades\DB;
 ?>
 
 
-
-
-<div>
-        @if(session('exito'))
-            <div class="alert alert-success">
-                {{ session('exito') }}
-            </div>
-        @endif
-</div>
 @extends('layouts.baseapp')
 
 @section('content')
-<div class="containes col-md-12" style="margin-bottom: 50px">
-         <h1 class="col-md-12 text-center bg-info" style=" margin-bottom: 30px"> Hospedajes </h1>
 
-        
+<div class="containes col-md-12" style="margin-bottom: 50px">
+         <h1 class="col-md-12 text-center bg-info" style=" margin-bottom: 30px;border-radius: 25px;border-style: double;"> Hospedajes </h1>
+
+            
+            
+                    @if(session('exito'))
+                    <div class="col-md-12">            
+                        <div class="alert alert-success">
+                            <button class="close" data-dismiss="alert"><span>&times;</span></button>
+                            {{ session('exito') }}
+                        </div>
+                    </div>
+                    @endif
+            
            
         
             @foreach($hospedajes as $hospedaje)
-                <div class="col-md-4" style="margin-bottom: 30px">
-                    <div class="card  text-white bg-dark">
+                <div class="col-md-4" style="margin-bottom: 30px;">
+                    <div class="card  text-white bg-dark" style="border-radius: 25px;">
                         
-                            <img src="/images/{{ $hospedaje->imagen }}" width="380" height="300" ></li>  
-                        
+                            <img src="/images/{{ $hospedaje->imagen }}" style="border-radius: 25px;margin: 15px" width="350" height="270"  ></li>  
+                        <hr/>
                         <div class="card-body">
                             <h5 class="card-title">
                         	    
@@ -45,7 +47,7 @@ use Illuminate\Support\Facades\DB;
                                 </p>
                                 	
                         
-                            <a class="btn btn-info" href="{{ url('/cargardetallehospedaje/'.$hospedaje->id) }}"> 
+                            <a class="btn btn-info float-right" href="{{ url('/cargardetallehospedaje/'.$hospedaje->id) }}"> 
                                     Ver detalles Hospedaje
                             </a>
                         </div>
