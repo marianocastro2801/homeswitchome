@@ -41,7 +41,7 @@
 										      	<label for="fechaInicio">Fecha inicial</label>
 									      		<input type="date" class="form-control form-control-sm" name="fechaInicio" id="fechaInicio">
 									      	</div>
-												<p class="text-center">(7 dias)</p>
+												<p class="text-muted text-center">(La estadía dura 7 dias desde la fecha incial)</p>
 											</div>
 										</div>
 												<br>
