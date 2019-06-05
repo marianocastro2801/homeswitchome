@@ -19,12 +19,12 @@
           <h3 class="panel-title">Crear Hospedaje</h3>
         </div>
         <div class="panel-body" style="background: #f3f3f3"> 
-          <form action="/crearhospedaje/validar" method="post" enctype="multipart/form-data">
+          <form action="/crearhospedaje" method="post" enctype="multipart/form-data">
             <div class="form-row">
               <div class="form-group col-md-6">
                 {{ csrf_field() }}
                 <label for="titulo">Titulo: </label>
-                <input class="form-control" type="text" name="titulo" id="titulo" placeholder="Ingrese el titulo del hospedaje" >
+                <input class="form-control" type="text" name="titulo" id="titulo" placeholder="Ingrese el titulo del hospedaje" value="{{ old('titulo') }}">
               </div>
               <br>
                 <br>
@@ -33,7 +33,12 @@
                 <select class="form-control" name="cantidadPersonas" id="cantidadPersonas">
                   <option value="">Seleccione</option>
                   @for($i = 1; $i <= 10; $i++)
-                    <option value="{{ $i }}">{{ $i }}</option>
+                    <option value="{{ $i }}"
+                    @<?php if (!is_null(old('cantidadPersonas'))): ?>
+                      @<?php if ($i == old('cantidadPersonas')): ?> 
+                        selected
+                      <?php endif ?> 
+                    <?php endif ?>>{{ $i }}</option>
                   @endfor
                 </select>
               </div>  
@@ -41,7 +46,8 @@
                 <br>
                 <div class="form-group col-md-12">
                 <label for="descripcion" >Descripcion: </label>
-                <textarea class="form-control" name="descripcion" id="descripcion"  placeholder="Ingrese una descripción"></textarea>
+                <textarea class="form-control" name="descripcion" id="descripcion"  placeholder="Ingrese una descripción">@if(!is_null(old('descripcion'))){{ old('descripcion') }}
+                  @endif</textarea>
               </div>
                 <br>
                 <br>
@@ -49,12 +55,42 @@
                 <label for="tipoHospedaje">Tipo hospedaje: </label>
                   <select class="form-control" name="tipoHospedaje" id="tipoHospedaje">
                   <option value="">Seleccione</option>
-                  <option value="Casa">Casa</option>
-                  <option value="Hotel">Hotel</option>
-                  <option value="Cabaña">Cabaña</option>
-                  <option value="Departamento">Departamento</option>
-                  <option value="Duplex">Duplex</option>
-                  <option value="Resort">Resort</option>
+                  <option value="Casa"
+                  @<?php if (!is_null(old('tipoHospedaje'))): ?>
+                    @<?php if ("Casa" == old('tipoHospedaje')): ?> 
+                      selected
+                    <?php endif ?>  
+                  <?php endif ?>>Casa</option>
+                  <option value="Hotel"
+                  @<?php if (!is_null(old('tipoHospedaje'))): ?>
+                    @<?php if ("Hotel" == old('tipoHospedaje')): ?> 
+                      selected
+                    <?php endif ?>  
+                  <?php endif ?>>Hotel</option>
+                  <option value="Cabaña"
+                  @<?php if (!is_null(old('tipoHospedaje'))): ?>
+                    @<?php if ("Cabaña" == old('tipoHospedaje')): ?> 
+                      selected
+                    <?php endif ?>  
+                  <?php endif ?>>Cabaña</option>
+                  <option value="Departamento"
+                  @<?php if (!is_null(old('tipoHospedaje'))): ?>
+                    @<?php if ("Departamento" == old('tipoHospedaje')): ?> 
+                      selected
+                    <?php endif ?>  
+                  <?php endif ?>>Departamento</option>
+                  <option value="Duplex"
+                  @<?php if (!is_null(old('tipoHospedaje'))): ?>
+                    @<?php if ("Duplex" == old('tipoHospedaje')): ?> 
+                      selected
+                    <?php endif ?>  
+                  <?php endif ?>>Duplex</option>
+                  <option value="Resort"
+                  @<?php if (!is_null(old('tipoHospedaje'))): ?>
+                    @<?php if ("Resort" == old('tipoHospedaje')): ?> 
+                      selected
+                    <?php endif ?>  
+                  <?php endif ?>>Resort</option>
                 </select>
               </div>
                 <br>
@@ -64,7 +100,12 @@
                 <select class="form-control" name="localidad" id="localidad">
                   <option value="">Seleccione</option>
                   @foreach($localidades as $localidad)
-                    <option value="{{ $localidad->id }}">{{ $localidad->nombre }}</option>
+                    <option value="{{ $localidad->id }}"
+                      @<?php if (!is_null(old('localidad'))): ?>
+                        @<?php if ($localidad->id == old('localidad')): ?> 
+                          selected
+                        <?php endif ?> 
+                      <?php endif ?>>{{ $localidad->nombre }}</option>
                   @endforeach
                 </select>
               </div>
@@ -72,13 +113,13 @@
                 <br>
                 <div class="form-group col-md-6">
                 <label for="fechaInicio">Fecha inicial: </label>
-                <input class="form-control" type="date" name="fechaInicio" id="fechaInicio"  placeholder="Ingrese una descripción">
+                <input class="form-control" type="date" name="fechaInicio" id="fechaInicio" value="{{ old('fechaInicio') }}">
               </div>
                 <br>
                 <br>
                 <div class="form-group col-md-6">
                 <label for="fechaInicio">Fecha final: </label>
-                <input class="form-control" type="date" name="fechaFin" id="fechaFin">
+                <input class="form-control" type="date" name="fechaFin" id="fechaFin" value="{{ old('fechaFin') }}">
               </div>
                 <br>
                 <br>

@@ -16,17 +16,17 @@ use Carbon\Carbon;
   <div class="col-md-2"></div>
   <div class="col-md-8">
     <div class="card" style="background: #c6c6c6;border-radius: 25px;border-style: double;"  > 
-      <form action="/validarModificacion" style="margin: 30px" method="post" enctype="multipart/form-data">
+      <form action="{{ '/modificarHospedaje/'.$idHospedaje }}" style="margin: 30px" method="post" enctype="multipart/form-data">
             	{{ csrf_field() }}
               <p><b>Titulo</b></p>
-            <input type="text" class="form-control" name="titulo" value="{{ $tituloHospedaje }}">
+              <input type="text" name="tituloHospedaje" value="{{ $tituloHospedaje }}">
             <br>
             <p><b>Descripcion</b></p>
             <textarea class="form-control" style="width:730px;height:100px;" name="descripcion" id="descripcion">{{ $descripcion }}</textarea>
             <br>
             <p><b>Capacidad maxima</b></p>
 
-            <select class="form-control" name="cantidadPersonas" id="cantidadPersonas">
+            <select class="form-control" name="maximasPersonas" id="maximasPersonas">
                               <option value="">Seleccione</option>
                               @for($i = 1; $i <= 10; $i++)
                                 <option value="{{ $i }}" 
@@ -95,6 +95,7 @@ use Carbon\Carbon;
             <br>
 
             <input type="hidden" name="idHospedaje" value="{{ $idHospedaje }}">
+
   
             <a style="margin-left: 40px" class="btn btn-secondary float-right btn-danger my-2 my-sm-0" href="{{ url('/listarhospedajes') }}">Cancelar</a>
 

@@ -39,7 +39,7 @@ Route::post('/cerrarsubasta', 'SubastasController@cerrarSubasta');
 
 Route::get('/crearhospedaje', 'HospedajeController@crearhospedaje');
 
-Route::post('/crearhospedaje/validar', 'HospedajeController@validar');
+Route::post('/crearhospedaje', 'HospedajeController@validar');
 
 Route::get('/listarhospedajes', 'HospedajeController@listarHospedajes');
 
@@ -49,4 +49,4 @@ Route::post('/eliminarHospedaje','HospedajeController@eliminarHospedaje');
 
 Route::get('/modificarHospedaje/{id}','HospedajeController@modificarHospedaje');
 
-Route::post('/validarModificacion','HospedajeController@validarModificacion');
+Route::post('/modificarHospedaje/{id}','HospedajeController@validarModificacion');

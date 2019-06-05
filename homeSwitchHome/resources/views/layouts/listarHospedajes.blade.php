@@ -8,9 +8,14 @@ use Illuminate\Support\Facades\DB;
 @section('content')
 
 <div class="containes col-md-12" style="margin-bottom: 50px">
-         <h1 class="col-md-12 text-center bg-info" style=" margin-bottom: 30px;border-radius: 25px;border-style: double;"> Hospedajes </h1>         
+         <h1 class="col-md-12 text-center bg-info" style=" margin-bottom: 30px;border-radius: 25px;border-style: double;"> Hospedajes
+         </h1>         
            
             @include('inc.mensajeExito')
+
+            @if(count($hospedajes) == 0)
+                Mensaje de no hay ningun hospedaje
+            @endif   
         
             @foreach($hospedajes as $hospedaje)
                 <div class="col-md-4" style="margin-bottom: 30px;">

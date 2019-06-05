@@ -15,6 +15,9 @@ class CreateSubastasTable extends Migration
     {
         Schema::create('subastas', function (Blueprint $table) {
             $table->increments('id');
+            $table->date('fecha_inicio_inscripcion');
+            $table->date('fecha_inicio_subasta');
+            $table->date('fecha_fin_subasta');
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
             $table->float('monto_base', 8, 2);

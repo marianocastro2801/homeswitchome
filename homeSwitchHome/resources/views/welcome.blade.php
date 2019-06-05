@@ -4,19 +4,6 @@
 use Illuminate\Support\Facades\DB;
 ?>
 
-	<!--
-		<p>{{ session('idUsuario') }}</p>
-		<p>{{ session('nombreUsuario') }}</p>
-		<p>{{ session('apellidoUsuario') }}</p>
-		<p>{{ session('email') }}</p>
-		<p>{{ session('esPremium') }}</p>
-		<p>{{ session('numeroTarjeta') }}</p>
-		<p>{{ session('fechaNacimiento') }}</p>
-	-->
-    
-    @include('inc.mensajeError')
-	  
-
     <!--@_include('layouts.listarSubastas') CAUSA PROBLEMAS -->
     <div class="container bg-dark" style="margin-bottom: 55px; border-radius:25px">
 	    
@@ -27,7 +14,14 @@ use Illuminate\Support\Facades\DB;
 				<p class="lead my-3 text-white font-italic" style="padding-right: 90px; padding-left: 90px; padding-bottom: 30px">	Una empresa dedicada unicamente a  ofrecete la oportunidad de tener tu alojamiento en un condominio dentro de desarrollos de alta calidad, los cuales son de una gama de amenidades en populares destinos vacacionales en toda la Argentina.</p>
 			 <hr>
       </div>
-			
+		
+    @include('inc.mensajeError')
+    @include('inc.mensajeExito')
+
+    @if(count($subastas) == 0)        
+        <p><font color="white">Mensaje de no hay ninguna subasta</font></p>
+    @endif 
+
 		</div>
 		  <div class="row mb-2">
         @foreach($subastas as $subasta)

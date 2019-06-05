@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Validator;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use App\Hospedaje;
@@ -22,15 +23,19 @@ class HospedajeController extends Controller
 
     public function validar(Request $request){
 
-        $request->validate([
-        	'titulo' => 'required|bail|unique:hospedajes,titulo',
+        $request['doceMesesAdelante'] = Carbon::now()->addMonths(12)->format('d-m-Y');
+        $request['diferencia'] = Carbon::create($request->fechaInicio)->diffInDays(Carbon::create($request->fechaFin));
+
+        $validator = Validator::make($request->all(), [
+        	  'titulo' => 'required|bail|unique:hospedajes,titulo',
             'descripcion' => 'required',
             'cantidadPersonas' => 'required',
             'tipoHospedaje' => 'required',
             'localidad' => 'required',
-            'fechaInicio' => 'required|before:fechaFin',
+            'fechaInicio' => 'required|before:fechaFin|after_or_equal:doceMesesAdelante',
             'fechaFin' => 'required',
-        	'imagen' => 'required'
+            'diferencia' => 'gte:7',
+        	  'imagen' => 'required'
         ],
             ['titulo.required' => 'Por favor ingrese un titulo',
             'titulo.unique' => 'El titulo ya se encuentra registrado, por favor ingrese otro titulo',
@@ -39,11 +44,18 @@ class HospedajeController extends Controller
             'tipoHospedaje.required' => 'Por favor ingrese un tipo vivienda',
             'localidad.required' => 'Por favor ingrese una localidad',
             'imagen.required' => 'Por favor ingrese una imagen', 
-             'montoBase.numeric' => 'Por favor ingrese un valor numérico',
-             'fechaInicio.required' => 'Por favor ingrese una fecha de inicio',
-             'fechaInicio.before' => 'La fecha de inicio debe ser menor a la de fin',
-             'fechaFin.required' => 'Por favor ingrese una fecha de fin'
+            'montoBase.numeric' => 'Por favor ingrese un valor numérico',
+            'fechaInicio.required' => 'Por favor ingrese una fecha de inicio',
+            'fechaInicio.before' => 'La fecha de inicio debe ser menor a la de fin',
+            'fechaInicio.after_or_equal' => 'La fecha de inicio libre debe ser por lo menos 12 meses a partir de hoy',
+            'fechaFin.required' => 'Por favor ingrese una fecha de fin',
+            'diferencia.gte' => 'Tiene que haber como minimo 7 dias de diferencia entre inicio y fin'
                ]);
+
+     if ($validator->fails()) {
+          
+          return redirect()->back()->withInput()->withErrors($validator->errors());
+    }   
 
 
 		 $imagen = $request->file('imagen');
@@ -64,7 +76,7 @@ class HospedajeController extends Controller
 
 	   	$hospedaje->save();
 
-	    return redirect('/')->with('exito', 'El hospedaje se creo exitosamente');
+	    return redirect('/listarhospedajes')->with('exito', 'El hospedaje se creo exitosamente');
     }
 
     public function listarHospedajes(){
@@ -137,27 +149,36 @@ class HospedajeController extends Controller
 
         $request['cantidadSubastas'] = DB::table('subastas')
                                         ->where('id_hospedaje', $request->input('idHospedaje'))
-                                        ->count();                           
+                                        ->count();                          
 
-        $request->validate([
+        $validator = Validator::make($request->all(), [
                 'cantidadSubastas' => 'lt: 1',
                 'idHospedaje' => 'not_in:4'],
                 ['idHospedaje.not_in' => 'No puede modificarse el hospedaje porque tiene reservas asociadas',
                 'cantidadSubastas.lt' => 'No puede modificarse el hospedaje porque tiene subastas asociadas']);
 
-        $request->validate([
-            'titulo' => 'required|bail|unique:hospedajes,titulo,'.$request->input('idHospedaje'),
+        if ($validator->fails()) {
+          $localidades = DB::table('localidads')->get();
+          $data = $request->all();
+          $data['idLocalidad'] = $request->localidad;
+          $data['localidades'] = $localidades;
+
+          return view('modificarHospedaje', $data)->withErrors($validator->errors());
+        }
+
+        $validator = Validator::make($request->all(), [
+            'tituloHospedaje' => 'required|bail|unique:hospedajes,titulo,'.$request->input('idHospedaje'),
             'descripcion' => 'required',
-            'cantidadPersonas' => 'required',
+            'maximasPersonas' => 'required',
             'tipoHospedaje' => 'required',
             'localidad' => 'required',
             'fechaInicio' => 'required|before:fechaFin',
             'fechaFin' => 'required'
         ],
-            ['titulo.required' => 'Por favor ingrese un titulo',
-            'titulo.unique' => 'El titulo ya se encuentra registrado, por favor ingrese otro titulo',
+            ['tituloHospedaje.required' => 'Por favor ingrese un titulo',
+            'tituloHospedaje.unique' => 'El titulo ya se encuentra registrado, por favor ingrese otro titulo',
             'descripcion.required' => 'Por favor ingrese una descripcion',
-            'cantidadPersonas.required' => 'Por favor ingrese una cantidad personas',
+            'maximasPersonas.required' => 'Por favor ingrese una cantidad personas',
             'tipoHospedaje.required' => 'Por favor ingrese un tipo vivienda',
             'localidad.required' => 'Por favor ingrese una localidad',
              'montoBase.numeric' => 'Por favor ingrese un valor numérico',
@@ -165,6 +186,17 @@ class HospedajeController extends Controller
              'fechaInicio.before' => 'La fecha de inicio debe ser menor a la de fin',
              'fechaFin.required' => 'Por favor ingrese una fecha de fin'
                ]);
+
+        if ($validator->fails()) {
+          $localidades = DB::table('localidads')->get();
+          $data = $request->all();
+          $data['idLocalidad'] = $request->localidad;
+          $data['localidades'] = $localidades;
+
+          return view('modificarHospedaje', $data)->withErrors($validator->errors());
+        }
+
+        
 
         if($request->hasFile('imagen')){
             $imagen = $request->file('imagen');
@@ -174,9 +206,9 @@ class HospedajeController extends Controller
 
             DB::table('hospedajes')
             ->where('id', $request->input('idHospedaje'))
-            ->update(['titulo' => $request->input('titulo'),
+            ->update(['titulo' => $request->input('tituloHospedaje'),
                       'descripcion' => $request->input('descripcion'),
-                      'cantidad_maxima_personas' => $request->input('cantidadPersonas'),
+                      'cantidad_maxima_personas' => $request->input('maximasPersonas'),
                       'tipo_hospedaje' => $request->input('tipoHospedaje'), 
                       'descripcion' => $request->input('descripcion'),
                       'id_localidad' => $request->input('localidad'), 
@@ -187,9 +219,9 @@ class HospedajeController extends Controller
         else{
             DB::table('hospedajes')
             ->where('id', $request->input('idHospedaje'))
-            ->update(['titulo' => $request->input('titulo'),
+            ->update(['titulo' => $request->input('tituloHospedaje'),
                       'descripcion' => $request->input('descripcion'),
-                      'cantidad_maxima_personas' => $request->input('cantidadPersonas'),
+                      'cantidad_maxima_personas' => $request->input('maximasPersonas'),
                       'tipo_hospedaje' => $request->input('tipoHospedaje'), 
                       'descripcion' => $request->input('descripcion'),
                       'id_localidad' => $request->input('localidad'), 
