@@ -63,6 +63,9 @@
 						<p class="text-center" style="margin-top: -30px">
 							Fechas ocupadas:
 						</p>
+						@if(count($subastas) == 0)
+			                No hay subastas ¿activas? para este hospedaje
+			            @endif  
 						@foreach($subastas as $subasta)
 							<div><span class="glyphicon glyphicon-hand-right" style="margin-right: 10px"></span> Comienza {{ Carbon\Carbon::parse($subasta->fecha_inicio)->format('d-m-Y') }} y termina {{ Carbon\Carbon::parse($subasta->fecha_fin)->format('d-m-Y') }}</div>
 						@endforeach						

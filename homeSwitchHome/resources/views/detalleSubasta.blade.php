@@ -3,6 +3,7 @@
   	use Carbon\Carbon;
 	$fechaInicio = Carbon::create($fechaInicio); 	
 	$fechaFin = Carbon::create($fechaFin);
+	$hoy = Carbon::today();
 ?>
 
 @extends('layouts.baseapp')
@@ -23,8 +24,8 @@
 									<p><b>Maximas personas hospedaje:</b> {{ $maximasPersonas }}</p> 
 									<p><b>Descripción hospedaje:</b> {{ $descripcion }}</p>
 									<hr> 
-									<p><b>Fecha inicio subasta:</b> {{ $fechaInicio->format('d-m-Y') }}</p>  
-									<p><b>Fecha fin subasta:</b> {{ $fechaFin->format('d-m-Y') }}</p>
+									<p><b>Fecha inicio alojamiento:</b> {{ $fechaInicio->format('d-m-Y') }}</p>  
+									<p><b>Fecha fin alojamiento:</b> {{ $fechaFin->format('d-m-Y') }}</p>
 									<hr> 
 									<p><b>Monto base subasta:</b> ${{ $montoBase }}</p>  
 									
@@ -39,7 +40,7 @@
 										 	{{$maximoUsuario}}
 									</p>
 									<hr>
-									@if( Session('nombreUsuario') != 'Andrea')
+									@if(( Session('nombreUsuario') != 'Andrea') && ($fechaInicioSubasta <= $hoy) && ($fechaFinSubasta > $hoy))
 										<form class='form' method='post' action='/pujarsubasta'>
 											{{ csrf_field() }}
 											<div class="col-group col-md-12">

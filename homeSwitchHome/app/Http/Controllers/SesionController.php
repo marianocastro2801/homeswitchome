@@ -32,8 +32,12 @@ class SesionController extends Controller
 
     public function obtenerListas(){
 
+        $hoy = Carbon::today()->format('Y-m-d');
+        $fechaInscripcion = Carbon::today()->format('Y-m-d');
+
         $data['subastas'] = DB::table('subastas')
                             ->whereNull('ganador')
+                            ->whereDate('fecha_inicio_inscripcion', '<=' , $hoy)
                             ->orderBy('created_at', 'desc')
                             ->get();
         
