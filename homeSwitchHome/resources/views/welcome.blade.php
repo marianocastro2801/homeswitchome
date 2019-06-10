@@ -14,7 +14,39 @@ use Illuminate\Support\Facades\DB;
 				<p class="lead my-3 text-white font-italic" style="padding-right: 90px; padding-left: 90px; padding-bottom: 30px">	Una empresa dedicada unicamente a  ofrecete la oportunidad de tener tu alojamiento en un condominio dentro de desarrollos de alta calidad, los cuales son de una gama de amenidades en populares destinos vacacionales en toda la Argentina.</p>
 			 <hr>
       </div>
-		
+    	<section class="search-sec" style="margin-left: 80px">
+        <div class="container">
+          <form action="#" method="post" novalidate="novalidate">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="row">
+                  <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                    <label for="locallidad" class="control-label text-white">Localidad</label>
+                    <input type="text" class="form-control search-slt" placeholder="La Plata">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                    <label for="fecha" class="control-label text-white">Fecha de Inicio</label>
+                    <input type="date" class="form-control search-slt">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                    <label for="tipoDeBusqueda" class="control-label text-white">Tipo de Busqueda</label>
+                    <select class="form-control search-slt" id="exampleFormControlSelect1">
+                      <option>Seleccione tipo</option>
+                      <option>Subastas</option>
+                      <option>Hotsale</option>
+                      <option>Hospedaje</option> <!-- si es admin, modificar despues-->
+                    </select>
+                  </div>
+                  <div style="margin-top: 18px" class="col-lg-3 col-md-3 col-sm-12 p-0">
+                    
+                    <button type="button" class="btn btn-danger btn-lg">Buscar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
     @include('inc.mensajeError')
     @include('inc.mensajeExito')
 
