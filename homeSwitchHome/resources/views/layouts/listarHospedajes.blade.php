@@ -14,14 +14,14 @@ use Illuminate\Support\Facades\DB;
             @include('inc.mensajeExito')
 
             @if(count($hospedajes) == 0)
-                Mensaje de no hay ningun hospedaje
+                <div class="container text-center bg-warning" style="border-radius: 25px; margin-bottom: 60px"><br><p><b>Mensaje de no hay ninguna subasta Que mostrar</b></p><br></div>
             @endif   
         
             @foreach($hospedajes as $hospedaje)
                 <div class="col-md-4" style="margin-bottom: 30px;">
                     <div class="card  text-white bg-dark" style="border-radius: 25px;">
                         
-                            <img src="/images/{{ $hospedaje->imagen }}" style="border-radius: 25px;margin: 15px" width="350" height="270"  ></li>  
+                            <img src="/images/{{ $hospedaje->imagen }}" style="border-radius: 25px;margin: 15px" width="390" height="270"  ></li>  
                         <hr/>
                         <div class="card-body" style="margin: 10px">
                             

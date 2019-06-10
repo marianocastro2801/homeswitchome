@@ -5,22 +5,49 @@ use Illuminate\Support\Facades\DB;
 ?>
 
     <!--@_include('layouts.listarSubastas') CAUSA PROBLEMAS -->
-    <div class="container bg-dark" style="margin-bottom: 55px; border-radius:25px">
+    <div class="container bg-dark  text-white" style="margin-bottom: 55px; border-radius:25px; padding-bottom: 15px">
 	    
         
       <div class="row colgroup">
 	    	<div class="colgroup col-md-12">
-				<h1 class="jumbotron display-4 text-dark text-center" style="border-style: double;"><img src="/images/Texto.png"></h1>
-				<p class="lead my-3 text-white font-italic" style="padding-right: 90px; padding-left: 90px; padding-bottom: 30px">	Una empresa dedicada unicamente a  ofrecete la oportunidad de tener tu alojamiento en un condominio dentro de desarrollos de alta calidad, los cuales son de una gama de amenidades en populares destinos vacacionales en toda la Argentina.</p>
+				<h1 class="jumbotron display-4 text-center" style="border-style: double;"><img src="/images/Texto.png"></h1>
+				<p class="lead my-3 font-italic" style="padding-right: 90px; padding-left: 90px; padding-bottom: 30px">	Una empresa dedicada unicamente a  ofrecete la oportunidad de tener tu alojamiento en un condominio dentro de desarrollos de alta calidad, los cuales son de una gama de amenidades en populares destinos vacacionales en toda la Argentina.</p>
 			 <hr>
       </div>
-		
+    	<section class="search-sec" style="margin-left: 80px">
+        <div class="container">
+          <form action="#" method="post" novalidate="novalidate">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="row">
+                  <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                    <label for="locallidad" class="control-label">Localidad</label>
+                    <input type="text" class="form-control search-slt" placeholder="La Plata">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                    <label for="fecha" class="control-label">Fecha de Inicio</label>
+                    <input type="date" class="form-control search-slt">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                    <label for="tipoDeBusqueda" class="control-label">Tipo de Busqueda</label>
+                    <select class="form-control search-slt" id="exampleFormControlSelect1">
+                      <option>Seleccione tipo</option>
+                      <option>Subastas</option>
+                      <option>Hotsale</option>
+                      <option>Hospedaje</option> <!-- si es admin, modificar despues-->
+                    </select>
+                  </div>
+                  <div style="margin-top: 18px" class="col-lg-3 col-md-3 col-sm-12 p-0">
+                    <button type="button" class="btn btn-danger btn-lg">Buscar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
     @include('inc.mensajeError')
     @include('inc.mensajeExito')
-
-    @if(count($subastas) == 0)        
-        <p><font color="white">Mensaje de no hay ninguna subasta</font></p>
-    @endif 
 
 		</div>
 		  <div class="row mb-2">
@@ -62,5 +89,8 @@ use Illuminate\Support\Facades\DB;
     </div>
 	</div>
 
+    @if(count($subastas) == 0)        
+        <div class="container text-center bg-warning" style="border-radius: 25px; margin-bottom: 60px"><br><p><b>Mensaje de no hay ninguna subasta Que mostrar</b></p><br></div>
+    @endif 
 
 @endsection

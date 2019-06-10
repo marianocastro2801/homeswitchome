@@ -35,6 +35,10 @@ Route::get('/login', function () {
     return view('logIn');
 });
 
+Route::get('/register', function () {
+    return view('registrarUsuario');
+});
+
 Route::post('/cerrarsubasta', 'SubastasController@cerrarSubasta');
 
 Route::get('/crearhospedaje', 'HospedajeController@crearhospedaje');
