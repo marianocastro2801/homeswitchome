@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
             @include('inc.mensajeExito')
 
             @if(count($hospedajes) == 0)
-                Mensaje de no hay ningun hospedaje
+                <div class="container text-center bg-warning" style="border-radius: 25px; margin-bottom: 60px"><br><p><b>Mensaje de no hay ninguna subasta Que mostrar</b></p><br></div>
             @endif   
         
             @foreach($hospedajes as $hospedaje)
