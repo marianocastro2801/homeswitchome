@@ -31,12 +31,28 @@
         @endif
       </ul>
     </div>
-      <div style="float:right">
-        <div class="btn-group">
-          <button type="button" class="btn btn-info dropdown-toggle btn-lg"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
-                {{ session('nombreUsuario') }}
-                {{ session('apellidoUsuario') }}
+      <div class="row" style="margin-right: 15px; float:right" >
+        <div class="btn-group" style="margin-right: 50px">
+          <a href="#" class="dropdown-toggle dropdown-toggle-split btn btn-info btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-bell"></span>
+          </a>
+          <div class="dropdown-menu" >
+             <a class="dropdown-item" href="#"><span class="  glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 1(Despues sacar esto)</a>
+            <a class="dropdown-item" href="#"><span class=" glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 2</a>
+            
+            <a class="dropdown-item" href="#"><span class="  glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 3</a>
+              <a class="dropdown-item" href="#"><span class=" glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 4</a>
+          </div>
+        </div>
+        <div class="btn-group" >
+          <button class="btn btn-primary btn-lg" type="button">
+            {{ session('nombreUsuario') }}
+            {{ session('apellidoUsuario') }}
           </button>
+          <button type="button" class="btn btn-lg btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          
           <div class="dropdown-menu" >
             <a class="dropdown-item" href="/perfil"><span class="glyphicon glyphicon-user" style="margin-right: 10px"></span>Mi Perfil</a>
             <a class="dropdown-item" href="#"><span class="glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Contactos</a>
