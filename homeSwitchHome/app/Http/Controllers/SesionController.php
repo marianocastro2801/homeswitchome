@@ -160,7 +160,7 @@ class SesionController extends Controller
             $usuario->nombre = $request->input('nombreUsuario');
             $usuario->apellido = $request->input('apellidoUsuario');
             $usuario->email = $request->input('email');
-            $usuario->contrasenia = $request('contrasnia');
+            $usuario->contrasenia = $request->input('contrasenia');
             $usuario->numero_tarjeta = $request->input('numeroTarjeta');
             $usuario->fecha_nacimiento = $request->input('fechaNacimiento');
 
