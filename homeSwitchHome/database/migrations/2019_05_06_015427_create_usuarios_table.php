@@ -18,6 +18,7 @@ class CreateUsuariosTable extends Migration
             $table->string('nombre');
             $table->string('apellido');
             $table->string('email');
+            $table->string('contrasenia');
             $table->tinyInteger('creditos')->default(2);
             $table->boolean('es_premium')->default($value = false);
             $table->integer('numero_tarjeta');

@@ -16,29 +16,35 @@ use Illuminate\Support\Facades\DB;
       </div>
     	<section class="search-sec" style="margin-left: 80px">
         <div class="container">
-          <form action="#" method="post" novalidate="novalidate">
+          <form action="/buscar">
+            {{ csrf_field() }}
             <div class="row">
               <div class="col-lg-12">
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                    <label for="locallidad" class="control-label">Localidad</label>
-                    <input type="text" class="form-control search-slt" placeholder="La Plata">
+                    <label for="localidad" class="control-label">Localidad</label>
+                    <select class="form-control" name="localidad" id="localidad">
+                      <option value="">Seleccione</option>
+                      @foreach($localidades as $localidad)
+                        <option value="{{ $localidad->id }}">{{ $localidad->nombre }}</option>
+                      @endforeach
+                    </select>
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                    <label for="fecha" class="control-label">Fecha de Inicio</label>
-                    <input type="date" class="form-control search-slt">
+                    <label for="fecha" class="control-label">Fecha de inicio alojamiento</label>
+                    <input type="date" name="fechaInicioAlojamiento" class="form-control search-slt">
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-12 p-0">
                     <label for="tipoDeBusqueda" class="control-label">Tipo de Busqueda</label>
-                    <select class="form-control search-slt" id="exampleFormControlSelect1">
-                      <option>Seleccione tipo</option>
-                      <option>Subastas</option>
-                      <option>Hotsale</option>
-                      <option>Hospedaje</option> <!-- si es admin, modificar despues-->
+                    <select name="tipoBusqueda" class="form-control search-slt" id="exampleFormControlSelect1">
+                      <option value="">Seleccione tipo</option>
+                      <option value="Subasta">Subasta</option>
+                      <option value="Hotsale">Hotsale</option>
+                      <option value="Hospedaje">Hospedaje</option> <!-- si es admin, modificar despues-->
                     </select>
                   </div>
                   <div style="margin-top: 18px" class="col-lg-3 col-md-3 col-sm-12 p-0">
-                    <button type="button" class="btn btn-danger btn-lg">Buscar</button>
+                    <button type="submit" class="btn btn-danger btn-lg">Buscar</button>
                   </div>
                 </div>
               </div>
@@ -48,7 +54,6 @@ use Illuminate\Support\Facades\DB;
       </section>
     @include('inc.mensajeError')
     @include('inc.mensajeExito')
-
 		</div>
 		  <div class="row mb-2">
         @foreach($subastas as $subasta)

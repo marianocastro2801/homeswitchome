@@ -35,8 +35,8 @@
                             <i class="glyphicon glyphicon-gift"></i>June 02, 1988</p>
                         <!-- Split button -->
                         <div class="btn-group">
-                            <button type="button" class="btn btn-primary">
-                                Editar Perfil</button>
+                            <a href="/modificarcuenta" class="btn btn-primary">
+                                Editar Perfil</a>
   
                        
                         </div>
@@ -46,4 +46,5 @@
         </div>
     </div>
 </div>
+@include('inc.mensajeExito')
 @endsection

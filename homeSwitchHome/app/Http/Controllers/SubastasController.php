@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use App\Subasta;
 use App\Participa;
 use App\Reserva;
+use App\Inscripcion;
+
 
 class SubastasController extends Controller
 {
@@ -166,8 +168,7 @@ class SubastasController extends Controller
                 ],
                 ['valorPuja.required' => 'Por favor ingrese un monto a pujar', 
                  'valorPuja.numeric' => 'Por favor ingrese un valor numérico',
-                  'valorPuja.gt' => 'El valor debe ser mas grande que la puja base',
-                  'nombreUsuario.different' => 'No posee créditos en la tarjeta'
+                  'valorPuja.gt' => 'El valor debe ser mas grande que la puja base'
               ]);
         else
             $request->validate([
@@ -287,5 +288,16 @@ class SubastasController extends Controller
         
 
         return redirect('/');    
+    }
+
+    public function inscribirse(Request $request){
+
+        $inscripcion = new Inscripcion;
+        $inscripcion->id_subasta = $request->input('idSubasta');
+        $inscripcion->id_usuario = session('idUsuario');
+
+        $inscripcion->save();
+
+        return redirect('/cargardetallesubasta/'.$request->input('idSubasta'))->with(['exito' => 'Se inscribió exitosamente a la subasta']);
     }
 }

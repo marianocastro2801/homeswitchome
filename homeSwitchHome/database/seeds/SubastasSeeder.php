@@ -20,11 +20,11 @@ class SubastasSeeder extends Seeder
         	'id' => '1',
         	'monto_base' => '14000',
             'id_hospedaje' => '1',
-            'fecha_inicio' => '2020-06-14',
-            'fecha_fin' => '2020-06-21',
-            'fecha_inicio_inscripcion' => '2019-06-14',
-            'fecha_inicio_subasta' => '2019-12-11',
-            'fecha_fin_subasta' => '2019-12-14',
+            'fecha_inicio' => '2020-06-15',
+            'fecha_fin' => '2020-06-22',
+            'fecha_inicio_inscripcion' => '2019-06-15',
+            'fecha_inicio_subasta' => '2019-12-12',
+            'fecha_fin_subasta' => '2019-12-15',
         ]);
 
         //Subasta con fecha de creación un dia antes de la demo para mostrar que no se puede cerrar
@@ -32,11 +32,11 @@ class SubastasSeeder extends Seeder
             'id' => '2',
             'monto_base' => '15000',
             'id_hospedaje' => '2',
-            'fecha_inicio' => '2020-05-21',
-            'fecha_fin' => '2020-05-28',
-            'fecha_inicio_inscripcion' => '2019-05-21',
-            'fecha_inicio_subasta' => '2019-05-18',
-            'fecha_fin_subasta' => '2020-05-21',
+            'fecha_inicio' => '2020-05-18',
+            'fecha_fin' => '2020-05-25',
+            'fecha_inicio_inscripcion' => '2019-05-18',
+            'fecha_inicio_subasta' => '2019-11-15',
+            'fecha_fin_subasta' => '2019-11-18',
         ]);
 
         //Subasta que para hacer espacio
@@ -44,11 +44,11 @@ class SubastasSeeder extends Seeder
             'id' => '3',
             'monto_base' => '25000',
             'id_hospedaje' => '3',
-            'fecha_inicio' => '2020-08-01',
-            'fecha_fin' => '2020-08-08',
-            'fecha_inicio_inscripcion' => '2019-08-01',
-            'fecha_inicio_subasta' => '2019-01-29',
-            'fecha_fin_subasta' => '2019-02-01',
+            'fecha_inicio' => '2020-08-10',
+            'fecha_fin' => '2020-08-17',
+            'fecha_inicio_inscripcion' => '2019-08-10',
+            'fecha_inicio_subasta' => '2019-02-07',
+            'fecha_fin_subasta' => '2019-02-10',
         ]);
 
     }

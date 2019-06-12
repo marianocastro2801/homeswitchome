@@ -18,9 +18,11 @@
 	<div class="row">
 		<div class="col-md-3">
 			<!--Futura Publicidad-->
+			@include('inc.mensajeError')
 		</div>
 		<div class="fondo text-center col-md-6">
-			<form>
+			<form action="/registrar/validarRegistro" method="post">
+				{{ csrf_field() }}
 				<img class=" mb-4" src="/images/Completo.png" alt="" width="330" height="150">
 		  		<hr>
 		  		<h1 class="h3 mb-3 font-weight-normal text-white">Registrarse</h1>
@@ -28,25 +30,25 @@
 		  		<div class="form-group row"> <!-- Full Name -->
 		  			<div class="col-md-6">
 				        <label for="nombre" class="control-label text-white">Nombre</label>
-				        <input type="text" class="form-control" id="full_name_id" name="full_name" placeholder="Andres">
+				        <input type="text" class="form-control" id="full_name_id" name="nombreUsuario" placeholder="Andres" value="{{ old('nombreUsuario') }}">
 			        </div>
 			        <div class="col-md-6">
 				        <label for="apellido" class="control-label text-white">Apellido</label>
-				        <input type="text" class="form-control" id="full_name_id" name="full_name" placeholder="Perez">
+				        <input type="text" class="form-control" id="full_name_id" name="apellidoUsuario" placeholder="Perez" value="{{ old('apellidoUsuario') }}">
 			        </div>
 			    </div>
 			    <div class="form-group">
 			    	<label for="email" class="control-label text-white">Email</label>
-                    <input id="email" name="email" type="text" placeholder="Correo Electronio" class="form-control">
+                    <input id="email" name="email" type="text" placeholder="Correo Electronio" class="form-control" value="{{ old('email') }}">
                 </div>
               	<div class="form-group row">
               		<div class="col-md-6">
               			<label for="pwd" class="control-label text-white">Contraseña</label>
-              			<input type="password" class="form-control" id="pwd" placeholder="********">
+              			<input type="password" class="form-control" name="contrasenia" id="pwd" placeholder="********">
               		</div>
               		<div class="col-md-6">
               			<label for="pwd2" class="control-label text-white">Confirme contraseña</label>
-              			<input type="password" class="form-control" id="pwd2" placeholder="********">
+              			<input type="password" class="form-control" name="contrasenia_confirmation" id="pwd2" placeholder="********">
               		</div>
               	</div>
               	<div class="form-group">
@@ -55,7 +57,7 @@
               	</div>
               	<div class="form-group">
 					<label for="fechaNacimiento" class="control-label text-white">Fecha de Nacimiento</label>
-					<input type="date" class="form-control form-control-sm" name="fechaNacimiento" id="fechaNacimiento">
+					<input type="date" class="form-control form-control-sm" name="fechaNacimiento" id="fechaNacimiento" value="{{ old('fechaNacimiento') }}">
 				</div>
 				<div class="form-group">
 					<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#flipFlop">Tarjeta</button>
@@ -77,7 +79,7 @@
 										 	<div class="panel-heading"> 
 										      	<div class="row ">
 										            <div class="col-md-12">
-										                <input type="text" class="form-control" placeholder="Ingrese el numero de la tarjeta" />
+										                <input type="text" class="form-control" name="numeroTarjeta" placeholder="Ingrese el numero de la tarjeta" value="{{ old('numeroTarjeta') }}" />
 										            </div>
 										        </div>
 										     	<div class="row ">
@@ -121,8 +123,8 @@
 						</div>
 					</div>
 					<hr>
-					<button type="button" class="btn btn-danger btn-lg" data-toggle="" data-target="">Cancelar</button>
-					<button type="button" class="btn btn-success btn-lg" data-toggle="" data-target="">Registrar</button>
+					<a href="{{ url('/login/') }}" class="btn btn-danger btn-lg" data-toggle="" data-target="">Cancelar</a>
+					<button type="submit" class="btn btn-success btn-lg" data-toggle="" data-target="">Registrar</button>
 				</div>
 			</form>
 
