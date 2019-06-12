@@ -38,11 +38,11 @@
                 {{ session('apellidoUsuario') }}
           </button>
           <div class="dropdown-menu" >
-            <a class="dropdown-item" href="#"><span class="glyphicon glyphicon-user" style="margin-right: 10px"></span>Mi Perfil</a>
+            <a class="dropdown-item" href="/perfil"><span class="glyphicon glyphicon-user" style="margin-right: 10px"></span>Mi Perfil</a>
             <a class="dropdown-item" href="#"><span class="glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Contactos</a>
             <a class="dropdown-item" href="#"><span class="glyphicon glyphicon-question-sign" style="margin-right: 10px"></span>FAQ</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/sesion"><span class="glyphicon glyphicon-off" style="margin-right: 10px"></span>Cerrar sesion</a>
+            <a class="dropdown-item" href="/login"><span class="glyphicon glyphicon-off" style="margin-right: 10px"></span>Cerrar sesion</a>
           </div>
       </div>
       </div>

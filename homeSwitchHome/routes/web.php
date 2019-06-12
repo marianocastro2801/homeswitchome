@@ -31,13 +31,31 @@ Route::get('/cargardetallesubasta/{id}', [ 'as' => 'cargardetallesubasta',
 
 Route::post('/pujarsubasta', 'SubastasController@pujar');
 
+Route::post('/inscribirse', 'SubastasController@inscribirse');
+
+Route::get('/buscar', 'SesionController@buscar');
+
 Route::get('/login', function () {
     return view('logIn');
 });
 
-Route::get('/register', function () {
+Route::post('/login/validarUsuario', 'SesionController@validarUsuario');
+
+Route::get('/registrar', function () {
     return view('registrarUsuario');
 });
+
+Route::get('/modificarcuenta', 'SesionController@modificarCuenta');
+
+Route::post('/modificarcuenta/datos', 'SesionController@validarDatos');
+
+Route::post('/modificarcuenta/contrasenia', 'SesionController@validarContrasenia');
+
+Route::get('/perfil', function () {
+    return view('miPerfil');
+});
+
+Route::post('/registrar/validarRegistro', 'SesionController@validarRegistro');
 
 Route::post('/cerrarsubasta', 'SubastasController@cerrarSubasta');
 

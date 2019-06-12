@@ -22,6 +22,7 @@ class UsuariosDemoSeeder extends Seeder
     		'email'=> 'andreaperez@gmail.com',
     		'es_premium'=> 0,
     		'numero_tarjeta'=> '000000',
+            'contrasenia' => 'andreaperez',
     		'fecha_nacimiento'=> '1990-06-04'
     	]);
 
@@ -36,6 +37,7 @@ class UsuariosDemoSeeder extends Seeder
     		'email'=> 'supernovar1470@hotmail.com',
     		'es_premium'=> 0,
     		'numero_tarjeta'=> '12345',
+            'contrasenia' => 'carlosrivero',
     		'fecha_nacimiento'=> '1996-06-15'
     	]);
 
@@ -49,7 +51,8 @@ class UsuariosDemoSeeder extends Seeder
     		'email'=> 'leonelmandarino@gmail.com',
     		'es_premium'=> 0,
     		'numero_tarjeta'=> '5677654',
-    		'fecha_nacimiento'=> '2093-05-29',
+            'contrasenia' => 'leonelmandarino',
+    		'fecha_nacimiento'=> '1996-05-29',
             'creditos' => 1
     	]);
 
@@ -61,7 +64,8 @@ class UsuariosDemoSeeder extends Seeder
     		'email'=> 'marcospereyra@yahoo.com.ar',
     		'es_premium'=> 0,
     		'numero_tarjeta'=> '1628826',
-    		'fecha_nacimiento'=> '2090-10-04',
+            'contrasenia' => 'marcospereyra',
+    		'fecha_nacimiento'=> '1996-10-04',
             'creditos' => 0
     	]);
     }

@@ -70,8 +70,8 @@ class HospedajeController extends Controller
 	    	$hospedaje->id_localidad = $request->input('localidad');
 	    	$hospedaje->descripcion = $request->input('descripcion');
 	    	$hospedaje->fecha_inicio = $request->input('fechaInicio');
-	        $hospedaje->fecha_fin = $request->input('fechaFin');
-	        $hospedaje->imagen = $nombreImagen;
+        $hospedaje->fecha_fin = $request->input('fechaFin');
+        $hospedaje->imagen = $nombreImagen;
 
 
 	   	$hospedaje->save();

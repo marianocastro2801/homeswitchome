@@ -15,6 +15,7 @@
 	<div class="col-md-12">
 		<div class="col-md-2"></div>
 		<div class="col-md-8 text-white" >
+			@include('inc.mensajeExito')
 			@include('inc.mensajeError')
 			<div class="panel bg-dark" style="border-radius: 25px;padding: 40px; margin-bottom: 55px">
 				<h3 class="mt-0 bg-info" style="text-align:center;border-radius: 25px;">
@@ -88,6 +89,13 @@
 			</div>
 		</div>
 		<div class="col-md-2">
+			<form method='post' action='/inscribirse'>
+						{{ csrf_field() }}
+				<input type="hidden"   name="idSubasta" value="{{$idSubasta}}">		
+				<button type="submit" class="float-right btn btn-danger">
+					Inscribirse a subasta
+				</button>
+			</form>
 		</div>
 	</div>
 </div>
