@@ -4,7 +4,7 @@
 @section('content')
 		
 
-		<div class="container">
+		<div class="container" style="margin-top: 20px">
 			<div id="main" >
 				<div class="col-md-6">
 					<div style="border-radius: 25px" class="alert alert-info text-center">

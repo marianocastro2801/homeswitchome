@@ -12,9 +12,10 @@
 @section('content')
 
 <div class="container">
-	<div class="col-md-12">
+	<div class="col-md-12" style="margin-top: 20px">
 		@include('inc.mensajeExito')
-			@include('inc.mensajeError')
+		@include('inc.mensajeError')
+		<div class="row" style="margin-top: 20px">
 		<div class="col-md-2"></div>
 		<div class="col-md-8 text-white" >
 			
@@ -100,6 +101,7 @@
 		</div>
 		<div class="col-md-2">
 			
+		</div>
 		</div>
 	</div>
 </div>
