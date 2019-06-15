@@ -4,7 +4,8 @@
 	.fondo{
 		margin-top: 50; 
 		padding: 25px;  
-		border-radius:25px; 
+		border-bottom-left-radius:25px; 
+		border-bottom-right-radius: 25px;
 		background: black;
 		margin-bottom: 60px;
 

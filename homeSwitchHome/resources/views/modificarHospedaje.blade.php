@@ -11,8 +11,8 @@ use Carbon\Carbon;
   <div>
           @include('inc.mensajeError')
   </div>
-  <h1 class="col-md-12 text-center bg-info" style="border-radius: 25px;border-style: double; margin-bottom: 30px"> Modificar </h1>
-  
+  <h1 class="col-md-12 text-center bg-info" style="border-radius: 25px; margin-top: 20px  ;border-style: double; margin-bottom: 30px"> Modificar </h1>
+  <div class="row">
   <div class="col-md-2"></div>
   <div class="col-md-8">
     <div class="card" style="background: #c6c6c6;border-radius: 25px;border-style: double;"  > 
@@ -106,6 +106,7 @@ use Carbon\Carbon;
 
       
     </div>
+  </div>
   </div>
 </div>
 @endsection

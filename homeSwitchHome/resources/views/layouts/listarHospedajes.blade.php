@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 @extends('layouts.baseapp')
 @section('content')
 
-<div class="containes col-md-12" style="margin-bottom: 50px">
+<div class="containes col-md-12" style="margin-top: 20px; margin-bottom: 50px">
          <h1 class="col-md-12 text-center bg-info" style=" margin-bottom: 30px;border-radius: 25px;border-style: double;"> Hospedajes
          </h1>         
            
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
             @if(count($hospedajes) == 0)
                 <div class="container text-center bg-warning" style="border-radius: 25px; margin-bottom: 60px"><br><p><b>Mensaje de no hay ninguna subasta Que mostrar</b></p><br></div>
             @endif   
-        
+            <div class="row">
             @foreach($hospedajes as $hospedaje)
                 <div class="col-md-4" style="margin-bottom: 30px;">
                     <div class="card  text-white bg-dark" style="border-radius: 25px;">
@@ -49,6 +49,7 @@ use Illuminate\Support\Facades\DB;
             	</div>
 
             @endforeach	
+            </div>
         </ul>
     </div>
 </div>

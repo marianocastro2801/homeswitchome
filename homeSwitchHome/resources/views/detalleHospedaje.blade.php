@@ -11,9 +11,9 @@ use Carbon\Carbon;
 <div class="conteiner col-md-12" style="margin-bottom: 50px">
 
 
-	<h1 class="col-md-12 text-center bg-info" style="border-radius: 25px;border-style: double; margin-bottom: 30px"> {{ $tituloHospedaje }}  </h1>
+	<h1 class="text-center bg-info" style="margin-top: 20px ; border-radius: 25px;border-style: double; margin-bottom: 30px"> {{ $tituloHospedaje }}  </h1>
 
-
+	<div class="row">
     @include('inc.mensajeExito')
 	<div class="col-md-2"></div>
 
@@ -62,6 +62,10 @@ use Carbon\Carbon;
 				
 			</div>
 		</div>
+	</div>
+	<div class="col-md-2">
+		
+	</div>
 	</div>
 </div>
 
