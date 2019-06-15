@@ -72,3 +72,18 @@ Route::post('/eliminarHospedaje','HospedajeController@eliminarHospedaje');
 Route::get('/modificarHospedaje/{id}','HospedajeController@modificarHospedaje');
 
 Route::post('/modificarHospedaje/{id}','HospedajeController@validarModificacion');
+
+Route::get('/informacion', 'SesionController@informacion');
+
+
+
+
+
+
+Route::get('/perfilAdministrador', 'SesionController@listarPerfilAdministrador');
+
+Route::get('/pasarabasico/{id}','SesionController@pasarABasico');
+
+Route::get('/pasarapremium/{id}','SesionController@pasarAPremium');
+
+Route::get('/pasarsolicitanteapremium/{id}','SesionController@pasarSolicitanteAPremium');

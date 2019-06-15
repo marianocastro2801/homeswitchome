@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Validator;
 use Carbon\Carbon;
 use App\Usuario;
+use App\Solicitante;
 
 class SesionController extends Controller
 {
@@ -106,10 +107,17 @@ class SesionController extends Controller
         $data = $this->obtenerListas();
         $localidades = DB::table('localidads')->get();
         $data['localidades'] = $localidades;
+        $solicitud = DB::table('solicitantes')
+                        ->where('id_usuario', session('idUsuario'))
+                        ->first();
+
+        $data['solicitud'] = false;
+
+        if(!is_null($solicitud)){
+            $data['solicitud'] = true;             
+        }
 
         return view('welcome', $data);
-
-
     } 
 
     public function validarRegistro(Request $request){
@@ -308,5 +316,78 @@ class SesionController extends Controller
         $data['subastas'] = $subastas;
 
         return view('resultados', $data);
+    }
+
+    public function informacion(){
+
+        $solicitud = new Solicitante;
+        $solicitud->id_usuario = session('idUsuario');
+
+        $solicitud->save();    
+
+        return view('informacion');
+    }
+
+    public function listarPerfilAdministrador(){
+
+        $solicitantes = DB::table('solicitantes')
+                    ->get();
+
+        $idUsuarios = [];
+                    
+        foreach ($solicitantes as $solicitante) {
+             $idUsuarios[] = $solicitante->id_usuario;   
+        }       
+
+        $usuarios = DB::table('usuarios')
+                    ->whereNotIn('id', $idUsuarios)
+                    ->orderBy('apellido')
+                    ->orderBy('nombre')
+                    ->get();
+
+        $solicitantes = DB::table('usuarios')
+                    ->whereIn('id', $idUsuarios)
+                    ->orderBy('apellido')
+                    ->orderBy('nombre')
+                    ->get();                 
+
+        $data['usuarios'] = $usuarios;
+        $data['solicitantes'] = $solicitantes;
+
+        return view('perfilAdministrador', $data);
+    }
+
+    public function pasarABasico($idUsuario){
+
+        DB::table('usuarios')
+            ->where('id', $idUsuario)
+            ->update(['es_premium' => 0]);
+
+        return redirect('/perfilAdministrador');
+        
+    }
+
+    public function pasarAPremium($idUsuario){
+
+        DB::table('usuarios')
+            ->where('id', $idUsuario)
+            ->update(['es_premium' => 1]);
+
+        return redirect('/perfilAdministrador');
+        
+    }
+
+    public function pasarSolicitanteAPremium($idUsuario){
+
+        DB::table('usuarios')
+            ->where('id', $idUsuario)
+            ->update(['es_premium' => 1]);
+
+        DB::table('solicitantes')
+            ->where('id', $idUsuario)
+            ->delete();    
+
+        return redirect('/perfilAdministrador');
+        
     }
 }

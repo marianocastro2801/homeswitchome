@@ -1,6 +1,7 @@
 <!--Navbar-->
 <nav class="navbar navbar-expand-lg navbar-static-top container-fluid navbar-dark bg-dark">
 
+
   <!-- Navbar brand -->
   <a class="navbar-brand" href="/">
     <ul class="nav navbar-nav list-inline">
@@ -17,7 +18,7 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
       class="navbar-toggler-icon"></span></button>
-  @if(!(Request::is('sesion')))
+ @if(!(Request::is('login')) && !(Request::is('registrar')))
     <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <!-- Links -->
@@ -28,6 +29,7 @@
                 <li class="nav-item itemnav">
                   <a class="nav-link" href="#">HotSale</a>
                 </li>-->
+
         @if (Session('nombreUsuario') == 'Andrea')
           <li class="nav-item ">
             <a class="nav-link" href="/listarhospedajes">Ver Hospedajes</a>
@@ -38,17 +40,45 @@
         @endif
       </ul>
 
+
       <!-- Notifications -->
-      
-      <div class="btn-group dropleft">
-        <button type="button" style="margin-right: 20px" class="btn btn-lg btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="glyphicon glyphicon-bell"></span>
-        </button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#"><span class="  glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 1(Despues sacar esto)</a>
-          <a class="dropdown-item" href="#"><span class=" glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 2</a>
-          <a class="dropdown-item" href="#"><span class="  glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 3</a>
-          <a class="dropdown-item" href="#"><span class=" glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 4</a>
+
+    </div>
+      <div class="row" style="margin-right: 15px; float:right" >
+        <div class="btn-group" style="margin-right: 50px">
+          @if(session('esPremium'))
+            <a href="#" class="btn btn-info btn-lg">
+            <span>Usted ya es premium</span>
+            @else
+              @if($solicitud)
+                <a href="#" class="btn btn-info btn-lg">
+                <span>Usted ya solicitó premium</span>
+              @else
+                <a href="/informacion" class="btn btn-info btn-lg">
+                <span>Solicitar premium</span> 
+              @endif
+            @endif  
+          </a>
+          <div class="dropdown-menu" >
+             <a class="dropdown-item" href="#"><span class="  glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 1(Despues sacar esto)</a>
+            <a class="dropdown-item" href="#"><span class=" glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 2</a>
+            
+            <a class="dropdown-item" href="#"><span class="  glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 3</a>
+              <a class="dropdown-item" href="#"><span class=" glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 4</a>
+          </div>
+        </div>
+      <div class="row" style="margin-right: 15px; float:right" >
+        <div class="btn-group" style="margin-right: 50px">
+          <a href="#" class="dropdown-toggle dropdown-toggle-split btn btn-info btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-bell"></span>
+          </a>
+          <div class="dropdown-menu" >
+             <a class="dropdown-item" href="#"><span class="  glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 1(Despues sacar esto)</a>
+            <a class="dropdown-item" href="#"><span class=" glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 2</a>
+            
+            <a class="dropdown-item" href="#"><span class="  glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 3</a>
+              <a class="dropdown-item" href="#"><span class=" glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 4</a>
+          </div>
         </div>
       </div>
 
