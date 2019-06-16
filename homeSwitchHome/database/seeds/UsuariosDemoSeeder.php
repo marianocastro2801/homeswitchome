@@ -21,7 +21,10 @@ class UsuariosDemoSeeder extends Seeder
     		'apellido'=> 'Perez',
     		'email'=> 'andreaperez@gmail.com',
     		'es_premium'=> 0,
-    		'numero_tarjeta'=> '000000',
+    		'numero_tarjeta'=> '2345678913456743',
+            'mes_vencimiento'=> '05',
+            'anio_vencimiento'=> '20',
+            'codigo_seguridad'=> '345',
             'contrasenia' => 'andreaperez',
     		'fecha_nacimiento'=> '1990-06-04'
     	]);
@@ -36,7 +39,10 @@ class UsuariosDemoSeeder extends Seeder
     		'apellido'=> 'Rivero',
     		'email'=> 'supernovar1470@hotmail.com',
     		'es_premium'=> 0,
-    		'numero_tarjeta'=> '12345',
+    		'numero_tarjeta'=> '2987654321874325',
+            'mes_vencimiento'=> '05',
+            'anio_vencimiento'=> '23',
+            'codigo_seguridad'=> '778',
             'contrasenia' => 'carlosrivero',
     		'fecha_nacimiento'=> '1996-06-15'
     	]);
@@ -50,7 +56,10 @@ class UsuariosDemoSeeder extends Seeder
     		'apellido'=> 'Mandarino',
     		'email'=> 'leonelmandarino@gmail.com',
     		'es_premium'=> 0,
-    		'numero_tarjeta'=> '5677654',
+    		'numero_tarjeta'=> '2345390313456743',
+            'mes_vencimiento'=> '01',
+            'anio_vencimiento'=> '22',
+            'codigo_seguridad'=> '543',
             'contrasenia' => 'leonelmandarino',
     		'fecha_nacimiento'=> '1996-05-29',
             'creditos' => 1
@@ -63,7 +72,10 @@ class UsuariosDemoSeeder extends Seeder
     		'apellido'=> 'Pereyra',
     		'email'=> 'marcospereyra@yahoo.com.ar',
     		'es_premium'=> 0,
-    		'numero_tarjeta'=> '1628826',
+    		'numero_tarjeta'=> '1628826890234123',
+            'mes_vencimiento'=> '04',
+            'anio_vencimiento'=> '21',
+            'codigo_seguridad'=> '365',
             'contrasenia' => 'marcospereyra',
     		'fecha_nacimiento'=> '1996-10-04',
             'creditos' => 0

@@ -149,12 +149,26 @@ class HospedajeController extends Controller
 
         $request['cantidadSubastas'] = DB::table('subastas')
                                         ->where('id_hospedaje', $request->input('idHospedaje'))
-                                        ->count();                          
+                                        ->count();
+
+        $subastas = DB::table('subastas')
+                      ->where('id_hospedaje', $request->input('idHospedaje'))
+                      ->get();
+
+        $idSubastas = [];
+                    
+        foreach ($subastas as $subasta) {
+             $idSubastas[] = $subasta->id;   
+        }                                
+                                         
+        $request['cantidadReservas'] = DB::table('reservas')
+                                        ->whereIn('id_subasta', $idSubastas)
+                                        ->count();                           
 
         $validator = Validator::make($request->all(), [
                 'cantidadSubastas' => 'lt: 1',
-                'idHospedaje' => 'not_in:4'],
-                ['idHospedaje.not_in' => 'No puede modificarse el hospedaje porque tiene reservas asociadas',
+                'cantidadReservas' => 'lt: 1'],
+                ['cantidadReservas.lt' => 'No puede modificarse el hospedaje porque tiene reservas asociadas',
                 'cantidadSubastas.lt' => 'No puede modificarse el hospedaje porque tiene subastas asociadas']);
 
         if ($validator->fails()) {
