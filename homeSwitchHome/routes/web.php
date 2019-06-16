@@ -27,7 +27,7 @@ Route::post('/crearsubasta/validar', 'SubastasController@validar');
 Route::get('/cargardetallesubasta/{id}', [ 'as' => 'cargardetallesubasta', 
 	'uses' => 'SubastasController@detalleSubasta']);
 
-// Route::get('/listarsubastas', 'SubastasController@listarSubastas');
+Route::get('/listarsubastas', 'SubastasController@listarSubastas');
 
 Route::post('/pujarsubasta', 'SubastasController@pujar');
 
@@ -51,10 +51,6 @@ Route::post('/modificarcuenta/datos', 'SesionController@validarDatos');
 
 Route::post('/modificarcuenta/contrasenia', 'SesionController@validarContrasenia');
 
-Route::get('/perfil', function () {
-    return view('miPerfil');
-});
-
 Route::post('/registrar/validarRegistro', 'SesionController@validarRegistro');
 
 Route::post('/cerrarsubasta', 'SubastasController@cerrarSubasta');
@@ -73,12 +69,12 @@ Route::get('/modificarHospedaje/{id}','HospedajeController@modificarHospedaje');
 
 Route::post('/modificarHospedaje/{id}','HospedajeController@validarModificacion');
 
+
+
+
+Route::get('/perfil', 'SesionController@perfilUsuario');
+
 Route::get('/informacion', 'SesionController@informacion');
-
-
-
-
-
 
 Route::get('/perfilAdministrador', 'SesionController@listarPerfilAdministrador');
 
@@ -86,4 +82,6 @@ Route::get('/pasarabasico/{id}','SesionController@pasarABasico');
 
 Route::get('/pasarapremium/{id}','SesionController@pasarAPremium');
 
-Route::get('/pasarsolicitanteapremium/{id}','SesionController@pasarSolicitanteAPremium');
+Route::get('/aceptarsolicitante/{id}','SesionController@aceptarSolicitante');
+
+Route::get('/rechazarsolicitante/{id}','SesionController@rechazarSolicitante');

@@ -20,7 +20,8 @@
 	@else
 		@foreach($solicitantes as $solicitante)
 			<div>{{ $solicitante->apellido.' '.$solicitante->nombre }}</div>
-			<a href="{{ url('/pasarsolicitanteapremium/'.$usuario->id) }}" class="btn">Pasar a premium</a>
+			<a href="{{ url('/aceptarsolicitante/'.$solicitante->id) }}" class="btn">Acepar</a>
+			<a href="{{ url('/rechazarsolicitante/'.$solicitante->id) }}" class="btn">Rechazar</a>
 		@endforeach
 	@endif	
 </ul>

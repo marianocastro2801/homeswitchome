@@ -47,8 +47,8 @@ class SubastasSeeder extends Seeder
             'fecha_inicio' => '2020-08-10',
             'fecha_fin' => '2020-08-17',
             'fecha_inicio_inscripcion' => '2019-08-10',
-            'fecha_inicio_subasta' => '2019-02-07',
-            'fecha_fin_subasta' => '2019-02-10',
+            'fecha_inicio_subasta' => '2020-02-07',
+            'fecha_fin_subasta' => '2020-02-10',
         ]);
 
     }

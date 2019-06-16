@@ -1,5 +1,8 @@
 <form action="/modificarcuenta/datos" method="post">
 	{{ csrf_field() }}
+	<p>Correo</p>
+	<input type="text" name="email" value="{{old('email', session('email'))}}">
+	<br>
 	<p>Nombre</p>
 	<input type="text" name="nombreUsuario" value="{{old('nombreUsuario', session('nombreUsuario'))}}">
 	<br>
@@ -11,6 +14,15 @@
 	<br>
 	<p>Numero de tarjeta</p>
 	<input type="text" name="numeroTarjeta" value="{{old('numeroTarjeta', session('numeroTarjeta'))}}">
+	<br>
+	<p>Mes vencimiento</p>
+	<input type="text" name="mesVencimiento" value="{{old('mesVencimiento', session('mesVencimiento'))}}">
+	<br>
+	<p>Año vencimiento</p>
+	<input type="text" name="anioVencimiento" value="{{old('anioVencimiento', session('anioVencimiento'))}}">
+	<br>
+	<p>Código seguridad</p>
+	<input type="text" name="codigoSeguridad" value="{{old('codigoSeguridad', session('codigoSeguridad'))}}">
 	<br>
 	<button type="submit">Guardar</button>
 	<br>

@@ -3,7 +3,11 @@
 
 
   <!-- Navbar brand -->
-  <a class="navbar-brand" href="/">
+  <a class="navbar-brand" @if(!(Request::is('login')) && !(Request::is('registrar')))
+                                {{ 'href=/' }}
+                               @else
+                                {{ 'href=/login' }}
+                               @endif>
     <ul class="nav navbar-nav list-inline">
       <li class="list-inline-item">  
         <img src="/images/Logo.png" width="40" height="35">
@@ -42,7 +46,7 @@
 
 
       <!-- Notifications -->
-
+    @if(Session('nombreUsuario') != 'Andrea')
     </div>
       <div class="row" style="margin-right: 15px; float:right" >
         <div class="btn-group" style="margin-right: 50px">
@@ -50,7 +54,7 @@
             <a href="#" class="btn btn-info btn-lg">
             <span>Usted ya es premium</span>
             @else
-              @if($solicitud)
+              @if(session('solicitud'))
                 <a href="#" class="btn btn-info btn-lg">
                 <span>Usted ya solicitó premium</span>
               @else
@@ -62,7 +66,6 @@
           <div class="dropdown-menu" >
              <a class="dropdown-item" href="#"><span class="  glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 1(Despues sacar esto)</a>
             <a class="dropdown-item" href="#"><span class=" glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 2</a>
-            
             <a class="dropdown-item" href="#"><span class="  glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 3</a>
               <a class="dropdown-item" href="#"><span class=" glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 4</a>
           </div>
@@ -73,14 +76,12 @@
             <span class="glyphicon glyphicon-bell"></span>
           </a>
           <div class="dropdown-menu" >
-             <a class="dropdown-item" href="#"><span class="  glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 1(Despues sacar esto)</a>
-            <a class="dropdown-item" href="#"><span class=" glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 2</a>
-            
-            <a class="dropdown-item" href="#"><span class="  glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 3</a>
-              <a class="dropdown-item" href="#"><span class=" glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>Notificacion 4</a>
-          </div>
+             @foreach(session('mensajes') as $mensaje)
+                <a class="dropdown-item" href="#"><span class="glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>{{ $mensaje }}</a>
+              @endforeach
         </div>
       </div>
+      @endif
 
       <!-- Info user -->
       <div class="btn-group" >

@@ -53,10 +53,6 @@
               		</div>
               	</div>
               	<div class="form-group">
-              		<label for="dni" class="control-label text-white">Documento Nacional de identidad</label>
-			        <input class="form-control" id="dni" name="dni" placeholder="99.129.880">
-              	</div>
-              	<div class="form-group">
 					<label for="fechaNacimiento" class="control-label text-white">Fecha de Nacimiento</label>
 					<input type="date" class="form-control form-control-sm" name="fechaNacimiento" id="fechaNacimiento" value="{{ old('fechaNacimiento') }}">
 				</div>
@@ -85,27 +81,21 @@
 										        </div>
 										     	<div class="row ">
 										            <div class="col-md-3 col-sm-3 col-xs-3">
-										                <span class="help-block text-muted small-font" > Mes</span>
-										                <input type="text" class="form-control" placeholder="MM" />
+										                <span class="help-block text-muted small-font">Mes</span>
+										                <input type="text" class="form-control" placeholder="MM" name="mesVencimiento" value="{{ old('mesVencimiento') }}"/>
 										            </div>
 										         	<div class="col-md-3 col-sm-3 col-xs-3">
-										                <span class="help-block text-muted small-font" > Año</span>
-										                <input type="text" class="form-control" placeholder="YY" />
+										                <span class="help-block text-muted small-font" >Año</span>
+										                <input type="text" class="form-control" placeholder="YY" name="anioVencimiento" value="{{ old('anioVencimiento') }}"/>
 										            </div>
 										        	<div class="col-md-3 col-sm-3 col-xs-3">
-										                <span class="help-block text-muted small-font" >  CCV</span>
-										                <input type="text" class="form-control" placeholder="CCV" />
+										                <span class="help-block text-muted small-font" >CCV</span>
+										                <input type="text" class="form-control" placeholder="CCV" name="codigoSeguridad" value="{{ old('codigoSeguridad') }}"/>
 										            </div>
 										         	<div class="col-md-3 col-sm-3 col-xs-3">
 														<img src="images/card.png" style="margin-top: 20px" height="50" width="50">
 										         	</div>
 										     	</div>
-										     	<br>
-										    	<div class="row">
-										    		<div class="col-md-12 pad-adjust">
-									            		<input type="text" class="form-control" placeholder="Nombre en la tarjeta" />
-										        	</div>
-										    	</div> 
 											</div>
 										</div>
 									</form>

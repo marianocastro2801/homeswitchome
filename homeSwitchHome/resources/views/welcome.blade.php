@@ -110,7 +110,7 @@
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-12 p-0">
                     <label>Hasta</label>
-                    <input type="date" name="fechaInicioAlojamiento" class="form-control search-slt">
+                    <input type="date" name="fechaFinAlojamiento" class="form-control search-slt">
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-12 p-0">
                     <label>Tipo de Busqueda</label>

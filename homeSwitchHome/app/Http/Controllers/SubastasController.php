@@ -10,6 +10,7 @@ use App\Subasta;
 use App\Participa;
 use App\Reserva;
 use App\Inscripcion;
+use App\Notificacion;
 
 
 class SubastasController extends Controller
@@ -24,7 +25,7 @@ class SubastasController extends Controller
                     ->where('id_hospedaje', $idHospedaje)
                     ->whereNull('ganador')
                     ->orderBy('fecha_inicio')
-                    ->get();            
+                    ->get();          
 
         $data['titulo'] = $hospedaje->titulo;
         $data['idHospedaje'] = $hospedaje->id;
@@ -66,14 +67,12 @@ class SubastasController extends Controller
                     ->get();
 
         foreach ($subastas as $subasta) {
-            $fechaInicioSubastaAux = $subasta->fecha_inicio;
-            $fechaFinSubastaAux = $subasta->fecha_fin;
-            $request['fechaInicioSubasta'] = $fechaInicioSubastaAux;
-            $request['fechaFinSubasta'] = $fechaFinSubastaAux;
+            $request['fechaInicioSubasta'] = $subasta->fecha_inicio;
+            $request['fechaFinSubasta'] = $subasta->fecha_fin;
 
             $request->validate([
             'fechaInicio' => 'date_overlap:'.$fechaFinSubasta.','.$fechaFin.','.$fechaInicioSubasta],
-            ['fechaInicio.date_overlap' => 'La fecha ingresada se superpone con otra subasta' ]); 
+            ['fechaInicio.date_overlap' => 'La fecha ingresada se superpone con otra subasta' ]);
         }
 
     	$subasta = new Subasta;
@@ -194,22 +193,32 @@ class SubastasController extends Controller
         return redirect()->route('cargardetallesubasta', [$id]);
     }
 
-    // public function listarSubastas(){
+    public function listarSubastas(){
 
-    //     $data['subastas'] = DB::table('subastas')
-    //                         ->whereNull('ganador')
-    //                         ->orderBy('created_at', 'desc')
-    //                         ->get();
+        $hoy = Carbon::today()->format('Y-m-d');
+
+        $data['subastasEnInscripcion'] = DB::table('subastas')
+                            ->whereNull('ganador')
+                            ->whereDate('fecha_inicio_inscripcion', '<=' , $hoy)
+                            ->whereDate('fecha_inicio_subasta', '>' , $hoy)
+                            ->orderBy('fecha_inicio', 'asc')
+                            ->get();
+
+        $data['subastasEnPeriodo'] = DB::table('subastas')
+                            ->whereNull('ganador')
+                            ->whereDate('fecha_inicio_subasta', '<=' , $hoy)
+                            ->orderBy('fecha_inicio', 'asc')
+                            ->get();
         
 
-    //     return view('/layouts/listarSubastas', $data);
-    // }
+        return view('/layouts/listarSubastas', $data);
+    }
 
     public function cerrarSubasta(Request $request){
 
         $subasta = DB::table('subastas')
-                                ->where('id', $request->input('idSubasta'))
-                                ->first();
+                    ->where('id', $request->input('idSubasta'))
+                    ->first();
 
         //Usuario sin crédito en la tarjeta
         $request['usuarioInvalido'] = 2; 
@@ -279,6 +288,16 @@ class SubastasController extends Controller
                 $reserva->id_subasta = $subasta->id;
 
                 $reserva->save(); 
+
+                $hospedaje = DB::table('hospedajes')
+                            ->where('id', $request->input('idSubasta'))
+                            ->first();
+
+                $notificacion = new Notificacion;
+                $notificacion->id_usuario = $puja->id_usuario;
+                $notificacion->mensaje = "Gano la subasta ".$hospedaje->titulo." para alojarse desde ".Carbon::parse($subasta->fecha_inicio)->format('d-m-Y')." hasta ".Carbon::parse($subasta->fecha_fin)->format('d-m-Y');
+
+                $notificacion->save(); 
 
                 $request->session()->flash('exito', 'La subasta se cerro con exito, el ganador es '.$usuario->email);
 

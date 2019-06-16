@@ -27,10 +27,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Validator::extend('date_overlap', function($attribute, $value, $parameters) {
 
-            $fechaInicio = Carbon::create($value);
-            $fechaFin = Carbon::create($parameters[1]);
-            $fechaFinSubasta = $parameters[0];
-            $fechaInicioSubasta = $parameters[2];
+            $fechaInicio = Carbon::parse($value);
+            $fechaFin = Carbon::parse($parameters[1]);
+            $fechaFinSubasta = Carbon::parse($parameters[0]);
+            $fechaInicioSubasta = Carbon::parse($parameters[2]);
 
             if (($fechaInicio->gt($fechaFinSubasta)) || $fechaFin->lt($fechaInicioSubasta))
                 return true;

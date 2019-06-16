@@ -66,7 +66,7 @@
 		  		<div style="padding-right: 30px; padding-left: 30px; padding-top: 30px">
 		  		<h3 class="font-weight-normal text-white">Iniciar Sesion</h3>
 		  		<div class="form-group">
-			  		<input type="email" name="email" id="inputEmail" class="form-control" placeholder="andresperez@gmail.com" autofocus>
+			  		<input type="email" name="email" id="inputEmail" class="form-control" placeholder="andreaperez@gmail.com" autofocus>
 		  		</div>
 		  		<div class="form-group">
 					<input type="password" name="contrasenia" id="inputPassword" class="form-control" placeholder="********">

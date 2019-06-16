@@ -21,7 +21,10 @@ class CreateUsuariosTable extends Migration
             $table->string('contrasenia');
             $table->tinyInteger('creditos')->default(2);
             $table->boolean('es_premium')->default($value = false);
-            $table->integer('numero_tarjeta');
+            $table->bigInteger('numero_tarjeta');
+            $table->integer('mes_vencimiento');
+            $table->integer('anio_vencimiento');
+            $table->integer('codigo_seguridad');
             $table->date('fecha_nacimiento');
             $table->timestamps();
         });
