@@ -1,46 +1,80 @@
 @extends('layouts.baseapp')
 @section('content')
+
 <style type="text/css">
-	
-
-	.glyphicon {  margin-bottom: 10px;margin-right: 10px;}
-
-	small {
-		display: block;
-		line-height: 1.428571429;
-		color: #999;
-	}
+    .fondo{
+        margin-top: 50; 
+        padding: 25px;  
+        border-bottom-left-radius:25px; 
+        border-bottom-right-radius: 25px;
+        background: black;
+        margin-bottom: 60px;
+    }    
 </style>
+
 <!------ Include the above in your HEAD tag ---------->
 
 <div class="container">
     <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6">
-            <div class="well well-sm">
-                <div class="row">
-                    <div class="col-sm-6 col-md-4">
-                        <img src="http://placehold.it/380x500" alt="" class="img-rounded img-responsive" />
-                    </div>
-                    <div class="col-sm-6 col-md-8">
-                        <h4>Aca esta las subastas en las que participa porque hay que listarlas en el perfil</h4>
-                            @foreach($subastas as $subasta)
-                                <h4> {{ $subasta->id }} </h4>
-                            @endforeach
-                        <small><cite title="San Francisco, USA">San Francisco, USA <i class="glyphicon glyphicon-map-marker">
-                        </i></cite></small>
-                        <p>
-                            <i class="glyphicon glyphicon-envelope"></i>email@example.com
-                            <br />
-                            <i class="glyphicon glyphicon-gift"></i>June 02, 1988</p>
-                        <!-- Split button -->
-                        <div class="btn-group">
-                            <a href="/modificarcuenta" class="btn btn-primary">
-                                Editar Perfil</a>
-  
-                       
-                        </div>
+        <div class="col-md-6">
+            <div class="fondo  text-white">
+                <h3 class="col-md-12 text-center">Datos Personales</h3>
+                <hr style="background: white">
+                <p>Nombre: {{ session('nombreUsuario') }} </p>
+                <p>Apellido: {{ session('apellidoUsuario') }}</p>
+                <p>Email: {{ session('email') }}</p>
+                <p>Fecha De Nacimiento: {{ Carbon\Carbon::parse(session('fechaNacimiento'))->format('d-m-Y') }} </p>
+                <p>Creditos: {{ session('creditos')}} </p>
+                <hr style="background: white">
+                @if(session('espremium'))
+                    <p class="text-center" style="background: green; border-radius: 10px">Usted es un usuario premium</p>
+                @else
+                    <p class="text-center" style="background: red; border-radius: 10px">Usted aun no es usuario premium</p>
+                @endif
+                <hr style="background: white">
+                <div class="btn-group row col-md-12">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4">
+                        <a href="/modificarcuenta" class="btn btn-primary">
+                            Editar Perfil
+                        </a>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="fondo text-white">
+                <h3 class="text-center"> Subastas incriptas e inicio de puja</h3>
+                <hr style="background: white">
+                    @if(count($subastas) == 0)  
+                        <!--Si no hay publicacion-->
+                        <div class="container text-center bg-warning" style="border-radius: 25px; margin-top: 80px"><br><p><b>Por el momento no participa de ninguna subasta</b></p><br></div>
+                    @else 
+                        <table class="table table-striped table-dark">
+                            <thead>
+                                <tr>
+                                  <th scope="col">Desde</th>
+                                  <th scope="col">Hasta</th>
+                                  <th scope="col">Detalle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($subastas as $subasta)
+                                    <tr>
+                                        <th scope="row">{{ Carbon\Carbon::parse($subasta->fecha_inicio_subasta)->format('d-m-Y') }} </th>
+                                        <td>
+                                           {{ Carbon\Carbon::parse($subasta->fecha_inicio_subasta)->format('d-m-Y') }}  
+                                        </td>
+                                        <td class="">
+                                            <a class=" btn btn-info text-center" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}"> 
+                                                Ir
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
             </div>
         </div>
     </div>
