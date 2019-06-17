@@ -76,9 +76,13 @@
             <span class="glyphicon glyphicon-bell"></span>
           </a>
           <div class="dropdown-menu" >
-             @foreach(session('mensajes') as $mensaje)
+            @if(count(session('mensajes')) == 0)
+              <a class="dropdown-item" href="#"><span class="glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>No posee notificaciones</a>
+            @else
+              @foreach(session('mensajes') as $mensaje)
                 <a class="dropdown-item" href="#"><span class="glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>{{ $mensaje }}</a>
               @endforeach
+            @endif  
         </div>
       </div>
       @endif

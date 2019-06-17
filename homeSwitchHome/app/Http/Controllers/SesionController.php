@@ -62,6 +62,8 @@ class SesionController extends Controller
                         ->orderBy('created_at', 'desc')
                         ->get();           
 
+        $mensajes = [];
+
         foreach ($notificaciones as $notificacion) {
             $mensajes[$notificacion->id] = $notificacion->mensaje;
         }                     
