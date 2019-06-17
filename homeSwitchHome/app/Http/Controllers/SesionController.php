@@ -501,7 +501,7 @@ class SesionController extends Controller
         }       
 
         $usuarios = DB::table('usuarios')
-                    ->whereNotIn('id', $idUsuarios)
+                    ->where('id', '!=', 1)
                     ->orderBy('apellido')
                     ->orderBy('nombre')
                     ->get();
