@@ -9,6 +9,7 @@ use Validator;
 use Carbon\Carbon;
 use App\Usuario;
 use App\Solicitante;
+use App\Notificacion;
 
 class SesionController extends Controller
 {
@@ -35,7 +36,7 @@ class SesionController extends Controller
 
     public function validarUsuario(Request $request){
         
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'email' => 'required|bail|email|bail|exists:usuarios,email',
             'contrasenia' => 'required'],
             ['email.required' => 'Por favor ingrese su correo', 
@@ -44,14 +45,26 @@ class SesionController extends Controller
              'contrasenia.required' => 'Por favor ingrese una contraseña'
                ]);
 
+        if ($validator->fails()) {
+              
+              return redirect()->back()->withInput()->withErrors($validator->errors());
+        }
+
         $usuario = DB::table('usuarios')
                     ->where('email', $request->input('email'))
-                    ->first();         
+                    ->first();  
 
-        $request->validate([
-            'contrasnia' => Rule::in([$usuario->contrasenia])],
-            ['contrasenia.in' => 'La contraseña es incorrecta'
+        $request['contraseniaValida'] = $usuario->contrasenia;   
+
+        $validator = Validator::make($request->all(), [
+            'contrasenia' => 'same:contraseniaValida'],
+            ['contrasenia.same' => 'La contraseña es incorrecta'
                ]);
+
+        if ($validator->fails()) {
+              
+              return redirect()->back()->withInput()->withErrors($validator->errors());
+        }
 
         $solicitud = DB::table('solicitantes')
                         ->where('id_usuario', $usuario->id)
