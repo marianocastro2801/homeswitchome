@@ -35,9 +35,7 @@ Route::post('/inscribirse', 'SubastasController@inscribirse');
 
 Route::get('/buscar', 'SesionController@buscar');
 
-Route::get('/login', function () {
-    return view('logIn');
-});
+Route::get('/login', 'SesionController@listarLogin');
 
 Route::post('/login/validarUsuario', 'SesionController@validarUsuario');
 
@@ -74,7 +72,7 @@ Route::post('/modificarHospedaje/{id}','HospedajeController@validarModificacion'
 
 Route::get('/perfil', 'SesionController@perfilUsuario');
 
-Route::get('/informacion', 'SesionController@informacion');
+Route::get('/boton', 'SesionController@informacion');
 
 Route::get('/perfilAdministrador', 'SesionController@listarPerfilAdministrador');
 
