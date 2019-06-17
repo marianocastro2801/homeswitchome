@@ -72,7 +72,7 @@ Route::post('/modificarHospedaje/{id}','HospedajeController@validarModificacion'
 
 Route::get('/perfil', 'SesionController@perfilUsuario');
 
-Route::get('/informacion', 'SesionController@informacion');
+Route::get('/boton', 'SesionController@informacion');
 
 Route::get('/perfilAdministrador', 'SesionController@listarPerfilAdministrador');
 

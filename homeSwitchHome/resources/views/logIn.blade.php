@@ -12,18 +12,13 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-8">
-			<div>
-				<!--Futura Publicidad-->
-				@include('inc.mensajeExito')
-				@include('inc.mensajeError')
-			</div>
 			@if(count($subastas) == 0)  
 				<!--Si no hay publicacion-->
-		    	<div class="container text-center bg-warning" style="border-radius: 25px; margin-top: 80px ;margin-bottom: 60px"><br><p><b>No hay subastas en este momento. Intente mas tarde</b></p><br></div>
+		    	<div class="container text-center bg-warning" style="border-radius: 25px; margin-top: 80px"><br><p><b>No hay subastas en este momento. Intente mas tarde</b></p><br></div>
 
 		    @else 
 		    	<!--Si hay subastas muestro en carrusel-->
-		    	<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-left: 80px; margin-right: 80px; margin-top: 60px">
+		    	<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-left: -60px; margin-right: 80px; margin-top: 60px">
 					@foreach($subastas as $subasta)
 			        	<ol class="carousel-indicators">
 				          	@if($loop->first)
@@ -41,7 +36,7 @@
 				            ?>
 				            @if($loop->first)
 					            <div class="carousel-item active">
-					            	<img class="d-block w-100" src="/images/{{ $hospedaje->imagen }}" height="400" alt="First slide" style="border-radius: 25px;">
+					            	<img class="d-block w-100" src="/images/{{ $hospedaje->imagen }}" height="430" alt="First slide" style="border-radius: 25px;">
 					                <div class="carousel-caption d-none d-md-block">
 					                	<h1 style="color: black; border-color: black; margin-top: -350px">
 					                        {{ $hospedaje->titulo  }}
@@ -51,7 +46,7 @@
 					            </div>
 				            @else
 				                <div class="carousel-item">
-				                	<img class="d-block w-100" src="/images/{{ $hospedaje->imagen }}" height="400" style="border-radius: 25px;" >
+				                	<img class="d-block w-100" src="/images/{{ $hospedaje->imagen }}" height="430" style="border-radius: 25px;" >
 				                	<div class="carousel-caption d-none d-md-block">
 				                    	<h1 style="color: black; border-color: black; margin-top: -350px">
 				                      		{{ $hospedaje->titulo  }}
@@ -78,6 +73,10 @@
 			<form class="form-signin" action="/login/validarUsuario" method="post" style="margin-top: 10px;">
 				{{ csrf_field() }}
 		  		<img class=" mb-4" src="/images/Completo.png" alt="" width="330" height="150">
+		  		<div>
+					@include('inc.mensajeExito')
+					@include('inc.mensajeError')
+				</div>
 		  		<div style="padding-right: 30px; padding-left: 30px; padding-top: 30px">
 		  			<h3 class="font-weight-normal text-white">Iniciar Sesion</h3>
 		  			<div class="form-group">

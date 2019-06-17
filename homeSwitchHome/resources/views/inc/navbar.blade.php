@@ -76,7 +76,7 @@
               @else
                 <!-- Button trigger modal -->
                 <button type="button" id="solicitar" class="btn btn-success btn-lg" data-toggle="modal" data-target="#exampleModal">
-                  Solicitar Premium
+                  <a style="text-decoration: none" href="/boton">Solicitar Premium</a>
                 </button>
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

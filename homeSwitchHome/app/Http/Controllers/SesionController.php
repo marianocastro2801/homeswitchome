@@ -473,7 +473,7 @@ class SesionController extends Controller
 
         session(['solicitud' => true]); 
 
-        return view('informacion');
+        return redirect('/'); 
     }
 
     public function listarPerfilAdministrador(){
