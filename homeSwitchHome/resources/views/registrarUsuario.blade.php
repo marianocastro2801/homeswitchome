@@ -78,7 +78,9 @@
 										            <div class="col-md-12">
 										                <input type="text" class="form-control" name="numeroTarjeta" placeholder="Ingrese el numero de la tarjeta" value="{{ old('numeroTarjeta') }}" />
 										            </div>
+
 										        </div>
+										        <br>
 										     	<div class="row ">
 										            <div class="col-md-3 col-sm-3 col-xs-3">
 										                <span class="help-block text-muted small-font">Mes</span>
@@ -103,7 +105,7 @@
 								<div class="modal-footer">
 									<div class="row ">
 									    <div class="col-md-6 col-sm-6 col-xs-6 pad-adjust">
-									        <input type="submit"  class="btn btn-danger" value="Cancelar" />
+									        <input type="button"  class="btn btn-danger" value="Cancelar" aria-label="Close" data-dismiss="modal" />
 									    </div>
 									    <div class="col-md-6 col-sm-6 col-xs-6 pad-adjust">
 									        <input type="submit"  class="btn btn-warning btn-block" value="Guradar" />

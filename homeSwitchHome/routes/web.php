@@ -35,9 +35,7 @@ Route::post('/inscribirse', 'SubastasController@inscribirse');
 
 Route::get('/buscar', 'SesionController@buscar');
 
-Route::get('/login', function () {
-    return view('logIn');
-});
+Route::get('/login', 'SesionController@listarLogin');
 
 Route::post('/login/validarUsuario', 'SesionController@validarUsuario');
 

@@ -580,4 +580,9 @@ class SesionController extends Controller
         return redirect('/perfilAdministrador');
         
     }
+
+    public function listarLogin(){
+        $data = $this->obtenerListas();
+        return view('login', $data);
+    }
 }
