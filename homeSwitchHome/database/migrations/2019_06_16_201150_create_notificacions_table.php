@@ -15,13 +15,10 @@ class CreateNotificacionsTable extends Migration
     {
         Schema::create('notificacions', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('id_subasta')->nullable();
             $table->integer('id_usuario')->unsigned();
             $table->mediumText('mensaje');
             $table->timestamps();
-
-            $table->foreign('id_usuario')
-                      ->references('id')->on('usuarios')
-                      ->onDelete('cascade'); 
         });
     }
 
