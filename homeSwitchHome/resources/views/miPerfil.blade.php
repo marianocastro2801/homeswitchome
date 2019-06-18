@@ -48,7 +48,9 @@
                 <hr style="background: white">
                     @if(count($subastas) == 0)  
                         <!--Si no hay publicacion-->
-                        <div class="container text-center bg-warning" style="border-radius: 25px; margin-top: 80px"><br><p><b>Por el momento no participa de ninguna subasta</b></p><br></div>
+                        <div class="container text-center bg-warning" style="border-radius: 25px; margin-top: 20px"><br><p><b>Por el momento no participa de ninguna subasta</b></p><br>
+                            <a href="listarsubastas" style="text-decoration: none"><button class="btn btn-dark" style="margin-bottom: 20px"> Listar Subastas</button></a>
+                        </div>
                     @else 
                         <table class="table table-striped table-dark">
                             <thead>

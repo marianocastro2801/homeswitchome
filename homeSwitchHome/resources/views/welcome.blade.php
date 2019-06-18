@@ -51,9 +51,9 @@
                 ?>
                 @if($loop->first)
                 <div class="carousel-item active">
-                  <img class="d-block w-100" src="/images/{{ $hospedaje->imagen }}" height="630" alt="First slide" style="border-bottom-right-radius: 25px;border-bottom-left-radius: 25px; ">
+                  <img class="d-block w-100" src="/images/{{ $hospedaje->imagen }}" height="570" alt="First slide" style="border-bottom-right-radius: 25px;border-bottom-left-radius: 25px; ">
                   <div class="carousel-caption d-none d-md-block">
-                    <h1 style="color: black; border-color: black; margin-top: -580px">
+                    <h1 style="color: black; border-color: black; margin-top: -510px">
                       <a class="text-dark" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}">
                         {{ $hospedaje->titulo  }}
                       </a>
@@ -63,9 +63,9 @@
                 </div>
                 @else
                   <div class="carousel-item">
-                  <img class="d-block w-100" src="/images/{{ $hospedaje->imagen }}" height="630" style="border-bottom-right-radius: 25px;border-bottom-left-radius: 25px; " >
+                  <img class="d-block w-100" src="/images/{{ $hospedaje->imagen }}" height="570" style="border-bottom-right-radius: 25px;border-bottom-left-radius: 25px; " >
                   <div class="carousel-caption d-none d-md-block">
-                    <h1 style="color: black; border-color: black; margin-top: -580px">
+                    <h1 style="color: black; border-color: black; margin-top: -510px">
                       <a class="text-dark" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}">
                         {{ $hospedaje->titulo  }}
                       </a>
