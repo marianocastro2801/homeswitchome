@@ -54,11 +54,13 @@
             <img src="/images/noti.png" width="30px" height="30px">
           </a>
           <div class="dropdown-menu" >
+            <a class="dropdown-item text-center" href="#">Area de notificaciones</a>
+            <hr>
             @if(count(session('mensajes')) == 0)
-              <a class="dropdown-item" href="#"><span class="glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>No posee notificaciones</a>
+              <a class="dropdown-item" href="#">No posee notificaciones</a>
             @else
               @foreach(session('mensajes') as $mensaje)
-                <a class="dropdown-item" href="#"><span class="glyphicon glyphicon-info-sign" style="margin-right: 10px"></span>{{ $mensaje }}</a>
+                <a class="dropdown-item" href="#"><small><small><small><b>- {{ $mensaje }}</b></small></small></small></a>
               @endforeach
             @endif  
         </div>
@@ -75,9 +77,9 @@
                 Usted ya solicitó premium</button>
               @else
                 <!-- Button trigger modal -->
-                <button type="button" id="solicitar" class="btn btn-success btn-lg" data-toggle="modal" data-target="#exampleModal">
-                  <a style="text-decoration: none" href="/boton">Solicitar Premium</a>
-                </button>
+                 <a style="text-decoration: none" href="/boton"> <button type="button" id="solicitar" class="btn btn-success btn-lg" data-toggle="modal" data-target="#exampleModal">
+                 Solicitar Premium
+                </button></a>
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
