@@ -26,10 +26,10 @@
       </div>
 		</div>
   </div>
-      @if(count($subastas) == 0)  
+      @if(count($subastas) == 0)
         <div class="container text-center bg-warning" style="border-radius: 25px; margin-top: 20px ;margin-bottom: 60px"><br><p><b>No hay subastas en este momento. Intente mas tarde</b></p><br></div>
 
-      @else 
+      @else
       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-left: 80px; margin-right: 80px">
 
         @foreach($subastas as $subasta)
@@ -39,15 +39,15 @@
           @endif
 
             <li data-target="#carouselExampleIndicators" data-slide-to="{{ $loop->iteration }}"></li>
-          
+
           </ol>
         @endforeach
             <div class="carousel-inner">
                 @foreach($subastas as $subasta)
-                <?php 
+                <?php
                       $hospedaje = DB::table('hospedajes')
                                     ->where('id', $subasta->id_hospedaje)
-                                    ->first(); 
+                                    ->first();
                 ?>
                 @if($loop->first)
                 <div class="carousel-item active">
@@ -76,7 +76,7 @@
                 @endif
               @endforeach
             </div>
-          
+
           <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
@@ -90,7 +90,7 @@
         <div class="bg-info" style="margin-top:-20px ; border-radius: 20px; margin-left: 100px; margin-right: 100px">
         <section class="search-sec" style=" padding: 30px;">
         <div class="container">
-          <form action="/buscar">
+          <form method="post" action="/buscar" >
             {{ csrf_field() }}
             <div class="row">
               <div class="col-lg-12">
@@ -121,7 +121,7 @@
                     </select>
                   </div>
                   <div class="col-lg-12 col-md-12 col-sm-12 p-0" style="text-align: center; margin-top: 10px">
-                    <button type="submit" class="btn btn-danger btn-lg" >Buscar</button>
+                    <button type="search" id="btnbuscar" class="btn btn-danger btn-lg" >Buscar</button>
                   </div>
                 </div>
               </div>
@@ -129,13 +129,28 @@
           </form>
         </div>
       </section>
-      
+
   </div>
 	<div>
+    <!-- Resultado de buscador-->
+    <div class="container text-center row" >
+      <div class="col-md-4">
+
+      </div>
+      <div class="col-md-4" style="background-color: green" id="buscador">
+        @if(count($resultadosDeBusqueda) == 0)
+          <div> No se encontraron resultados </div>
+        @else
+          @foreach($resultadosDeBusqueda as $subasta)
+            <p>subasta con id: {{ $subasta->id }}</p>
+          @endforeach
+        @endif
+      </div>
+    </div>
     <br>
     <br>
-    <br>  
-  </div>    
+    <br>
+  </div>
 
 </div>
 
@@ -143,36 +158,36 @@
 <!--
       <div class="row mb-2">
         @foreach($subastas as $subasta)
-        <?php 
+        <?php
               $hospedaje = DB::table('hospedajes')
                             ->where('id', $subasta->id_hospedaje)
-                            ->first(); 
+                            ->first();
         ?>
         <div class="col-md-12">
           <div class="card flex-md-row mb-4 box-shadow h-md-250 bg-info" style="padding: 20px; margin: 20px; border-radius: 30px">
             <div class="card-body d-flex flex-column align-items-start" style="margin-left: 40px">
               <strong class="d-inline-block">Subasta</strong>
-              
+
               <div class="colgroup" style="margin-left: -15px ;margin-bottom: -15px; margin-top: 5px">
                 <div class="col-md-6 colgroup">
-                  <span class="glyphicon glyphicon-log-in"></span> {{ Carbon\Carbon::parse($subasta->fecha_inicio)->format('d-m-Y') }} 
+                  <span class="glyphicon glyphicon-log-in"></span> {{ Carbon\Carbon::parse($subasta->fecha_inicio)->format('d-m-Y') }}
                 </div>
                 <div class="col-md-6 colgroup">
                   <span class="glyphicon glyphicon-log-out"></span> {{ Carbon\Carbon::parse($subasta->fecha_fin)->format('d-m-Y') }}
                 </div>
               </div>
-              
+
               <h1>
                 <a class="text-dark" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}">{{ $hospedaje->titulo  }}</a>
               </h1>
-              
+
               <p class="card-text mb-auto text-dark">Monto Base: ${{ $subasta->monto_base }}</p>
               <br>
               <p class="card-text mb-auto text-dark">  <span class="glyphicon glyphicon-map-marker">  </span>  <span class="glyphicon glyphicon-phone-alt">  </span>  <span class="glyphicon glyphicon-bed">  </span>  <span class=" glyphicon glyphicon-signal">  </span> </p>
-              
+
               <a href="{{ url('/cargardetallesubasta/'.$subasta->id) }}" class="text-white">Ver detalle</a>
             </div>
-            <img class="card-img-right flex-auto d-none d-md-block" style="border-radius: 25px" width="280" height="200" src="/images/{{ $hospedaje->imagen }}" alt="Card image cap">  
+            <img class="card-img-right flex-auto d-none d-md-block" style="border-radius: 25px" width="280" height="200" src="/images/{{ $hospedaje->imagen }}" alt="Card image cap">
           </div>
         </div>
         @endforeach
@@ -181,8 +196,7 @@
     </div>
 	</div>
 
-    @if(count($subastas) == 0)        
+    @if(count($subastas) == 0)
         <div class="container text-center bg-warning" style="border-radius: 25px; margin-bottom: 60px"><br><p><b>Mensaje de no hay ninguna subasta Que mostrar</b></p><br></div>
-    @endif 
+    @endif
 -->
-
