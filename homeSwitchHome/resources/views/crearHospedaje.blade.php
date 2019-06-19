@@ -20,8 +20,7 @@
 </style>
 <div class="container">
 
-  <div class="col-md-12">
-    @include('inc.mensajeError')
+    
   <div class="row">
   <div class="col-md-3">
     
@@ -34,7 +33,12 @@
 
                   <h1 class="h3 mb-3 font-weight-normal text-center text-white">Registrarse</h1>
                 <hr style="background: white">
-                <div class="form-group row">
+                <div class="form-group row" style="margin-top: -15px">
+                  <hr>
+                    <div class="col-md-12">
+                      @include('inc.mensajeError')
+                    </div>
+                  <hr>
                   <div class="col-md-6">
                     <label class="text-white" for="titulo">Titulo: </label>
                     <input class="form-control" type="text" name="titulo" id="titulo" placeholder="Ingrese el titulo del hospedaje" value="{{ old('titulo') }}">
@@ -152,7 +156,7 @@
       </div>
         
           
-    </div>
+    
     <div class="col-md-3"></div>
   </div>
  

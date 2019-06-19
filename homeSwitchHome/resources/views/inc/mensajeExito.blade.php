@@ -1,8 +1,6 @@
 @if(session('exito'))
-	<div class="col-md-12">
-	  <div class="alert alert-success">
+	  <div class="alert alert-success" style="border-radius: 25px">
 	      <button class="close" data-dismiss="alert"><span>&times;</span></button>
-	      {{ session('exito') }}
+	      <div class="text-center" style="border-radius: 25px">{{ session('exito') }}</div>
 	  </div>
-	</div>
 @endif

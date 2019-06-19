@@ -20,33 +20,33 @@ class SesionController extends Controller
     //     if(empty($usuario))
     //         return redirect('/sesion');
     //     else{
-    //         session(['idUsuario' => $usuario->id, 
-    //         	'nombreUsuario' => $usuario->nombre, 
-    //         	'apellidoUsuario' => $usuario->apellido, 
-    //         	'email' => $usuario->email, 
-    //         	'esPremium' => $usuario->es_premium, 
-    //         	'numeroTarjeta' => $usuario->numero_tarjeta, 
+    //         session(['idUsuario' => $usuario->id,
+    //         	'nombreUsuario' => $usuario->nombre,
+    //         	'apellidoUsuario' => $usuario->apellido,
+    //         	'email' => $usuario->email,
+    //         	'esPremium' => $usuario->es_premium,
+    //         	'numeroTarjeta' => $usuario->numero_tarjeta,
     //             'creditos' => $usuario->creditos,
     //         	'fechaNacimiento' => $usuario->fecha_nacimiento]);
 
 
-    //         return redirect('/');   
-    //     }         
+    //         return redirect('/');
+    //     }
     // }
 
     public function validarUsuario(Request $request){
-        
+
         $validator = Validator::make($request->all(), [
             'email' => 'required|bail|email|bail|exists:usuarios,email',
             'contrasenia' => 'required'],
-            ['email.required' => 'Por favor ingrese su correo', 
+            ['email.required' => 'Por favor ingrese su correo',
              'email.email' => 'El formato de correo no es correcto',
              'email.exists' => 'El correo ingresado no existe',
              'contrasenia.required' => 'Por favor ingrese una contraseña'
                ]);
 
         if ($validator->fails()) {
-              
+
               return redirect()->back()->withInput()->withErrors($validator->errors());
         }
 
@@ -54,7 +54,7 @@ class SesionController extends Controller
                     ->where('email', $request->input('email'))
                     ->first();             
 
-        $request['contraseniaValida'] = $usuario->contrasenia;   
+        $request['contraseniaValida'] = $usuario->contrasenia;
 
         $validator = Validator::make($request->all(), [
             'contrasenia' => 'same:contraseniaValida'],
@@ -62,7 +62,7 @@ class SesionController extends Controller
                ]);
 
         if ($validator->fails()) {
-              
+
               return redirect()->back()->withInput()->withErrors($validator->errors());
         }
 
@@ -110,22 +110,22 @@ class SesionController extends Controller
 
         foreach ($notificaciones as $notificacion) {
             $mensajes[$notificacion->id] = $notificacion->mensaje;
-        }                     
+        }
 
         $mesVencimiento = $usuario->mes_vencimiento;
 
         if(strlen($usuario->mes_vencimiento) < 2){
             $mesVencimiento = '0'.$mesVencimiento;
-        }                
+        }
 
-        session(['idUsuario' => $usuario->id, 
-                'nombreUsuario' => $usuario->nombre, 
-                'apellidoUsuario' => $usuario->apellido, 
-                'email' => $usuario->email, 
-                'esPremium' => $usuario->es_premium, 
+        session(['idUsuario' => $usuario->id,
+                'nombreUsuario' => $usuario->nombre,
+                'apellidoUsuario' => $usuario->apellido,
+                'email' => $usuario->email,
+                'esPremium' => $usuario->es_premium,
                 'numeroTarjeta' => $usuario->numero_tarjeta,
                 'mesVencimiento' =>$mesVencimiento,
-                'anioVencimiento' =>$usuario->anio_vencimiento, 
+                'anioVencimiento' =>$usuario->anio_vencimiento,
                 'codigoSeguridad' =>$usuario->codigo_seguridad,
                 'creditos' => $usuario->creditos,
                 'contrasenia' => $usuario->contrasenia,
@@ -134,10 +134,10 @@ class SesionController extends Controller
                 'mensajes' => $mensajes]);
 
         if(!is_null($solicitud)){
-            session(['solicitud' => true]);             
+            session(['solicitud' => true]);
         }
 
-        return redirect('/');           
+        return redirect('/');
     }
 
 
@@ -158,29 +158,29 @@ class SesionController extends Controller
                             ->orderBy('fecha_inicio', 'asc')
                             ->get();
 
-        
+
         $data['subastas'] = array_merge($subastasEnPeriodo->all(), $subastasEnInscripcion->all());
 
 
         return $data;
     }
 
-    public function listarInicio(){
+    public function listarInicio($resultadosDeBusqueda=[]){
 
         // $subasta1= DB::table('subastas')->where('id', 1)->first();
         // $hospedaje1 = DB::table('hospedajes')->where('id', $subasta1->id_hospedaje)->first();
         // $subasta2 = DB::table('subastas')->where('id', 2)->first();
         // $hospedaje2 = DB::table('hospedajes')->where('id', $subasta2->id_hospedaje)->first();
-        
 
-        // $data['tituloHospedaje1'] = $hospedaje1->titulo;    
-        // $data['nombreImagen1'] = $hospedaje1->imagen;   
+
+        // $data['tituloHospedaje1'] = $hospedaje1->titulo;
+        // $data['nombreImagen1'] = $hospedaje1->imagen;
         // $data['idSubasta1'] = $subasta1->id;
         // $data['montoBase1'] = $subasta1->monto_base;
         // $data['fechaInicio1'] = $subasta1->fecha_inicio;
 
-        // $data['tituloHospedaje2'] = $hospedaje2->titulo;  
-        // $data['nombreImagen2'] = $hospedaje2->imagen;   
+        // $data['tituloHospedaje2'] = $hospedaje2->titulo;
+        // $data['nombreImagen2'] = $hospedaje2->imagen;
         // $data['idSubasta2'] = $subasta2->id;
         // $data['montoBase2'] = $subasta2->monto_base;
         // $data['fechaInicio2'] = $subasta2->fecha_inicio;
@@ -190,9 +190,9 @@ class SesionController extends Controller
         $data = $this->obtenerListas();
         $localidades = DB::table('localidads')->get();
         $data['localidades'] = $localidades;
-
+        $data["resultadosDeBusqueda"] = $resultadosDeBusqueda;
         return view('welcome', $data);
-    } 
+    }
 
     public function validarRegistro(Request $request){
 
@@ -231,7 +231,7 @@ class SesionController extends Controller
                ]);
 
         if ($validator->fails()) {
-              
+
               return redirect()->back()->withInput()->withErrors($validator->errors());
         }
 
@@ -248,11 +248,11 @@ class SesionController extends Controller
         ],
             ['contrasenia.confirmed' => 'Las contraseñas son diferentes',
             'edad.gte' => 'Debe ser mayor de 18 años para usar el sistema',
-            'noVencida.accepted' => 'La tarjeta se encuntra vencidad' 
+            'noVencida.accepted' => 'La tarjeta se encuntra vencidad'
                ]);
 
         if ($validator->fails()) {
-              
+
               return redirect()->back()->withInput()->withErrors($validator->errors());
         }
 
@@ -264,7 +264,7 @@ class SesionController extends Controller
             $usuario->numero_tarjeta = $request->input('numeroTarjeta');
             $usuario->fecha_nacimiento = $request->input('fechaNacimiento');
 
-        $usuario->save();    
+        $usuario->save();
 
         return redirect('/login')->with('exito', 'El usuario se creo exitosamente');
     }
@@ -281,9 +281,9 @@ class SesionController extends Controller
                     ->where('id_usuario', session('idUsuario'))
                     ->get();
 
-        $idSubastas = [-1];            
+        $idSubastas = [-1];
         foreach ($SubastasDondeParticipa as $SubastaDondeParticipa) {
-             $idSubastas[] = $SubastaDondeParticipa->id_subasta;   
+             $idSubastas[] = $SubastaDondeParticipa->id_subasta;
         }
 
         $data['subastas'] = DB::table('subastas')
@@ -358,7 +358,7 @@ class SesionController extends Controller
             'noVencida' => 'accepted'
         ],
             ['edad.gte' => 'Debe ser mayor de 18 años para usar el sistema',
-            'noVencida.accepted' => 'La tarjeta se encuntra vencidad' 
+            'noVencida.accepted' => 'La tarjeta se encuntra vencidad'
                ]);
 
         if ($validator->fails()) {
@@ -376,13 +376,13 @@ class SesionController extends Controller
                       'anio_vencimiento' => $request->input('anioVencimiento'),
                       'codigo_seguridad' => $request->input('codigoSeguridad')]);
 
-        session(['nombreUsuario' => $request->input('nombreUsuario'), 
+        session(['nombreUsuario' => $request->input('nombreUsuario'),
                 'apellidoUsuario' => $request->input('apellidoUsuario'),
                 'numeroTarjeta' => $request->input('numeroTarjeta'),
                 'fechaNacimiento' => $request->input('fechaNacimiento'),
                 'email' => $request->input('email'),
                 'mesVencimiento' => $request->input('mesVencimiento'),
-                'anioVencimiento' => $request->input('anioVencimiento'), 
+                'anioVencimiento' => $request->input('anioVencimiento'),
                 'codigoSeguridad' => $request->input('codigoSeguridad')]);
 
         return redirect('/perfil')->with('exito', 'El usuario se modificó exitosamente');
@@ -399,7 +399,7 @@ class SesionController extends Controller
             'contraseniaNueva.required' => 'Por favor ingrese una nueva contraseña',
             'contraseniaNueva_confirmation.required' => 'Por favor ingrese la confirmación de su nueva contraseña'
               ]);
-            
+
         $request->validate([
             'contraseniaNueva' => 'confirmed',],
             ['contraseniaNueva.confirmed' => 'Las contraseñas son diferentes'
@@ -409,7 +409,7 @@ class SesionController extends Controller
     }
 
     public function buscar(Request $request){
-
+      
         if((is_null($request->input('fechaInicioAlojamiento'))) && (is_null($request->input('fechaFinAlojamiento'))) && (is_null($request->input('tipoBusqueda'))) && (is_null($request->input('localidad')))){
                 $request['hayBusqueda'] = false;
                 $request->validate([
@@ -509,9 +509,8 @@ class SesionController extends Controller
             return $subastas;        
         }
 
-        $data['subastas'] = $subastas;
 
-        return view('resultados', $data);
+        return $this->listarInicio($subastas);
     }
 
     public function informacion(){
@@ -521,9 +520,9 @@ class SesionController extends Controller
 
         $solicitud->save();
 
-        session(['solicitud' => true]); 
+        session(['solicitud' => true]);
 
-        return redirect('/'); 
+        return redirect('/');
     }
 
     public function listarPerfilAdministrador(){
@@ -532,10 +531,10 @@ class SesionController extends Controller
                     ->get();
 
         $idUsuarios = [];
-                    
+
         foreach ($solicitantes as $solicitante) {
-             $idUsuarios[] = $solicitante->id_usuario;   
-        }       
+             $idUsuarios[] = $solicitante->id_usuario;
+        }
 
         $usuarios = DB::table('usuarios')
                     ->where('id', '!=', 1)
@@ -547,7 +546,7 @@ class SesionController extends Controller
                     ->whereIn('id', $idUsuarios)
                     ->orderBy('apellido')
                     ->orderBy('nombre')
-                    ->get();                 
+                    ->get();
 
         $data['usuarios'] = $usuarios;
         $data['solicitantes'] = $solicitantes;
@@ -567,10 +566,10 @@ class SesionController extends Controller
         $notificacion->id_usuario = $idUsuario;
         $notificacion->mensaje = "Fue pasado a usuario basico el dia ".$hoy.". Se descontará el monto adicional para el próximo mes.";
 
-        $notificacion->save();    
+        $notificacion->save();
 
         return redirect('/perfilAdministrador');
-        
+
     }
 
     public function pasarAPremium($idUsuario){
@@ -585,10 +584,10 @@ class SesionController extends Controller
         $notificacion->id_usuario = $idUsuario;
         $notificacion->mensaje = "Fue pasado a usuario premium el dia ".$hoy.". Se cobrará el costo de pasar a premium y adicional por mes a partir del próximo mes.";
 
-        $notificacion->save();    
+        $notificacion->save();
 
         return redirect('/perfilAdministrador');
-        
+
     }
 
     public function aceptarSolicitante($idUsuario){
@@ -599,7 +598,7 @@ class SesionController extends Controller
 
         DB::table('solicitantes')
             ->where('id_usuario', $idUsuario)
-            ->delete();    
+            ->delete();
 
         $hoy = Carbon::today()->format('d-m-Y');
 
@@ -607,17 +606,17 @@ class SesionController extends Controller
         $notificacion->id_usuario = $idUsuario;
         $notificacion->mensaje = "Su solicitud de usuario premium fue aceptada el dia ".$hoy.". Se cobrará el costo de pasar a premium y adicional por mes a partir del próximo mes.";
 
-        $notificacion->save();    
+        $notificacion->save();
 
         return redirect('/perfilAdministrador');
-        
+
     }
 
     public function rechazarSolicitante($idUsuario){
 
         DB::table('solicitantes')
             ->where('id_usuario', $idUsuario)
-            ->delete();    
+            ->delete();
 
         $hoy = Carbon::today()->format('d-m-Y');
 
@@ -625,10 +624,10 @@ class SesionController extends Controller
         $notificacion->id_usuario = $idUsuario;
         $notificacion->mensaje = "Su solicitud de usuario premium fue rechazada el dia ".$hoy;
 
-        $notificacion->save();    
+        $notificacion->save();
 
         return redirect('/perfilAdministrador');
-        
+
     }
 
     public function listarLogin(){
