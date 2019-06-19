@@ -13,6 +13,7 @@
 
 
 Route::get('/', 'SesionController@listarInicio');
+Route::post('/', 'SesionController@buscar');
 
 Route::get('/sesion', function () {
     return view('iniciarSesion');
@@ -32,8 +33,6 @@ Route::get('/listarsubastas', 'SubastasController@listarSubastas');
 Route::post('/pujarsubasta', 'SubastasController@pujar');
 
 Route::post('/inscribirse', 'SubastasController@inscribirse');
-
-Route::post('/buscar', 'SesionController@buscar');
 
 Route::get('/login', 'SesionController@listarLogin');
 

@@ -1,4 +1,4 @@
-<?php 
+<?php
 use Illuminate\Support\Facades\DB;
 
 ?>
@@ -14,12 +14,12 @@ use Illuminate\Support\Facades\DB;
 				<div class="card card-primary">
 			  		<div class="card-heading">
 			    		<h3 style="margin-top: 5px" class="card-title text-center">
-			    			<b><?php 
+			    			<b><?php
 								$hospedaje = DB::table('hospedajes')
 								->select('titulo', 'imagen' )
 				                ->where('id', $subasta->id_hospedaje)
 				                ->first();
-				                echo $hospedaje->titulo;    
+				                echo $hospedaje->titulo;
 				   			?></b>
 				   		</h3>
 				   		<hr>
@@ -53,12 +53,12 @@ use Illuminate\Support\Facades\DB;
 				<div class="card" style="border-radius: 25px; background: #c8c8c8">
 			  		<div class="card-heading">
 			    		<h3 style="margin-top: 5px" class="card-title text-center">
-			    			<b><?php 
+			    			<b><?php
 								$hospedaje = DB::table('hospedajes')
 								->select('titulo', 'imagen' )
 				                ->where('id', $subasta->id_hospedaje)
 				                ->first();
-				                echo $hospedaje->titulo;    
+				                echo $hospedaje->titulo;
 				   			?></b>
 				   		</h3>
 				   		<hr>
@@ -73,7 +73,7 @@ use Illuminate\Support\Facades\DB;
 								<p><b>Fecha de ingreso:</b> {{ Carbon\Carbon::parse($subasta->fecha_inicio)->format('d-m-Y') }} </p>
 								<p><b>Fecha de egreso:</b> {{ Carbon\Carbon::parse($subasta->fecha_fin)->format('d-m-Y') }}</p>
 								<hr>
-								<a class="btn btn-info float-right" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}"> 
+								<a class="btn btn-info float-right" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}">
 			                                    Ver detalles subasta
 			                            </a>
 		                    </div>
