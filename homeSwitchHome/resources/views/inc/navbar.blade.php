@@ -36,12 +36,15 @@
 
         @if (Session('nombreUsuario') == 'Andrea')
           <li class="nav-item ">
-            <a class="nav-link" href="/listarhospedajes">Ver Hospedajes</a>
-          </li>
-          <li class="nav-item ">
             <a class="nav-link" href="/crearhospedaje">Crear Hospedajes</a>
           </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/listarhospedajes">Ver Hospedajes</a>
+          </li>
         @endif
+        <li class="nav-item">
+            <a class="nav-link itemnav" href="/listarsubastas">Ver Subastas</a>
+        </li>
       </ul>
     </div>
 
