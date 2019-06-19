@@ -409,7 +409,7 @@ class SesionController extends Controller
     }
 
     public function buscar(Request $request){
-
+      
         if((is_null($request->input('fechaInicioAlojamiento'))) && (is_null($request->input('fechaFinAlojamiento'))) && (is_null($request->input('tipoBusqueda'))) && (is_null($request->input('localidad')))){
                 $request['hayBusqueda'] = false;
                 $request->validate([
@@ -433,15 +433,22 @@ class SesionController extends Controller
                   ]);
         }
 
-        $fechaInicioAlojamiento = Carbon::create($request->input('fechaInicioAlojamiento'));
-        $fechaFinAlojamiento = Carbon::create($request->input('fechaFinAlojamiento'));
-        $fechaFinAlojamiento = $fechaFinAlojamiento->startOfWeek()->format('Y-m-d');
+        if(!is_null($request->input('fechaInicioAlojamiento'))){
+            
+            $fechaInicioAlojamiento = Carbon::create($request->input('fechaInicioAlojamiento'));
+            $fechaFinAlojamiento = Carbon::create($request->input('fechaFinAlojamiento'));
+            $fechaFinAlojamiento = $fechaFinAlojamiento->startOfWeek()->format('Y-m-d');
 
-        if($fechaInicioAlojamiento->dayOfWeek != Carbon::MONDAY) {
-            $fechaInicioAlojamiento = $fechaInicioAlojamiento->endOfWeek()->addDay()->format('Y-m-d');
+            if($fechaInicioAlojamiento->dayOfWeek != Carbon::MONDAY) {
+                $fechaInicioAlojamiento = $fechaInicioAlojamiento->endOfWeek()->addDay()->format('Y-m-d');
+            }
+            else{
+                $fechaInicioAlojamiento = $fechaInicioAlojamiento->format('Y-m-d');
+            }
         }
         else{
-            $fechaInicioAlojamiento = $fechaInicioAlojamiento->format('Y-m-d');
+            $fechaInicioAlojamiento = null;
+            $fechaFinAlojamiento = null;
         }
 
         $localidad = $request->input('localidad');
@@ -450,58 +457,58 @@ class SesionController extends Controller
                     ->where('id_localidad', $localidad)
                     ->get();
 
-        $idHospedajes = [-1];
-        foreach ($hospedajes as $hospedaje) {
-             $idHospedajes[] = $hospedaje->id;
+        if(is_null($request->input('localidad'))){
+            $idHospedajes = null;            
+            
+        }
+        else{
+            $idHospedajes = [-1]; 
         }
 
-        if($request->input('tipoBusqueda') == 'Subasta'){
-            $subastas = DB::table('subastas')
-                    ->when($idHospedajes, function ($query, $idHospedajes) {
-                        $hoy = Carbon::today()->format('Y-m-d');
-                        return $query
-                                ->whereNull('ganador')
-                                ->whereDate('fecha_inicio_inscripcion', '<=' , $hoy)
-                                ->whereIn('id_hospedaje', $idHospedajes);
-                    });
+        foreach ($hospedajes as $hospedaje) {
+                 $idHospedajes[] = $hospedaje->id;   
+        }
 
-            $subastas =  DB::table('subastas')
-                    ->when($fechaInicioAlojamiento, function ($query) use ($fechaInicioAlojamiento,$fechaFinAlojamiento){
-                        $hoy = Carbon::today()->format('Y-m-d');
-                        return $query
-                                ->whereNull('ganador')
-                                ->whereDate('fecha_inicio_inscripcion', '<=' , $hoy)
-                                ->whereDate('fecha_inicio', '>=', $fechaInicioAlojamiento)
-                                ->whereDate('fecha_fin', '<=', $fechaFinAlojamiento);
+        $hoy = Carbon::today()->format('Y-m-d');
+
+        if($request->input('tipoBusqueda') == 'Subasta'){
+            
+            $subastas = DB::table('subastas')
+                    ->whereNull('ganador')
+                    ->whereDate('fecha_inicio_inscripcion', '<=' , $hoy)
+                    ->when($idHospedajes, function ($query, $idHospedajes){
+                            return $query
+                                    ->whereIn('id_hospedaje', $idHospedajes);
                     })
-                    ->union($subastas)
-                    ->get();
+                    ->when($fechaInicioAlojamiento, function ($query) use ($fechaInicioAlojamiento,$fechaFinAlojamiento){
+                            return $query
+                                    ->whereDate('fecha_inicio', '>=', $fechaInicioAlojamiento)
+                                    ->whereDate('fecha_fin', '<=', $fechaFinAlojamiento);
+                    })
+                    ->get();              
         }
         elseif($request->input('tipoBusqueda') == 'Hotsale') {
             $subastas = [];
         }
         else{
-            $subastas = DB::table('subastas')
-                    ->when($idHospedajes, function ($query, $idHospedajes) {
-                        $hoy = Carbon::today()->format('Y-m-d');
-                        return $query
-                                ->whereNull('ganador')
-                                ->whereDate('fecha_inicio_inscripcion', '<=' , $hoy)
-                                ->whereIn('id_hospedaje', $idHospedajes);
-                    });
 
-            $subastas =  DB::table('subastas')
-                    ->when($fechaInicioAlojamiento, function ($query) use ($fechaInicioAlojamiento,$fechaFinAlojamiento){
-                        $hoy = Carbon::today()->format('Y-m-d');
-                        return $query
-                                ->whereNull('ganador')
-                                ->whereDate('fecha_inicio_inscripcion', '<=' , $hoy)
-                                ->whereDate('fecha_inicio', '>=', $fechaInicioAlojamiento)
-                                ->whereDate('fecha_fin', '<=', $fechaFinAlojamiento);
+            $subastas = DB::table('subastas')
+                    ->whereNull('ganador')
+                    ->whereDate('fecha_inicio_inscripcion', '<=' , $hoy)
+                    ->when($idHospedajes, function ($query, $idHospedajes){
+                            return $query
+                                    ->whereIn('id_hospedaje', $idHospedajes);
                     })
-                    ->union($subastas)
-                    ->get();
+                    ->when($fechaInicioAlojamiento, function ($query) use ($fechaInicioAlojamiento,$fechaFinAlojamiento){
+                            return $query
+                                    ->whereDate('fecha_inicio', '>=', $fechaInicioAlojamiento)
+                                    ->whereDate('fecha_fin', '<=', $fechaFinAlojamiento);
+                    })
+                    ->get();      
+    
+            return $subastas;        
         }
+
 
         return $this->listarInicio($subastas);
     }

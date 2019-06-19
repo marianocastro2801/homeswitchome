@@ -108,7 +108,7 @@
 									        <input type="button"  class="btn btn-danger" value="Cancelar" aria-label="Close" data-dismiss="modal" />
 									    </div>
 									    <div class="col-md-6 col-sm-6 col-xs-6 pad-adjust">
-									        <input type="submit"  class="btn btn-warning btn-block" value="Guradar" />
+									        <input type="submit"  class="btn btn-warning btn-block" value="Guardar" />
 									    </div>
 									</div>
 								</div>
