@@ -24,7 +24,7 @@ Route::get('/crearsubasta/{id}', ['as' => 'crearsubasta', 'uses' => 'SubastasCon
 
 Route::post('/crearsubasta/validar', 'SubastasController@validar');
 
-Route::get('/cargardetallesubasta/{id}', [ 'as' => 'cargardetallesubasta', 
+Route::get('/cargardetallesubasta/{id}', [ 'as' => 'cargardetallesubasta',
 	'uses' => 'SubastasController@detalleSubasta']);
 
 Route::get('/listarsubastas', 'SubastasController@listarSubastas');
@@ -33,7 +33,7 @@ Route::post('/pujarsubasta', 'SubastasController@pujar');
 
 Route::post('/inscribirse', 'SubastasController@inscribirse');
 
-Route::get('/buscar', 'SesionController@buscar');
+Route::post('/buscar', 'SesionController@buscar');
 
 Route::get('/login', 'SesionController@listarLogin');
 
