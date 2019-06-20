@@ -34,6 +34,8 @@ Route::post('/pujarsubasta', 'SubastasController@pujar');
 
 Route::post('/inscribirse', 'SubastasController@inscribirse');
 
+Route::post('/', 'SesionController@buscar');
+
 Route::get('/login', 'SesionController@listarLogin');
 
 Route::post('/login/validarUsuario', 'SesionController@validarUsuario');

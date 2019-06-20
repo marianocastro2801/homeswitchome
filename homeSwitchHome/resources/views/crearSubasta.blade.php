@@ -38,10 +38,10 @@
 										      		<span class="col-md-1 col-group glyphicon glyphicon-calendar" style="margin-top: 35px; margin-left: -20px"></span>
 										      	</div>
 										      	<div class="form-group col-md-11">
-										      	<label for="fechaInicio">Fecha inicial</label>
+										      	<label for="fechaInicio">Fecha inicio alojamiento</label>
 									      		<input type="date" class="form-control form-control-sm" name="fechaInicio" id="fechaInicio">
 									      	</div>
-												<p class="text-muted text-center">(La estadía dura 7 dias desde la fecha incial)</p>
+												<p class="text-muted text-center">La estadía dura 7 dias desde la fecha incial, la subasta se crea para 6 meses antes de la estadía.</p>
 											</div>
 										</div>
 												<br>

@@ -45,7 +45,7 @@ class SubastasController extends Controller
 
         $fechaInicio = Carbon::create($request->input('fechaInicio'));
         $fechaInicio = $fechaInicio->startOfWeek();
-        $fechaFin = Carbon::create($request->input('fechaInicio'))->startOfWeek()->addDays(7)->format('Y-m-d');
+        $fechaFin = Carbon::create($request->input('fechaInicio'))->startOfWeek()->addDays(6)->format('Y-m-d');
         $request['fechaInicio'] = $fechaInicio;
         $request['fechaFin'] = $fechaFin;
 
@@ -62,18 +62,16 @@ class SubastasController extends Controller
                ]);
 
         $subastas = DB::table('subastas')
+                    ->where('fecha_inicio', '<=', $request->input('fechaInicio'))
+                    ->Where('fecha_fin', '>=', $request->input('fechaFin'))
                     ->where('id_hospedaje', $request->input('idHospedaje'))
-                    ->whereNull('ganador')
-                    ->get();
+                    ->count();
 
-        foreach ($subastas as $subasta) {
-            $request['fechaInicioSubasta'] = $subasta->fecha_inicio;
-            $request['fechaFinSubasta'] = $subasta->fecha_fin;
+        $request['cantidadSubastas'] = $subastas;
 
-            $request->validate([
-            'fechaInicio' => 'date_overlap:'.$fechaFinSubasta.','.$fechaFin.','.$fechaInicioSubasta],
-            ['fechaInicio.date_overlap' => 'La fecha ingresada se superpone con otra subasta' ]);
-        }
+        $request->validate([
+            'cantidadSubastas' => 'lt:1'],
+            ['cantidadSubastas.lt' => 'La fecha ingresada se superpone con otra subasta' ]);
 
     	$subasta = new Subasta;
     	$subasta->monto_base = $request->input('montoBase');
@@ -97,7 +95,7 @@ class SubastasController extends Controller
         
         if($hoy < $subasta->fecha_inicio_subasta){
             $data['diferencia'] = Carbon::create($subasta->fecha_inicio_subasta)->diffInDays($hoy);
-            $data['diferencia'] = 'Faltan '.$data['diferencia'].' días para que la subasta comience';
+            $data['diferencia'] = 'La subasta comienza el '.Carbon::create($subasta->fecha_inicio_subasta)->format('d-m-Y');
         }
         elseif ($hoy >= $subasta->fecha_fin_subasta){
             $data['diferencia'] = 'La subasta ya terminó';
