@@ -2,8 +2,8 @@
 @section('content')
 <style type="text/css">
 	.fondo{
-		margin-top: -13px; 
-		padding: 25px;   
+		margin-top: -13px;
+		padding: 25px;
 		background: black;
 	}
 </style>
@@ -12,13 +12,18 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-8">
-			@if(count($subastas) == 0)  
+			@if(count($subastas) == 0)
+
+
 				<!--Si no hay publicacion-->
 		    	<div class="container text-center bg-warning" style="border-radius: 25px; margin-top: 80px"><br><p><b>No hay subastas en este momento. Intente mas tarde</b></p><br></div>
 
-		    @else 
+		    @else
+
+
 		    	<!--Si hay subastas muestro en carrusel-->
-		    	<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-left: -60px; margin-right: 80px; margin-top: 60px">
+		    	<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-left: -60px; margin-right: 80px; margin-top: 70px">
+
 					@foreach($subastas as $subasta)
 			        	<ol class="carousel-indicators">
 				          	@if($loop->first)
@@ -29,30 +34,32 @@
 			        @endforeach
 			        <div class="carousel-inner">
 			            @foreach($subastas as $subasta)
-				            <?php 
+				            <?php
 				                $hospedaje = DB::table('hospedajes')
 				                    ->where('id', $subasta->id_hospedaje)
-				                    ->first(); 
+				                    ->first();
 				            ?>
 				            @if($loop->first)
 					            <div class="carousel-item active">
-					            	<img class="d-block w-100" src="/images/{{ $hospedaje->imagen }}" height="430" alt="First slide" style="border-radius: 25px;">
+					            	<img class="d-block w-100" src="/images/{{ $hospedaje->imagen }}" height="430" alt="First slide" >
 					                <div class="carousel-caption d-none d-md-block">
-					                	<h1 style="color: black; border-color: black; margin-top: -350px">
-					                        {{ $hospedaje->titulo  }}
-					                    </h1>
-					                    <p class="card-text mb-auto text-dark">Monto Base: ${{ $subasta->monto_base }}</p>
+														<div style="background:black; border-radius: 45px;margin-top: -390px">
+															<h4 style="color: white;margin-bottom: -15px; font-family: serif;">
+																		{{ $hospedaje->titulo  }}
+																</h4>
+																</div>
 					                </div>
 					            </div>
 				            @else
 				                <div class="carousel-item">
-				                	<img class="d-block w-100" src="/images/{{ $hospedaje->imagen }}" height="430" style="border-radius: 25px;" >
+				                	<img class="d-block w-100" src="/images/{{ $hospedaje->imagen }}" height="430" >
 				                	<div class="carousel-caption d-none d-md-block">
-				                    	<h1 style="color: black; border-color: black; margin-top: -350px">
+														<div style="background:black; border-radius: 45px;margin-top: -390px">
+															<h4 style="color: white;margin-bottom: -15px;;font-family: serif">
 				                      		{{ $hospedaje->titulo  }}
-				                    	</h1>
-				                    	<p class="card-text mb-auto text-dark">Monto Base: ${{ $subasta->monto_base }}</p>
-				                  	</div>
+				                    	</h4>
+				                    	</div>
+				                  </div>
 				                </div>
 				            @endif
 			        	@endforeach
@@ -93,7 +100,7 @@
 					<button style="margin-top: 10px; margin-bottom: -10px" class="btn btn-lg btn-warning btn-block" >
 						Registrarse
 					</button>
-				</div> 
+				</div>
 			</a>
 			<br>
 			<br>
