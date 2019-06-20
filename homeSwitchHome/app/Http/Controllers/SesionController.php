@@ -52,7 +52,7 @@ class SesionController extends Controller
 
         $usuario = DB::table('usuarios')
                     ->where('email', $request->input('email'))
-                    ->first();             
+                    ->first();
 
         $request['contraseniaValida'] = $usuario->contrasenia;
 
@@ -76,9 +76,9 @@ class SesionController extends Controller
                                 ->where('id_usuario', $usuario->id)
                                 ->get();
 
-        $idSubastas = [-1];            
+        $idSubastas = [-1];
         foreach ($SubastasInscriptas as $SubastaInscriptas) {
-             $idSubastas[] = $SubastaInscriptas->id_subasta;   
+             $idSubastas[] = $SubastaInscriptas->id_subasta;
         }
 
         $hoy = Carbon::today()->format('Y-m-d');
@@ -97,14 +97,14 @@ class SesionController extends Controller
             Notificacion::updateOrCreate(
                 ['id_subasta' => $subasta->id,
                 'id_usuario' => $usuario->id],
-                ['mensaje' => 'Comenzo la subasta para '.$hospedaje->titulo, 
+                ['mensaje' => 'Comenzo la subasta para '.$hospedaje->titulo,
                 'created_at' => $fechaDeInicioPuja]);
-        }       
- 
+        }
+
         $notificaciones = DB::table('notificacions')
                         ->where('id_usuario', $usuario->id)
                         ->orderBy('created_at', 'desc')
-                        ->get();                  
+                        ->get();
 
         $mensajes = [];
 
@@ -191,6 +191,11 @@ class SesionController extends Controller
         $localidades = DB::table('localidads')->get();
         $data['localidades'] = $localidades;
         $data["resultadosDeBusqueda"] = $resultadosDeBusqueda;
+        if(count($resultadosDeBusqueda) == 0){
+          $data['vacio'] = true;
+        } else {
+          $data['vacio'] = false;
+        }
         return view('welcome', $data);
     }
 
@@ -409,7 +414,7 @@ class SesionController extends Controller
     }
 
     public function buscar(Request $request){
-      
+
         if((is_null($request->input('fechaInicioAlojamiento'))) && (is_null($request->input('fechaFinAlojamiento'))) && (is_null($request->input('tipoBusqueda'))) && (is_null($request->input('localidad')))){
                 $request['hayBusqueda'] = false;
                 $request->validate([
@@ -434,7 +439,7 @@ class SesionController extends Controller
         }
 
         if(!is_null($request->input('fechaInicioAlojamiento'))){
-            
+
             $fechaInicioAlojamiento = Carbon::create($request->input('fechaInicioAlojamiento'));
             $fechaFinAlojamiento = Carbon::create($request->input('fechaFinAlojamiento'));
             $fechaFinAlojamiento = $fechaFinAlojamiento->startOfWeek()->format('Y-m-d');
@@ -458,21 +463,21 @@ class SesionController extends Controller
                     ->get();
 
         if(is_null($request->input('localidad'))){
-            $idHospedajes = null;            
-            
+            $idHospedajes = null;
+
         }
         else{
-            $idHospedajes = [-1]; 
+            $idHospedajes = [-1];
         }
 
         foreach ($hospedajes as $hospedaje) {
-                 $idHospedajes[] = $hospedaje->id;   
+                 $idHospedajes[] = $hospedaje->id;
         }
 
         $hoy = Carbon::today()->format('Y-m-d');
 
         if($request->input('tipoBusqueda') == 'Subasta'){
-            
+
             $subastas = DB::table('subastas')
                     ->whereNull('ganador')
                     ->whereDate('fecha_inicio_inscripcion', '<=' , $hoy)
@@ -485,7 +490,7 @@ class SesionController extends Controller
                                     ->whereDate('fecha_inicio', '>=', $fechaInicioAlojamiento)
                                     ->whereDate('fecha_fin', '<=', $fechaFinAlojamiento);
                     })
-                    ->get();              
+                    ->get();
         }
         elseif($request->input('tipoBusqueda') == 'Hotsale') {
             $subastas = [];
@@ -504,9 +509,7 @@ class SesionController extends Controller
                                     ->whereDate('fecha_inicio', '>=', $fechaInicioAlojamiento)
                                     ->whereDate('fecha_fin', '<=', $fechaFinAlojamiento);
                     })
-                    ->get();      
-    
-            return $subastas;        
+                    ->get();
         }
 
 
