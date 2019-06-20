@@ -1,7 +1,6 @@
 <!--Navbar-->
 <nav class="navbar navbar-expand-lg navbar-static-top container-fluid navbar-dark bg-dark">
 
-
   <!-- Navbar brand -->
   <a class="navbar-brand" @if(!(Request::is('login')) && !(Request::is('registrar')))
                                 {{ 'href=/' }}
@@ -20,6 +19,10 @@
 
   <!-- Collapse button -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+      class="navbar-toggler-icon"></span></button>
+
+       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
       class="navbar-toggler-icon"></span></button>
  @if(!(Request::is('login')) && !(Request::is('registrar')))
