@@ -34,6 +34,25 @@ class SesionController extends Controller
     //     }
     // }
 
+    public function verificarSolictud(){
+        $solicitud = DB::table('solicitantes')
+                        ->where('id_usuario', session('idUsuario'))
+                        ->first();
+
+        $usuario = DB::table('usuarios')
+                    ->where('id', session('idUsuario'))
+                    ->first();               
+
+        session(['esPremium' => $usuario->es_premium]);
+
+        if(!is_null($solicitud)){
+            session(['solicitud' => true]);
+        }
+        else{
+            session(['solicitud' => false]);   
+        }                        
+    }
+
     public function validarUsuario(Request $request){
 
         $validator = Validator::make($request->all(), [
@@ -197,7 +216,8 @@ class SesionController extends Controller
         } else {
           $data['vacio'] = false;
         }
-
+      
+        $this->verificarSolictud();
         return view('welcome', $data);
     }
 
@@ -278,6 +298,7 @@ class SesionController extends Controller
 
     public function modificarCuenta(){
 
+        $this->verificarSolictud();
         return view('modificarUsuario');
 
     }
@@ -298,7 +319,7 @@ class SesionController extends Controller
                                 ->whereIn('id', $idSubastas)
                                 ->get();
 
-
+        $this->verificarSolictud();
         return view('miPerfil', $data);
 
     }
@@ -614,7 +635,6 @@ class SesionController extends Controller
         $notificacion->save();
 
         return redirect('/perfilAdministrador');
-
     }
 
     public function rechazarSolicitante($idUsuario){

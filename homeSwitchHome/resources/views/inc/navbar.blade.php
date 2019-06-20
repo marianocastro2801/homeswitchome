@@ -84,8 +84,8 @@
                 </a>
               @else
                 @if(session('solicitud'))
-                  <button type="button" id="solicitud" class="btn btn-black text-white btn-lg">
-                  Usted ya solicitó premium</button>
+                  <button type="button" id="solicitud" class="btn btn-primary text-white btn-lg">
+                  Solicitud premium enviada</button>
                 @else
                   <!-- Button trigger modal -->
                    <button type="button" id="solicitar" class="btn btn-success btn-lg" data-toggle="modal" data-target="#exampleModal">

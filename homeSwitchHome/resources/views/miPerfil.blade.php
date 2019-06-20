@@ -1,3 +1,6 @@
+<?php 
+    use Illuminate\Support\Facades\DB;                            
+?>
 @extends('layouts.baseapp')
 @section('content')
 
@@ -10,6 +13,7 @@
         background: black;
         margin-bottom: 60px;
     }
+
 </style>
 
 <!------ Include the above in your HEAD tag ---------->
@@ -23,7 +27,7 @@
                 <p>Nombre: {{ session('nombreUsuario') }} </p>
                 <p>Apellido: {{ session('apellidoUsuario') }}</p>
                 <p>Email: {{ session('email') }}</p>
-                <p>Fecha De Nacimiento: {{ Carbon\Carbon::parse(session('fechaNacimiento'))->format('d-m-Y') }} </p>
+                <p>Fecha de nacimiento: {{ Carbon\Carbon::parse(session('fechaNacimiento'))->format('d-m-Y') }} </p>
                 <p>Creditos: {{ session('creditos')}} </p>
                 <hr style="background: white">
                 @if(session('esPremium'))
@@ -48,30 +52,41 @@
         <!--Subastas inscriptas-->
         <div class="col-md-6">
             <div class="fondo text-white">
-                <h3 class="text-center"> Subastas incriptas e inicio de puja</h3>
+                <h3 class="text-center">Subastas en las que participa</h3>
                 <hr style="background: white">
                     @if(count($subastas) == 0)
                         <!--Si no hay publicacion-->
                         <div class="container text-center bg-info" style="border-radius: 25px; margin-top: 20px"><br><p><b>Por el momento no participa de ninguna subasta</b></p><br>
-                            <a href="listarsubastas" style="text-decoration: none"><button class="btn btn-dark" style="margin-bottom: 20px"> Ver Subastas</button></a>
+                            <a href="listarsubastas" style="text-decoration: none"><button class="btn btn-dark" style="margin-bottom: 20px">Ver Subastas</button></a>
                         </div>
                     @else
                         <table class="table table-striped table-dark">
                             <thead>
                                 <tr>
-                                  <th scope="col">Desde</th>
-                                  <th scope="col">Hasta</th>
-                                  <th scope="col">Detalle</th>
+                                  <th scope="col" style="text-align: center">Titulo</th>  
+                                  <th scope="col" style="text-align: center">Comienzo subasta</th>
+                                  <th scope="col" style="padding: 12px 20px 12px 20px;text-align: center">Fin subasta</th>
+                                  <th scope="col" style="text-align: center">Detalle</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($subastas as $subasta)
+                                    <?php 
+                                        $hospedaje = DB::table('hospedajes')
+                                                    ->where('id', $subasta->id_hospedaje)
+                                                    ->first();
+                                    ?>
                                     <tr>
-                                        <th scope="row">{{ Carbon\Carbon::parse($subasta->fecha_inicio_subasta)->format('d-m-Y') }} </th>
-                                        <td>
-                                           {{ Carbon\Carbon::parse($subasta->fecha_inicio_subasta)->format('d-m-Y') }}
+                                        <td style="text-align: center">
+                                            {{ $hospedaje->titulo }}
                                         </td>
-                                        <td class="">
+                                        <td style="text-align: center">
+                                            {{ Carbon\Carbon::parse($subasta->fecha_inicio_subasta)->format('d-m-Y') }}
+                                        </td style="text-align: center">
+                                        <td>
+                                           {{ Carbon\Carbon::parse($subasta->fecha_fin_subasta)->format('d-m-Y') }}
+                                        </td>
+                                        <td>
                                             <a class=" btn btn-info text-center" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}">
                                                 Ir
                                             </a>
