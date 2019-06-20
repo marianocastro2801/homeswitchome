@@ -123,8 +123,19 @@ class SubastasController extends Controller
                     ->where('id_subasta', $subasta->id)
                     ->whereRaw('puja = (SELECT MAX(puja) as puja FROM participas
                                 WHERE id_subasta = ?)', [$subasta->id])
-                    ->first();     
-        
+                    ->first();  
+
+        $inscripto = DB::table('inscripcions')
+                    ->where('id_subasta', $subasta->id)
+                    ->where('id_usuario', session('idUsuario'))
+                    ->count();
+
+        if ($inscripto > 0){
+             $data['inscripto'] = true;
+        }
+        else{
+            $data['inscripto'] = false;
+        } 
 
         if(is_null($maximaPuja)){
             $data['maximoUsuario'] = 'no hay usuario';

@@ -97,7 +97,7 @@ class SesionController extends Controller
             Notificacion::updateOrCreate(
                 ['id_subasta' => $subasta->id,
                 'id_usuario' => $usuario->id],
-                ['mensaje' => 'Comenzo la subasta para '.$hospedaje->titulo,
+                ['mensaje' => 'Comenzó una subasta para '.$hospedaje->titulo.' el día '.$fechaDeInicioPuja->format('d-m-Y') ,
                 'created_at' => $fechaDeInicioPuja]);
         }
 
@@ -527,7 +527,7 @@ class SesionController extends Controller
 
         session(['solicitud' => true]);
 
-        return redirect('/');
+        return redirect()->back();
     }
 
     public function listarPerfilAdministrador(){
