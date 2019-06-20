@@ -3,13 +3,13 @@
 
 <style type="text/css">
     .fondo{
-        margin-top: 50; 
-        padding: 25px;  
-        border-bottom-left-radius:25px; 
+        margin-top: 50;
+        padding: 25px;
+        border-bottom-left-radius:25px;
         border-bottom-right-radius: 25px;
         background: black;
         margin-bottom: 60px;
-    }    
+    }
 </style>
 
 <!------ Include the above in your HEAD tag ---------->
@@ -26,10 +26,10 @@
                 <p>Fecha De Nacimiento: {{ Carbon\Carbon::parse(session('fechaNacimiento'))->format('d-m-Y') }} </p>
                 <p>Creditos: {{ session('creditos')}} </p>
                 <hr style="background: white">
-                @if(session('espremium'))
-                    <p class="text-center" style="background: green; border-radius: 10px">Usted es un usuario premium</p>
+                @if(session('esPremium'))
+                    <p class="text-center bg-info" style=" border-radius: 10px">Usted es un usuario premium</p>
                 @else
-                    <p class="text-center" style="background: red; border-radius: 10px">Usted aun no es usuario premium</p>
+                    <p class="text-center bg-danger" style=" border-radius: 10px">Usted aun no es usuario premium</p>
                 @endif
                 <hr style="background: white">
                 <div class="btn-group row col-md-12">
@@ -42,16 +42,20 @@
                 </div>
             </div>
         </div>
+
+
+
+        <!--Subastas inscriptas-->
         <div class="col-md-6">
             <div class="fondo text-white">
                 <h3 class="text-center"> Subastas incriptas e inicio de puja</h3>
                 <hr style="background: white">
-                    @if(count($subastas) == 0)  
+                    @if(count($subastas) == 0)
                         <!--Si no hay publicacion-->
-                        <div class="container text-center bg-warning" style="border-radius: 25px; margin-top: 20px"><br><p><b>Por el momento no participa de ninguna subasta</b></p><br>
-                            <a href="listarsubastas" style="text-decoration: none"><button class="btn btn-dark" style="margin-bottom: 20px"> Listar Subastas</button></a>
+                        <div class="container text-center bg-info" style="border-radius: 25px; margin-top: 20px"><br><p><b>Por el momento no participa de ninguna subasta</b></p><br>
+                            <a href="listarsubastas" style="text-decoration: none"><button class="btn btn-dark" style="margin-bottom: 20px"> Ver Subastas</button></a>
                         </div>
-                    @else 
+                    @else
                         <table class="table table-striped table-dark">
                             <thead>
                                 <tr>
@@ -65,10 +69,10 @@
                                     <tr>
                                         <th scope="row">{{ Carbon\Carbon::parse($subasta->fecha_inicio_subasta)->format('d-m-Y') }} </th>
                                         <td>
-                                           {{ Carbon\Carbon::parse($subasta->fecha_inicio_subasta)->format('d-m-Y') }}  
+                                           {{ Carbon\Carbon::parse($subasta->fecha_inicio_subasta)->format('d-m-Y') }}
                                         </td>
                                         <td class="">
-                                            <a class=" btn btn-info text-center" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}"> 
+                                            <a class=" btn btn-info text-center" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}">
                                                 Ir
                                             </a>
                                         </td>

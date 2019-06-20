@@ -13,6 +13,7 @@
 
 
 Route::get('/', 'SesionController@listarInicio');
+Route::post('/', 'SesionController@buscar');
 
 Route::get('/sesion', function () {
     return view('iniciarSesion');

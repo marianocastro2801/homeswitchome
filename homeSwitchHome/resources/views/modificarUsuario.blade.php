@@ -2,9 +2,9 @@
 @section('content')
 <style type="text/css">
 	.fondo{
-		margin-top: 50; 
-		padding: 25px;  
-		border-bottom-left-radius:55px; 
+		margin-top: 50;
+		padding: 25px;
+		border-bottom-left-radius:55px;
 		border-bottom-right-radius: 55px;
 		background: black;
 		margin-bottom: 60px;
@@ -15,7 +15,10 @@
 	.credit-card-div .small-font { font-size:9px; }
 	.credit-card-div .pad-adjust { padding-top:10px; }
 </style>
+
+
 <div class="container">
+	@include('inc.mensajeError')
 	<div class="row">
 		<div class="text-center col-md-6" style="margin-bottom: 60px">
 			<form class=" fondo" action="/modificarcuenta/datos" method="post">
@@ -84,7 +87,7 @@
 		</div>
 		<div class="text-center col-md-6">
 			<form action="/modificarcuenta/contrasenia" class="fondo" method="post">
-				{{ csrf_field() }}	
+				{{ csrf_field() }}
 				<h3 class="col-md-12 text-white">Editar Contraseña</h3>
 				<hr style="background: white">
 				<div class="row form-group">
@@ -120,5 +123,4 @@
 	</div>
 </div>
 
-@include('inc.mensajeError')
 @endsection
