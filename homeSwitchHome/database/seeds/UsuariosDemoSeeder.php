@@ -37,7 +37,7 @@ class UsuariosDemoSeeder extends Seeder
     		'id'=> 	2,
     		'nombre'=> 'Carlos',
     		'apellido'=> 'Rivero',
-    		'email'=> 'supernovar1470@hotmail.com',
+    		'email'=> 'supernovas1470@hotmail.com',
     		'es_premium'=> 0,
     		'numero_tarjeta'=> '2987654321874325',
             'mes_vencimiento'=> '05',

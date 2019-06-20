@@ -18,6 +18,11 @@
         <img src="/images/Texto.png" width="220" height="25" style="margin-left: -35px; margin-top: 4px"></a>
       </li>
     </ul>
+
+    <a>
+    Puto el que lee
+  </a> 
+  
    @if(!(Request::is('sesion')))
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>

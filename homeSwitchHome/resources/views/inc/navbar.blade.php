@@ -1,7 +1,6 @@
 <!--Navbar-->
 <nav class="navbar navbar-expand-lg navbar-static-top container-fluid navbar-dark bg-dark">
 
-
   <!-- Navbar brand -->
   <a class="navbar-brand" @if(!(Request::is('login')) && !(Request::is('registrar')))
                                 {{ 'href=/' }}
@@ -20,6 +19,10 @@
 
   <!-- Collapse button -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+      class="navbar-toggler-icon"></span></button>
+
+       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
       class="navbar-toggler-icon"></span></button>
  @if(!(Request::is('login')) && !(Request::is('registrar')))
@@ -97,17 +100,17 @@
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title" id="exampleModalLabel">Solicitud Enviada</h5>
-                          <a style="text-decoration: none" class="close" href="/boton">
+                          <a style="text-decoration: none" class="" href="/boton">
                              <span aria-hidden="true">&times;</span>
                           </a>
                         </div>
                         <div class="modal-body">
                           <p>
-                            Presentar en la calle facultad de Luneas a Viernes de 8 a 12 para que pueda hacerce efectivo su cambio a usuario premium
+                            Presentar en Calle 50 &, Av. 120, La Plata, Buenos Aires de Lunes a Viernes de 8 a 12 para que pueda hacerce efectivo su cambio a usuario premium
                           </p>
                         </div>
                         <div class="modal-footer">
-                          <a class="btn btn-secondary" style="text-decoration: none" href="/boton"> Close</a>
+                          <a class="btn btn-secondary" style="text-decoration: none" href="/boton"> Aceptar</a>
                         </div>
                       </div>
                     </div>
