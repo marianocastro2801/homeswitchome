@@ -191,6 +191,7 @@ class SesionController extends Controller
         $localidades = DB::table('localidads')->get();
         $data['localidades'] = $localidades;
         $data["resultadosDeBusqueda"] = $resultadosDeBusqueda;
+        
         return view('welcome', $data);
     }
 
@@ -504,9 +505,7 @@ class SesionController extends Controller
                                     ->whereDate('fecha_inicio', '>=', $fechaInicioAlojamiento)
                                     ->whereDate('fecha_fin', '<=', $fechaFinAlojamiento);
                     })
-                    ->get();      
-    
-            return $subastas;        
+                    ->get();    
         }
 
 

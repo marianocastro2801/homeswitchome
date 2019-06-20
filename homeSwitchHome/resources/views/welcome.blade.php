@@ -90,7 +90,7 @@
         <div class="bg-info" style="margin-top:-20px ; border-radius: 20px; margin-left: 100px; margin-right: 100px">
         <section class="search-sec" style=" padding: 30px;">
         <div class="container">
-          <form method="post" action="/buscar" >
+          <form method="post" action="/" >
             {{ csrf_field() }}
             <div class="row">
               <div class="col-lg-12">
