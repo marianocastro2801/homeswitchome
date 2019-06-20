@@ -15,6 +15,25 @@ use App\Notificacion;
 
 class SubastasController extends Controller
 {
+    public function verificarSolictud(){
+        $solicitud = DB::table('solicitantes')
+                        ->where('id_usuario', session('idUsuario'))
+                        ->first();
+
+        $usuario = DB::table('usuarios')
+                    ->where('id', session('idUsuario'))
+                    ->first();               
+
+        session(['esPremium' => $usuario->es_premium]);
+
+        if(!is_null($solicitud)){
+            session(['solicitud' => true]);
+        }
+        else{
+            session(['solicitud' => false]);   
+        }                        
+    }
+
     public function crearSubasta($idHospedaje){
         
         $hospedaje = DB::table('hospedajes')
@@ -148,6 +167,8 @@ class SubastasController extends Controller
             $data['maximoUsuario'] = $maximoUsuario->email;
             $data['montoMaximo'] = $maximaPuja->puja;               
         }
+
+        $this->verificarSolictud();
         return view('detalleSubasta', $data);
     }
 
@@ -219,7 +240,7 @@ class SubastasController extends Controller
                             ->orderBy('fecha_inicio', 'asc')
                             ->get();
         
-
+        $this->verificarSolictud();
         return view('/layouts/listarSubastas', $data);
     }
 
