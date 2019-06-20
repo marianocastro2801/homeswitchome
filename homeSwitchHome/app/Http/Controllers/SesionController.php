@@ -191,13 +191,13 @@ class SesionController extends Controller
         $localidades = DB::table('localidads')->get();
         $data['localidades'] = $localidades;
         $data["resultadosDeBusqueda"] = $resultadosDeBusqueda;
-      
+
         if(count($resultadosDeBusqueda) == 0){
           $data['vacio'] = true;
         } else {
           $data['vacio'] = false;
         }
-      
+
         return view('welcome', $data);
     }
 
