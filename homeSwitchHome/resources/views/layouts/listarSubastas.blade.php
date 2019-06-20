@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\DB;
 			<div class="row">
 				<div class="col-md-2"></div>
 					<div class=" col-md-8 col-centered">
-						<h1 class="text-center"> Subastas en periodo de Inscripcion</h1>
+						<h1 class="text-center">Subastas en periodo de puja</h1>
 						<hr>
 						@if((count($subastasEnPeriodo)) == 0)
-							<div class="container text-center bg-warning" style="border-radius: 25px; margin-top: 20px"><br><p><b>No hay subastas en periodo de inscripcion.</b></p><br>
+							<div class="container text-center bg-warning" style="border-radius: 25px; margin-top: 20px"><br><p><b>No hay subastas en periodo de puja</b></p><br>
 							</div>
 						@else
 							@foreach($subastasEnPeriodo as $subasta)
@@ -61,10 +61,10 @@ use Illuminate\Support\Facades\DB;
 			<div class="row">
 				<div class="col-md-2"></div>
 				<div class=" col-md-8 col-centered">
-					<h1 class="text-center"> Subastas vencidas</h1>
+					<h1 class="text-center"> Subastas en periodo de inscripción</h1>
 					<hr>
-					@if((count($subastasEnPeriodo)) == 0)
-						<div class="container text-center bg-warning" style="border-radius: 25px; margin-top: 20px"><br><p><b>No hay subastas vencidas.</b></p><br>
+					@if((count($subastasEnInscripcion)) == 0)
+						<div class="container text-center bg-warning" style="border-radius: 25px; margin-top: 20px"><br><p><b>No hay subastas en periodo de inscripción</b></p><br>
 							</div>
 						<div style="background: #ffae42; padding: 50px; border-radius: 25px" class="text-center"><b></b></div>
 					@else

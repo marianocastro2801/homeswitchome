@@ -88,14 +88,20 @@
 							</button>
 						</form>
 					@endif
-					@if(Session('nombreUsuario')!='Andrea')
-					<form method='post' action='/inscribirse'>
-						{{ csrf_field() }}
-						<input type="hidden"   name="idSubasta" value="{{$idSubasta}}">		
-						<button type="submit" class="float-right btn btn-danger">
-							Inscribirse a subasta
-						</button>
-					</form>
+					@if((Session('nombreUsuario')!='Andrea') && ($fechaInicioSubasta > $hoy))
+						@if($inscripto)
+							<button class="float-right btn btn-success">
+									Ya se encuentra inscripto en la subasta
+							</button>
+						@else
+							<form method='post' action='/inscribirse'>
+								{{ csrf_field() }}
+								<input type="hidden"   name="idSubasta" value="{{$idSubasta}}">		
+								<button type="submit" class="float-right btn btn-warning">
+									Inscribirse a subasta
+								</button>
+							</form>
+						@endif	
 					@endif
 			</div>
 		</div>
