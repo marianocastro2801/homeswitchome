@@ -20,7 +20,7 @@ class SubastasSeeder extends Seeder
         	'monto_base' => '14000',
             'id_hospedaje' => '1',
             'fecha_inicio' => '2020-06-15',
-            'fecha_fin' => '2020-06-22',
+            'fecha_fin' => '2020-06-21',
             'fecha_inicio_inscripcion' => '2019-06-15',
             'fecha_inicio_subasta' => '2019-12-12',
             'fecha_fin_subasta' => '2019-12-15',

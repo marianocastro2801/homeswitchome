@@ -187,13 +187,16 @@ class HospedajeController extends Controller
           return view('modificarHospedaje', $data)->withErrors($validator->errors());
         }
 
+        $request['doceMesesAdelante'] = Carbon::now()->addMonths(12)->format('d-m-Y');
+        $request['diferencia'] = Carbon::create($request->fechaInicio)->diffInDays(Carbon::create($request->fechaFin));
+
         $validator = Validator::make($request->all(), [
             'tituloHospedaje' => 'required|bail|unique:hospedajes,titulo,'.$request->input('idHospedaje'),
             'descripcion' => 'required',
             'maximasPersonas' => 'required',
             'tipoHospedaje' => 'required',
             'localidad' => 'required',
-            'fechaInicio' => 'required|before:fechaFin',
+            'fechaInicio' => 'required|before:fechaFin|after_or_equal:doceMesesAdelante',
             'fechaFin' => 'required'
         ],
             ['tituloHospedaje.required' => 'Por favor ingrese un titulo',
@@ -205,8 +208,22 @@ class HospedajeController extends Controller
              'montoBase.numeric' => 'Por favor ingrese un valor numérico',
              'fechaInicio.required' => 'Por favor ingrese una fecha de inicio',
              'fechaInicio.before' => 'La fecha de inicio debe ser menor a la de fin',
+            'fechaInicio.after_or_equal' => 'La fecha de inicio libre debe ser por lo menos 12 meses a partir de hoy',
              'fechaFin.required' => 'Por favor ingrese una fecha de fin'
                ]);
+
+        if ($validator->fails()) {
+          $localidades = DB::table('localidads')->get();
+          $data = $request->all();
+          $data['idLocalidad'] = $request->localidad;
+          $data['localidades'] = $localidades;
+
+          return view('modificarHospedaje', $data)->withErrors($validator->errors());
+        }
+
+        $validator = Validator::make($request->all(), [
+            'diferencia' => 'gte:7'],
+            ['diferencia.gte' => 'Tiene que haber como minimo 7 dias de diferencia entre inicio y fin']);
 
         if ($validator->fails()) {
           $localidades = DB::table('localidads')->get();

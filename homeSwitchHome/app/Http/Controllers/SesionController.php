@@ -215,6 +215,7 @@ class SesionController extends Controller
         $subastasEnPeriodo = DB::table('subastas')
                             ->whereNull('ganador')
                             ->whereDate('fecha_inicio_subasta', '<=' , $hoy)
+                            ->whereDate('fecha_fin_subasta', '>' , $hoy)
                             ->orderBy('fecha_inicio', 'asc')
                             ->get();
 
@@ -280,7 +281,7 @@ class SesionController extends Controller
             'apellidoUsuario' => 'required',
             'email' => 'required|bail|email|bail|unique:usuarios,email',
             'fechaNacimiento' => 'required',
-            'fechaInvalida' => 'accepted',
+            'fechaValida' => 'accepted',
             'contrasenia' => 'required',
             'contrasenia_confirmation' => 'required',
             'numeroTarjeta' => 'required|bail|not_in:1234567890123456|bail|digits:16',
@@ -293,7 +294,7 @@ class SesionController extends Controller
             'email.required' => 'Por favor ingrese una dirreción de correo',
             'email.email' => 'El formato del correo es incorrecto',
             'email.unique' => 'El correo ya se encuentra registrado, por favor ingrese otro correo',
-            'fechaInvalida.accepted' => 'La fecha debe ser menor a la actual',
+            'fechaValida.accepted' => 'La fecha debe ser menor a la actual',
             'fechaNacimiento.required' => 'Por favor ingrese una fecha nacimiento',
             'numeroTarjeta.required' => 'Por favor ingrese un numero de tarjeta',
             'numeroTarjeta.not_in' => 'La tarjeta no es válida',
@@ -395,7 +396,7 @@ class SesionController extends Controller
             'apellidoUsuario' => 'required',
             'email' => 'required|bail|email|bail|unique:usuarios,email,'.session('idUsuario'),
             'fechaNacimiento' => 'required',
-            'fechaInvalida' => 'accepted',
+            'fechaValida' => 'accepted',
             'numeroTarjeta' => 'required|bail|not_in:1234567890123456|bail|digits:16',
             'mesVencimiento' => 'required|bail|digits:2',
             'anioVencimiento' => 'required|bail|digits:2',
@@ -407,7 +408,7 @@ class SesionController extends Controller
             'email.email' => 'El formato del correo es incorrecto',
             'email.unique' => 'El correo ya se encuentra registrado, por favor ingrese otro correo',
             'fechaNacimiento.required' => 'Por favor ingrese una fecha nacimiento',
-            'fechaInvalida.accepted' => 'La fecha debe ser menor a la actual',
+            'fechaValida.accepted' => 'La fecha debe ser menor a la actual',
             'numeroTarjeta.required' => 'Por favor ingrese un numero de tarjeta',
             'numeroTarjeta.not_in' => 'La tarjeta no es válida',
             'numeroTarjeta.digits' => 'El numero de tarjeta debe ser nuemrica y contener 16 digitos ',
