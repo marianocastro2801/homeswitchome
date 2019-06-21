@@ -77,7 +77,7 @@
 				<div class="row">
 					<div class="col-md-7"></div>
 					<div class="col-md-2">
-						<a style="text-decoration: none" class="btn btn-danger" type="button" href="/perfil">Cancelar</a>
+						<a style="text-decoration: none" class="btn btn-danger" href="/perfil">Cancelar</a>
 					</div>
 					<div class="col-md-3">
 						<button class="btn btn-warning" type="submit">Guardar</button>

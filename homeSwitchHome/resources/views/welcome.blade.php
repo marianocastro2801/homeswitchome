@@ -153,7 +153,7 @@
       <div class="col-md-1">
 
       </div>
-      @if(!$vacio)
+      @if($seRealizaBusqueda)
         <div class="col-md-10" id="buscador">
           @if(count($resultadosDeBusqueda) == 0)
             <div> No se encontraron resultados </div>
@@ -163,6 +163,8 @@
               <tr>
                   <th scope="col">Imagen</th>
                   <th scope="col">Titulo</th>
+                  <th scope="col">Comienzo alojamiento</th>
+                  <th scope="col">Fin alojamiento</th>
                   <th scope="col">Ciudad</th>
                   <th scope="col">Detalle</th>
                 </tr>
@@ -184,6 +186,14 @@
               <td>
                 <br>
                 {{ $hospedaje->titulo }}
+              </td>
+              <td>
+                <br>
+                  {{ Carbon\Carbon::parse($subasta->fecha_inicio)->format('d-m-Y') }}
+              </td>
+              <td>
+                <br>
+                 {{ Carbon\Carbon::parse($subasta->fecha_fin)->format('d-m-Y') }}
               </td>
               <td>
                 <br>

@@ -31,7 +31,7 @@
 		  		<div class="form-group row"> <!-- Full Name -->
 		  			<div class="col-md-6">
 				        <label for="nombre" class="control-label text-white">Nombre</label>
-				        <input type="text" class="form-control" id="full_name_id" name="nombreUsuario" placeholder="Andres" value="{{ old('nombreUsuario') }}">
+				        <input type="text" class="form-control" id="full_name_id" name="nombreUsuario" placeholder="Andrea" value="{{ old('nombreUsuario') }}">
 			        </div>
 			        <div class="col-md-6">
 				        <label for="apellido" class="control-label text-white">Apellido</label>

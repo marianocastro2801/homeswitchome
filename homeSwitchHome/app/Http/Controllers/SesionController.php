@@ -39,11 +39,52 @@ class SesionController extends Controller
                         ->where('id_usuario', session('idUsuario'))
                         ->first();
 
+        $SubastasInscriptas = DB::table('inscripcions')
+                                ->where('id_usuario', session('idUsuario'))
+                                ->get();
+
+        $idSubastas = [-1];
+        foreach ($SubastasInscriptas as $SubastaInscriptas) {
+             $idSubastas[] = $SubastaInscriptas->id_subasta;
+        }                
+
+        $hoy = Carbon::today()->format('Y-m-d');                
+
+        $subastas = DB::table('subastas')
+                    ->whereNull('ganador')
+                    ->whereDate('fecha_inicio_subasta', '<=' , $hoy)
+                    ->whereIn('id', $idSubastas)
+                    ->get();
+
+        foreach ($subastas as $subasta) {
+
+            $hospedaje = DB::table('hospedajes')->where('id', $subasta->id_hospedaje)->first();
+            $fechaDeInicioPuja = Carbon::parse($subasta->fecha_inicio_subasta);
+
+            Notificacion::updateOrCreate(
+                ['id_subasta' => $subasta->id,
+                'id_usuario' => session('idUsuario')],
+                ['mensaje' => 'Comenzó una subasta para '.$hospedaje->titulo.' el día '.$fechaDeInicioPuja->format('d-m-Y') ,
+                'created_at' => $fechaDeInicioPuja]);
+        }                
+
+        $notificaciones = DB::table('notificacions')
+                        ->where('id_usuario', session('idUsuario'))
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+
+        $mensajes = [];
+
+        foreach ($notificaciones as $notificacion) {
+            $mensajes[$notificacion->id] = $notificacion->mensaje;
+        }                
+
         $usuario = DB::table('usuarios')
                     ->where('id', session('idUsuario'))
                     ->first();               
 
-        session(['esPremium' => $usuario->es_premium]);
+        session(['esPremium' => $usuario->es_premium,
+                 'mensajes' => $mensajes]);
 
         if(!is_null($solicitud)){
             session(['solicitud' => true]);
@@ -142,12 +183,12 @@ class SesionController extends Controller
                 'apellidoUsuario' => $usuario->apellido,
                 'email' => $usuario->email,
                 'esPremium' => $usuario->es_premium,
+                'contrasenia' => $usuario->contrasenia,
                 'numeroTarjeta' => $usuario->numero_tarjeta,
                 'mesVencimiento' =>$mesVencimiento,
                 'anioVencimiento' =>$usuario->anio_vencimiento,
                 'codigoSeguridad' =>$usuario->codigo_seguridad,
                 'creditos' => $usuario->creditos,
-                'contrasenia' => $usuario->contrasenia,
                 'fechaNacimiento' => $usuario->fecha_nacimiento,
                 'solicitud' => false,
                 'mensajes' => $mensajes]);
@@ -184,7 +225,7 @@ class SesionController extends Controller
         return $data;
     }
 
-    public function listarInicio($resultadosDeBusqueda=[]){
+    public function listarInicio($resultadosDeBusqueda = [-1]){
 
         // $subasta1= DB::table('subastas')->where('id', 1)->first();
         // $hospedaje1 = DB::table('hospedajes')->where('id', $subasta1->id_hospedaje)->first();
@@ -209,14 +250,15 @@ class SesionController extends Controller
         $data = $this->obtenerListas();
         $localidades = DB::table('localidads')->get();
         $data['localidades'] = $localidades;
-        $data["resultadosDeBusqueda"] = $resultadosDeBusqueda;
+        $data['resultadosDeBusqueda'] = $resultadosDeBusqueda;
 
-        if(count($resultadosDeBusqueda) == 0){
-          $data['vacio'] = true;
-        } else {
-          $data['vacio'] = false;
+        if($resultadosDeBusqueda == [-1]){
+            $data['seRealizaBusqueda'] = false;
         }
-      
+        else{
+            $data['seRealizaBusqueda'] = true;
+        }
+
         $this->verificarSolictud();
         return view('welcome', $data);
     }
@@ -226,11 +268,19 @@ class SesionController extends Controller
         $fechaNacimiento = Carbon::parse($request->input('fechaNacimiento'));
         $request['edad'] = Carbon::now()->diffInYears($fechaNacimiento);
 
+        if($fechaNacimiento > Carbon::now()){
+            $request['fechaValida'] = false;
+        }
+        else{
+            $request['fechaValida'] = true;
+        }
+
         $validator = Validator::make($request->all(), [
             'nombreUsuario' => 'required',
             'apellidoUsuario' => 'required',
             'email' => 'required|bail|email|bail|unique:usuarios,email',
             'fechaNacimiento' => 'required',
+            'fechaInvalida' => 'accepted',
             'contrasenia' => 'required',
             'contrasenia_confirmation' => 'required',
             'numeroTarjeta' => 'required|bail|not_in:1234567890123456|bail|digits:16',
@@ -243,6 +293,7 @@ class SesionController extends Controller
             'email.required' => 'Por favor ingrese una dirreción de correo',
             'email.email' => 'El formato del correo es incorrecto',
             'email.unique' => 'El correo ya se encuentra registrado, por favor ingrese otro correo',
+            'fechaInvalida.accepted' => 'La fecha debe ser menor a la actual',
             'fechaNacimiento.required' => 'Por favor ingrese una fecha nacimiento',
             'numeroTarjeta.required' => 'Por favor ingrese un numero de tarjeta',
             'numeroTarjeta.not_in' => 'La tarjeta no es válida',
@@ -290,6 +341,9 @@ class SesionController extends Controller
             $usuario->contrasenia = $request->input('contrasenia');
             $usuario->numero_tarjeta = $request->input('numeroTarjeta');
             $usuario->fecha_nacimiento = $request->input('fechaNacimiento');
+            $usuario->mes_vencimiento = $request->input('mesVencimiento');
+            $usuario->anio_vencimiento = $request->input('anioVencimiento');;
+            $usuario->codigo_seguridad = $request->input('codigoSeguridad');;;
 
         $usuario->save();
 
@@ -329,22 +383,31 @@ class SesionController extends Controller
         $fechaNacimiento = Carbon::parse($request->input('fechaNacimiento'));
         $request['edad'] = Carbon::now()->diffInYears($fechaNacimiento);
 
+        if($fechaNacimiento > Carbon::now()){
+            $request['fechaValida'] = false;
+        }
+        else{
+            $request['fechaValida'] = true;
+        }
+
         $validator = Validator::make($request->all(), [
-            'email' => 'required|bail|email|bail|unique:usuarios,email,'.session('idUsuario'),
             'nombreUsuario' => 'required',
             'apellidoUsuario' => 'required',
+            'email' => 'required|bail|email|bail|unique:usuarios,email,'.session('idUsuario'),
             'fechaNacimiento' => 'required',
+            'fechaInvalida' => 'accepted',
             'numeroTarjeta' => 'required|bail|not_in:1234567890123456|bail|digits:16',
             'mesVencimiento' => 'required|bail|digits:2',
             'anioVencimiento' => 'required|bail|digits:2',
             'codigoSeguridad' => 'required|bail|digits:3'
         ],
-            ['email.required' => 'Por favor ingrese una dirreción de correo',
+            ['nombreUsuario.required' => 'Por favor ingrese un nombre',
+            'apellidoUsuario.required' => 'Por favor ingrese un apellido',
+            'email.required' => 'Por favor ingrese una dirreción de correo',
             'email.email' => 'El formato del correo es incorrecto',
             'email.unique' => 'El correo ya se encuentra registrado, por favor ingrese otro correo',
-            'nombreUsuario.required' => 'Por favor ingrese un nombre',
-            'apellidoUsuario.required' => 'Por favor ingrese un apellido',
             'fechaNacimiento.required' => 'Por favor ingrese una fecha nacimiento',
+            'fechaInvalida.accepted' => 'La fecha debe ser menor a la actual',
             'numeroTarjeta.required' => 'Por favor ingrese un numero de tarjeta',
             'numeroTarjeta.not_in' => 'La tarjeta no es válida',
             'numeroTarjeta.digits' => 'El numero de tarjeta debe ser nuemrica y contener 16 digitos ',
@@ -354,26 +417,12 @@ class SesionController extends Controller
             'anioVencimiento.digits' => 'Ingrese el año en el formato indicado',
             'codigoSeguridad.required' => 'Por favor ingrese el código de seguridad',
             'codigoSeguridad.digits' => 'El codigo de seguridad debe tener 3 digitos'
-             ]);
+               ]);
 
-        if ($validator->fails()){
-            return redirect()->back()->withInput()->withErrors($validator->errors());
+        if ($validator->fails()) {
+
+              return redirect()->back()->withInput()->withErrors($validator->errors());
         }
-
-        // if(!is_null($request->input('contraseniaVieja'))){
-        //     $request->validate([
-        //     'contraseniaNueva' => 'required',
-        //     'contraseniaNueva_confirmation' => 'required'],
-        //     ['contraseniaNueva.required' => 'Por favor ingrese una nueva contraseña',
-        //     'contraseniaNueva_confirmation.required' => 'Por favor ingrese la confirmación de su nueva contraseña'
-        //       ]);
-        //     $request->validate([
-        //     'contraseniaNueva' => 'confirmed',],
-        //     ['contraseniaNueva.confirmed' => 'Las contraseñas son diferentes'
-        //       ]);
-
-
-        // }
 
         $anioVencimiento = 2000 + $request->input('anioVencimiento');
         $fechaVencimiento = Carbon::createFromDate($anioVencimiento, $request->input('mesVencimiento'), 1)->startOfMonth();
@@ -390,7 +439,8 @@ class SesionController extends Controller
                ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withInput()->withErrors($validator->errors());
+
+              return redirect()->back()->withInput()->withErrors($validator->errors());
         }
 
         DB::table('usuarios')
@@ -428,10 +478,23 @@ class SesionController extends Controller
             'contraseniaNueva_confirmation.required' => 'Por favor ingrese la confirmación de su nueva contraseña'
               ]);
 
+        $request['contraseniaValida'] = session('contrasenia');
+
+        $request->validate([
+            'contraseniaVieja' => 'same:contraseniaValida'],
+            ['contraseniaVieja.same' => 'La contraseña anterior es incorrecta'
+               ]);
+
         $request->validate([
             'contraseniaNueva' => 'confirmed',],
             ['contraseniaNueva.confirmed' => 'Las contraseñas son diferentes'
               ]);
+
+        DB::table('usuarios')
+            ->where('id', session('idUsuario'))
+            ->update(['contrasenia' => $request->input('contraseniaNueva')]);
+
+        session(['contrasenia' => $request->input('contraseniaNueva')]);
 
         return redirect('/perfil')->with('exito', 'La contraseña se modificó exitosamente');
     }
@@ -461,18 +524,26 @@ class SesionController extends Controller
                   ]);
         }
 
+        // if(!is_null($request->input('fechaInicioAlojamiento'))){
+
+        //     $fechaInicioAlojamiento = Carbon::create($request->input('fechaInicioAlojamiento'));
+        //     $fechaFinAlojamiento = Carbon::create($request->input('fechaFinAlojamiento'));
+        //     $fechaFinAlojamiento = $fechaFinAlojamiento->startOfWeek()->subDay()->format('Y-m-d');
+
+        //     if($fechaInicioAlojamiento->dayOfWeek != Carbon::MONDAY) {
+        //         $fechaInicioAlojamiento = $fechaInicioAlojamiento->endOfWeek()->addDay()->format('Y-m-d');
+        //     }
+        //     else{
+        //         $fechaInicioAlojamiento = $fechaInicioAlojamiento->format('Y-m-d');
+        //     }
+        // }
+        // else{
+        //     $fechaInicioAlojamiento = null;
+        //     $fechaFinAlojamiento = null;
+        // }
         if(!is_null($request->input('fechaInicioAlojamiento'))){
-
-            $fechaInicioAlojamiento = Carbon::create($request->input('fechaInicioAlojamiento'));
-            $fechaFinAlojamiento = Carbon::create($request->input('fechaFinAlojamiento'));
-            $fechaFinAlojamiento = $fechaFinAlojamiento->startOfWeek()->format('Y-m-d');
-
-            if($fechaInicioAlojamiento->dayOfWeek != Carbon::MONDAY) {
-                $fechaInicioAlojamiento = $fechaInicioAlojamiento->endOfWeek()->addDay()->format('Y-m-d');
-            }
-            else{
-                $fechaInicioAlojamiento = $fechaInicioAlojamiento->format('Y-m-d');
-            }
+            $fechaInicioAlojamiento = Carbon::create($request->input('fechaInicioAlojamiento'))->format('Y-m-d');
+            $fechaFinAlojamiento = Carbon::create($request->input('fechaFinAlojamiento'))->format('Y-m-d');
         }
         else{
             $fechaInicioAlojamiento = null;
@@ -504,6 +575,7 @@ class SesionController extends Controller
             $subastas = DB::table('subastas')
                     ->whereNull('ganador')
                     ->whereDate('fecha_inicio_inscripcion', '<=' , $hoy)
+                    ->whereDate('fecha_fin_subasta', '>' , $hoy)
                     ->when($idHospedajes, function ($query, $idHospedajes){
                             return $query
                                     ->whereIn('id_hospedaje', $idHospedajes);
@@ -523,6 +595,7 @@ class SesionController extends Controller
             $subastas = DB::table('subastas')
                     ->whereNull('ganador')
                     ->whereDate('fecha_inicio_inscripcion', '<=' , $hoy)
+                    ->whereDate('fecha_fin_subasta', '>' , $hoy)
                     ->when($idHospedajes, function ($query, $idHospedajes){
                             return $query
                                     ->whereIn('id_hospedaje', $idHospedajes);
@@ -532,9 +605,8 @@ class SesionController extends Controller
                                     ->whereDate('fecha_inicio', '>=', $fechaInicioAlojamiento)
                                     ->whereDate('fecha_fin', '<=', $fechaFinAlojamiento);
                     })
-                    ->get();
+                    ->get();  
         }
-
 
         return $this->listarInicio($subastas);
     }

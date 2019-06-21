@@ -20,11 +20,52 @@ class SubastasController extends Controller
                         ->where('id_usuario', session('idUsuario'))
                         ->first();
 
+        $SubastasInscriptas = DB::table('inscripcions')
+                                ->where('id_usuario', session('idUsuario'))
+                                ->get();
+
+        $idSubastas = [-1];
+        foreach ($SubastasInscriptas as $SubastaInscriptas) {
+             $idSubastas[] = $SubastaInscriptas->id_subasta;
+        }                
+
+        $hoy = Carbon::today()->format('Y-m-d');                
+
+        $subastas = DB::table('subastas')
+                    ->whereNull('ganador')
+                    ->whereDate('fecha_inicio_subasta', '<=' , $hoy)
+                    ->whereIn('id', $idSubastas)
+                    ->get();
+
+        foreach ($subastas as $subasta) {
+
+            $hospedaje = DB::table('hospedajes')->where('id', $subasta->id_hospedaje)->first();
+            $fechaDeInicioPuja = Carbon::parse($subasta->fecha_inicio_subasta);
+
+            Notificacion::updateOrCreate(
+                ['id_subasta' => $subasta->id,
+                'id_usuario' => session('idUsuario')],
+                ['mensaje' => 'Comenzó una subasta para '.$hospedaje->titulo.' el día '.$fechaDeInicioPuja->format('d-m-Y') ,
+                'created_at' => $fechaDeInicioPuja]);
+        }                
+
+        $notificaciones = DB::table('notificacions')
+                        ->where('id_usuario', session('idUsuario'))
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+
+        $mensajes = [];
+
+        foreach ($notificaciones as $notificacion) {
+            $mensajes[$notificacion->id] = $notificacion->mensaje;
+        }                
+
         $usuario = DB::table('usuarios')
                     ->where('id', session('idUsuario'))
                     ->first();               
 
-        session(['esPremium' => $usuario->es_premium]);
+        session(['esPremium' => $usuario->es_premium,
+                 'mensajes' => $mensajes]);
 
         if(!is_null($solicitud)){
             session(['solicitud' => true]);
@@ -237,8 +278,15 @@ class SubastasController extends Controller
         $data['subastasEnPeriodo'] = DB::table('subastas')
                             ->whereNull('ganador')
                             ->whereDate('fecha_inicio_subasta', '<=' , $hoy)
+                            ->whereDate('fecha_fin_subasta', '>' , $hoy)
                             ->orderBy('fecha_inicio', 'asc')
                             ->get();
+
+        $data['subastasRecientementeTerminadas'] = DB::table('subastas')
+                            ->whereNull('ganador')
+                            ->whereDate('fecha_fin_subasta', '<=' , $hoy)
+                            ->orderBy('fecha_inicio', 'asc')
+                            ->get();                    
         
         $this->verificarSolictud();
         return view('/layouts/listarSubastas', $data);

@@ -83,7 +83,7 @@
           @else
               @if(session('esPremium'))
                 <a href="#" class="btn btn-warning btn-lg">
-                  <span id="premium">Usted ya es premium</span>
+                  <span id="premium">Usted es premium</span>
                 </a>
               @else
                 @if(session('solicitud'))
