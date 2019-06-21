@@ -35,5 +35,11 @@ class ParticipasSeeder extends Seeder
             'id_subasta' => '5'
         ]);
 
+        DB::table('inscripcions')->insert([
+            'id' => '1',
+            'id_usuario' => '2',
+            'id_subasta' => '5'
+        ]);
+
     }
 }
