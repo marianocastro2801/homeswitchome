@@ -14,8 +14,7 @@ class SubastasSeeder extends Seeder
     {
         //Lista de subastas para poder mostrar
 
-        //Subasta con fecha de creación 19 de mayo para poder cerrar en la demo, mostrar que al cerrar
-        //se descuenta el crédito al usuario 3 (Leonel Mandarino) y no puede puajar
+        //Subasta para inscribirse en BERA
         DB::table('subastas')->insert([
         	'id' => '1',
         	'monto_base' => '14000',
@@ -27,7 +26,7 @@ class SubastasSeeder extends Seeder
             'fecha_fin_subasta' => '2019-12-15',
         ]);
 
-        //Para mostrar que al cerrar la subasta igual no se puede modificar
+        //Para mostrar que al cerrar la subasta igual no se puede modificar en LA PLATA
         DB::table('subastas')->insert([
             'id' => '2',
             'monto_base' => '15000',
@@ -40,7 +39,7 @@ class SubastasSeeder extends Seeder
         ]);
 
 
-        //La subasta 3 y 4 son para mostrar que no puede ganar en la misma semana
+        //La subasta 3 y 4 son para mostrar que no puede ganar en la misma semana EN LA PLATA
         DB::table('subastas')->insert([
             'id' => '3',
             'monto_base' => '12000',
@@ -52,6 +51,7 @@ class SubastasSeeder extends Seeder
             'fecha_fin_subasta' => '2019-06-09',
         ]);
 
+        //EN BERA
         DB::table('subastas')->insert([
             'id' => '4',
             'monto_base' => '20000',
@@ -64,7 +64,7 @@ class SubastasSeeder extends Seeder
         ]);
 
 
-        //Para mostrar que aunque haya pujador puede no haber ganador
+        //Para mostrar que aunque haya pujador puede no haber ganador EN QUILMES
         DB::table('subastas')->insert([
             'id' => '5',
             'monto_base' => '6000',
@@ -74,6 +74,33 @@ class SubastasSeeder extends Seeder
             'fecha_inicio_inscripcion' => '2018-12-09',
             'fecha_inicio_subasta' => '2019-06-06',
             'fecha_fin_subasta' => '2019-06-09',
+        ]);    
+
+
+        //Para poder pujar y mostrar que se muestra en el perfil EN QUILMES
+        DB::table('subastas')->insert([
+            'id' => '6',
+            'monto_base' => '5000',
+            'id_hospedaje' => '3',
+            'fecha_inicio' => '2019-12-23',
+            'fecha_fin' => '2019-12-29',
+            'fecha_inicio_inscripcion' => '2018-12-23',
+            'fecha_inicio_subasta' => '2019-06-20',
+            'fecha_fin_subasta' => '2019-06-23',
+        ]);    
+
+
+        //Para poder mostrar que se puede pujar el monto base EN LA PLATA
+        DB::table('subastas')->insert([
+            'id' => '7',
+            'monto_base' => '24000',
+            'id_hospedaje' => '2',
+            'fecha_inicio' => '2019-12-23',
+            'fecha_fin' => '2019-12-29',
+            'fecha_inicio_inscripcion' => '2018-12-23',
+            'fecha_inicio_subasta' => '2019-06-20',
+            'fecha_fin_subasta' => '2019-06-23',
+        ]);
 
     }
 }
