@@ -237,8 +237,15 @@ class SubastasController extends Controller
         $data['subastasEnPeriodo'] = DB::table('subastas')
                             ->whereNull('ganador')
                             ->whereDate('fecha_inicio_subasta', '<=' , $hoy)
+                            ->whereDate('fecha_fin_subasta', '>' , $hoy)
                             ->orderBy('fecha_inicio', 'asc')
                             ->get();
+
+        $data['subastasRecientementeTerminadas'] = DB::table('subastas')
+                            ->whereNull('ganador')
+                            ->whereDate('fecha_fin_subasta', '<=' , $hoy)
+                            ->orderBy('fecha_inicio', 'asc')
+                            ->get();                    
         
         $this->verificarSolictud();
         return view('/layouts/listarSubastas', $data);

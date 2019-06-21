@@ -34,7 +34,6 @@ class HospedajeController extends Controller
             'localidad' => 'required',
             'fechaInicio' => 'required|before:fechaFin|after_or_equal:doceMesesAdelante',
             'fechaFin' => 'required',
-            'diferencia' => 'gte:7',
         	  'imagen' => 'required'
         ],
             ['titulo.required' => 'Por favor ingrese un titulo',
@@ -48,14 +47,22 @@ class HospedajeController extends Controller
             'fechaInicio.required' => 'Por favor ingrese una fecha de inicio',
             'fechaInicio.before' => 'La fecha de inicio debe ser menor a la de fin',
             'fechaInicio.after_or_equal' => 'La fecha de inicio libre debe ser por lo menos 12 meses a partir de hoy',
-            'fechaFin.required' => 'Por favor ingrese una fecha de fin',
-            'diferencia.gte' => 'Tiene que haber como minimo 7 dias de diferencia entre inicio y fin'
+            'fechaFin.required' => 'Por favor ingrese una fecha de fin'
                ]);
 
      if ($validator->fails()) {
           
           return redirect()->back()->withInput()->withErrors($validator->errors());
     }   
+
+      $validator = Validator::make($request->all(), [
+            'diferencia' => 'gte:7'],
+            ['diferencia.gte' => 'Tiene que haber como minimo 7 dias de diferencia entre inicio y fin']);
+
+     if ($validator->fails()) {
+          
+          return redirect()->back()->withInput()->withErrors($validator->errors());
+    }
 
 
 		 $imagen = $request->file('imagen');

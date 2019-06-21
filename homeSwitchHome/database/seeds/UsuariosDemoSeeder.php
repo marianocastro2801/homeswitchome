@@ -65,7 +65,7 @@ class UsuariosDemoSeeder extends Seeder
             'creditos' => 1
     	]);
 
-        //Usuario sin creditos
+        //Usuario para mostrar que no puede reservas dos hospedajes en la misma semana
     	DB::table('usuarios')->insert([
     		'id'=> 	4,
     		'nombre'=> 'Marcos',
@@ -78,7 +78,7 @@ class UsuariosDemoSeeder extends Seeder
             'codigo_seguridad'=> '365',
             'contrasenia' => 'marcospereyra',
     		'fecha_nacimiento'=> '1996-10-04',
-            'creditos' => 0
+            'creditos' => 2
     	]);
     }
 }
