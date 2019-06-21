@@ -215,6 +215,7 @@ class SesionController extends Controller
         $subastasEnPeriodo = DB::table('subastas')
                             ->whereNull('ganador')
                             ->whereDate('fecha_inicio_subasta', '<=' , $hoy)
+                            ->whereDate('fecha_fin_subasta', '>' , $hoy)
                             ->orderBy('fecha_inicio', 'asc')
                             ->get();
 
