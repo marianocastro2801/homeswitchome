@@ -31,7 +31,7 @@ class HospedajesSeeder extends Seeder
             'titulo' => 'Departamento La plata',
             'descripcion' => 'Los huespedes que buscan exclusividad pueden sumergirse en el ambiente discreto y distinguido del mejor departamento de lujo en el centro de la ciudad, que cuenta con 12 espectaculares habitaciones y suites de ensueño.',
             'fecha_inicio' => '2019-06-17',
-            'fecha_fin' => '2020-06-17',
+            'fecha_fin' => '2020-08-12',
             'imagen' => 'depto1.jpg',
             'id_localidad' => '1900',
         ]);

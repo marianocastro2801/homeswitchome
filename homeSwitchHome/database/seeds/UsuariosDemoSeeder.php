@@ -55,7 +55,7 @@ class UsuariosDemoSeeder extends Seeder
     		'nombre'=> 'Leonel',
     		'apellido'=> 'Mandarino',
     		'email'=> 'leonelmandarino@gmail.com',
-    		'es_premium'=> 0,
+    		'es_premium'=> 1,
     		'numero_tarjeta'=> '2345390313456743',
             'mes_vencimiento'=> '01',
             'anio_vencimiento'=> '22',
