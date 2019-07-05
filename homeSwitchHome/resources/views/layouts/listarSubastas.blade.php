@@ -93,9 +93,19 @@ use Illuminate\Support\Facades\DB;
 											<p><b>Fecha de ingreso:</b> {{ Carbon\Carbon::parse($subasta->fecha_inicio)->format('d-m-Y') }} </p>
 											<p><b>Fecha de egreso:</b> {{ Carbon\Carbon::parse($subasta->fecha_fin)->format('d-m-Y') }}</p>
 											<hr>
+											@if(Session('esPremium'))
+												<form class='form' method='post' action='/adquirircomopremium'>
+													{{ csrf_field() }}
+														<input type="hidden"   name="idSubasta" value="{{$subasta->id}}">
+														<button class="col-md-4 col-group btn btn-success" type='submit'>
+															Adquirir hospedaje
+														</button>
+												</form>	
+												@include('inc.mensajeError')
+											@endif
 											<a class="btn btn-info float-right" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}">
 				                                    Ver detalles subasta
-				                            </a>
+				                            </a> 
 			              </div>
 		              </div>
 								</div>

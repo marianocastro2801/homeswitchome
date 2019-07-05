@@ -650,6 +650,23 @@ class SesionController extends Controller
         $data['usuarios'] = $usuarios;
         $data['solicitantes'] = $solicitantes;
 
+        //Estos son los hotsale candidatos en la view 'listarCandidatosAHotsale' tenes una guia de como usar los datos que te doy
+
+        $candidatosAHotsale = DB::table('hotsales')
+                    ->where('candidato', true)
+                    ->get();
+
+        $idSubastas = [-1];
+        
+        foreach ($candidatosAHotsale as $candidatoAHotsale){
+             $idSubastas[] = $candidatoAHotsale->id_subasta;
+        }            
+
+        $data['candidatosAHotsales'] = DB::table('subastas')
+                    ->whereIn('id', $idSubastas)
+                    ->get(); 
+
+
         return view('perfilAdministrador', $data);
     }
 

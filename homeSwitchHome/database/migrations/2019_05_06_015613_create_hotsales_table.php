@@ -15,12 +15,13 @@ class CreateHotsalesTable extends Migration
     {
         Schema::create('hotsales', function (Blueprint $table) {
             $table->increments('id');
-            $table->float('precio_base');
-            $table->integer('id_hospedaje')->unsigned();
+            $table->float('precio_base')->nullable();
+            $table->boolean('candidato')->default($value = true);
+            $table->integer('id_subasta')->unsigned();
             $table->timestamps();
 
-            $table->foreign('id_hospedaje')
-                      ->references('id')->on('hospedajes')
+            $table->foreign('id_subasta')
+                      ->references('id')->on('subastas')
                       ->onDelete('cascade');
         });
     }
