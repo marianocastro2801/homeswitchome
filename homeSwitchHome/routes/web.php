@@ -84,3 +84,15 @@ Route::get('/pasarapremium/{id}','SesionController@pasarAPremium');
 Route::get('/aceptarsolicitante/{id}','SesionController@aceptarSolicitante');
 
 Route::get('/rechazarsolicitante/{id}','SesionController@rechazarSolicitante');
+
+Route::get('/candidatoshotsale', 'HotsaleController@listarCandidatosHotsale');
+
+Route::get('/pasarahotsale/{id}', 'HotsaleController@pasarAHotsale');
+
+Route::post('/guardarhotsale', 'HotsaleController@guardarHotsale');
+
+Route::get('/listarhotsales', 'HotsaleController@listarHotsales');
+
+Route::post('/reservarhotsale', 'HotsaleController@reservarHotsale');
+
+Route::post('/adquirircomopremium', 'HotsaleController@adquirirComoPremium');

@@ -11,6 +11,7 @@ use App\Participa;
 use App\Reserva;
 use App\Inscripcion;
 use App\Notificacion;
+use App\Hotsale;
 
 
 class SubastasController extends Controller
@@ -330,6 +331,11 @@ class SubastasController extends Controller
 
         $request->session()->flash('exito', 'La subasta se cerro con exito sin ganadores. La subasta se ha agregado a la lista de candidatos de Hotsale');
 
+        $candidatoHotsale = new Hotsale;
+        $candidatoHotsale->id_subasta = $subasta->id;
+
+        $candidatoHotsale->save();
+
         foreach ($pujas as $puja){
             
             $tieneReservaEnLaSemana = false;
@@ -378,6 +384,8 @@ class SubastasController extends Controller
                 $notificacion->save(); 
 
                 $request->session()->flash('exito', 'La subasta se cerro con exito, el ganador es '.$usuario->email);
+
+                DB::table('hotsales')->where('id_subasta', $request->input('idSubasta'))->delete();
 
                 break;
             }
