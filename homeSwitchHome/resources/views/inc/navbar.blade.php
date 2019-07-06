@@ -140,10 +140,50 @@
               @else
                 <a class="dropdown-item" href="/perfil">Mi Perfil</a>
               @endif
-              <a class="dropdown-item" href="#">Contactos</a>
-              <a class="dropdown-item" href="#">FAQ</a>
+              <a href="#contacots" class="dropdown-item" data-toggle="modal" data-target="#contactos">Contactos</a>
+              <a href="#response" class="dropdown-item" data-toggle="modal" data-target="#response">FAQ</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="/login">Cerrar sesion</a>
+            </div>
+            <div class="modal" id="response">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">FAQ</h5>
+                    <button class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="list-group">
+                      <div class="d-flex w-100 justify-content-between">
+                        <p>Aca van a ir las preguntas frcuentes que tengo que sacar de alguna pagina terminada</p>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal" id="contactos">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Contacto</h5>
+                    <button class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="list-group">
+                      <div class="d-flex w-100 justify-content-between">
+                        <p>Aca van a ir el mail, la direccion, telefono y demas cosas que son propias de el cliente</p>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
       </div>
