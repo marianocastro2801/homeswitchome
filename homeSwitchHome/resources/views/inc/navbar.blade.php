@@ -140,26 +140,37 @@
               @else
                 <a class="dropdown-item" href="/perfil">Mi Perfil</a>
               @endif
-              <a href="#contacots" class="dropdown-item" data-toggle="modal" data-target="#contactos">Contactos</a>
-              <a href="#response" class="dropdown-item" data-toggle="modal" data-target="#response">FAQ</a>
+              @if(Session('nombreUsuario') != 'Andrea')
+                <a href="#contacots" class="dropdown-item" data-toggle="modal" data-target="#contactos">Contactos</a>
+                <a href="#response" class="dropdown-item" data-toggle="modal" data-target="#response">FAQ</a>
+              @endif
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="/login">Cerrar sesion</a>
             </div>
             <div class="modal" id="response">
-              <div class="modal-dialog">
+              <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title">FAQ</h5>
+                    <h5 class="modal-title">Preguntas Frecuentes</h5>
                     <button class="close" data-dismiss="modal">&times;</button>
                   </div>
                   <div class="modal-body">
                     <div class="list-group">
                       <div class="d-flex w-100 justify-content-between">
-                        <p>Aca van a ir las preguntas frcuentes que tengo que sacar de alguna pagina terminada</p>
+                        <div class="">
+                          <h6>1- ¿Qué acciones podrá realizar cada uno de los usuarios?</h6>
+                          <p>Un usuario normal podrá ver distintas residencias, anotarse a subastas, ofertar en las subasta, reservar por hotsale, ver su perfil con estados de subastas y reservas.
+                            El usuario premium podrá hacer lo mismo, con la diferencia que se le cobra un monto de registro y un extra mensual. Y como beneficio podrá acceder directamente a la propiedad sin pasar por la etapa de inscripción a la subasta.
+                            En la etapa subastas ambos usuarios tienen los mismos “privilegios”.</p>
+                          <h6>2- ¿Un mismo usuario puede hacer a múltiples reservas?</h6>
+                          <p>Si, pero se maneja mediante un sistema de créditos. Este crédito será adquirido a cada usuario una vez se registren. El usuario recibirá la suma de dos créditos cada 1 año, y se descontará uno al reservar un hospedaje, ya sea por ganar una subasta, reservar un Hotsale o reservar directo siendo usuario Premium.
+                            Se tiene pensado que haya un mecanismo de comprar créditos, pero no será implementado por el momento.</p>
+
+                        </div>
                       </div>
                     </div>
                     <div class="modal-footer">
-                      <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>
                   </div>
                 </div>
@@ -173,13 +184,19 @@
                     <button class="close" data-dismiss="modal">&times;</button>
                   </div>
                   <div class="modal-body">
-                    <div class="list-group">
-                      <div class="d-flex w-100 justify-content-between">
-                        <p>Aca van a ir el mail, la direccion, telefono y demas cosas que son propias de el cliente</p>
-                      </div>
-                    </div>
+                        <div class="container-fluid">
+                          <div class="d-flex w-100 justify-content-between">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <p><b>Direccion:</b> Calle 50 &, Av. 120, La Plata, Buenos Aires de Lunes a Viernes de 8 a 12.</p>
+                                  <p><b>Email:</b> andreaperez@gmail.com</p>
+                                  <p><b>Tel:</b> 221 - 4567434</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                     <div class="modal-footer">
-                      <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>
                   </div>
                 </div>
