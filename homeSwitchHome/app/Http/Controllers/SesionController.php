@@ -348,6 +348,18 @@ class SesionController extends Controller
 
         $usuario->save();
 
+        $usuario = DB::table('usuaiso')
+                    ->where('email', $request->input('email'))
+                    ->first();
+
+        $idUsuario = $usuario->id;
+
+        $notificacion = new Notificacion;
+        $notificacion->id_usuario = $idUsuario;
+        $notificacion->mensaje = 'Se ha cobrado el monto de registro de su tarjeta. Se comenzará a cobrar el monto mensual a partir del próximo més' ;
+
+        $notificacion->save();
+
         return redirect('/login')->with('exito', 'El usuario se creo exitosamente');
     }
 
@@ -374,7 +386,16 @@ class SesionController extends Controller
                                 ->whereIn('id', $idSubastas)
                                 ->get();
 
+        $data['misReservas'] = DB::table('reservas')
+                                ->where('id', session('idUsuario'))
+                                ->get();
+
+        $data['misInscripciones'] = DB::table('inscripcions')
+                                ->where('id', session('idUsuario'))
+                                ->get();                        
+
         $this->verificarSolictud();
+
         return view('miPerfil', $data);
 
     }

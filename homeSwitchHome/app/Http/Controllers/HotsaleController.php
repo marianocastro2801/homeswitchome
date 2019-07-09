@@ -10,6 +10,67 @@ use App\Notificacion;
 
 class HotsaleController extends Controller
 {
+	public function verificarSolictud(){
+        $solicitud = DB::table('solicitantes')
+                        ->where('id_usuario', session('idUsuario'))
+                        ->first();
+
+        $SubastasInscriptas = DB::table('inscripcions')
+                                ->where('id_usuario', session('idUsuario'))
+                                ->get();
+
+        $idSubastas = [-1];
+        foreach ($SubastasInscriptas as $SubastaInscriptas) {
+             $idSubastas[] = $SubastaInscriptas->id_subasta;
+        }                
+
+        $hoy = Carbon::today()->format('Y-m-d');                
+
+        $subastas = DB::table('subastas')
+                    ->whereNull('ganador')
+                    ->whereDate('fecha_inicio_subasta', '<=' , $hoy)
+                    ->whereIn('id', $idSubastas)
+                    ->get();
+
+        foreach ($subastas as $subasta) {
+
+            $hospedaje = DB::table('hospedajes')->where('id', $subasta->id_hospedaje)->first();
+            $fechaDeInicioPuja = Carbon::parse($subasta->fecha_inicio_subasta);
+
+            Notificacion::updateOrCreate(
+                ['id_subasta' => $subasta->id,
+                'id_usuario' => session('idUsuario')],
+                ['mensaje' => 'Comenzó una subasta para '.$hospedaje->titulo.' el día '.$fechaDeInicioPuja->format('d-m-Y') ,
+                'created_at' => $fechaDeInicioPuja]);
+        }                
+
+        $notificaciones = DB::table('notificacions')
+                        ->where('id_usuario', session('idUsuario'))
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+
+        $mensajes = [];
+
+        foreach ($notificaciones as $notificacion) {
+            $mensajes[$notificacion->id] = $notificacion->mensaje;
+        }                
+
+        $usuario = DB::table('usuarios')
+                    ->where('id', session('idUsuario'))
+                    ->first();               
+
+        session(['esPremium' => $usuario->es_premium,
+                 'mensajes' => $mensajes]);
+
+        if(!is_null($solicitud)){
+            session(['solicitud' => true]);
+        }
+        else{
+            session(['solicitud' => false]);   
+        }                        
+    }
+
+
     public function listarCandidatosHotsale(){
     	
     	$candidatosAHotsale = DB::table('hotsales')
@@ -26,7 +87,7 @@ class HotsaleController extends Controller
                     ->whereIn('id', $idSubastas)
                     ->get(); 
 
-                               
+        $this->verificarSolictud();                       
 
         return view('/layouts/listarCandidatosAHotsale', $data);                      
     }
@@ -51,6 +112,8 @@ class HotsaleController extends Controller
     public function pasarAHotsale($idSubasta){
 
     	$data = $this->obtenerInformacionHotsale($idSubasta);
+
+    	$this->verificarSolictud();
 
     	return view('pasarAHotsale', $data);
     }
@@ -90,6 +153,8 @@ class HotsaleController extends Controller
                     ->whereIn('subastas.id', $idSubastas)
                     ->get(); 
 
+        $this->verificarSolictud();
+
     	return view('/layouts/listarHotsales', $data);
     }
 
@@ -103,7 +168,9 @@ class HotsaleController extends Controller
                 'usuarioInvalido' => 'not_in:2'],
                 ['usuarioInvalido.not_in' => 'No posee suficiente crédito en la tarjeta']);
 
-		return session('idUsuario');
+		 DB::table('subastas')
+                ->where('id', $request->input('idSubasta'))
+                ->update(['monto_maximo' => 0, 'ganador' => session('idUsuario')]);
 
 		$reserva = new Reserva;
         $reserva->id_usuario = session('idUsuario');
@@ -133,7 +200,7 @@ class HotsaleController extends Controller
                 ['creditos.gt' => 'No posee créditos para adquirir el hospedaje']);
 
         DB::table('subastas')
-                ->where('id', $$request->input('idSubasta'))
+                ->where('id', $request->input('idSubasta'))
                 ->update(['monto_maximo' => 0, 'ganador' => session('idUsuario')]);
 
         $reserva = new Reserva;
@@ -147,6 +214,16 @@ class HotsaleController extends Controller
         $notificacion->mensaje = "Usted adquirió como premium el hospedaje ".$data['tituloHospedaje']." para alojarse desde ".Carbon::parse($data['fechaInicio'])->format('d-m-Y')." hasta ".Carbon::parse($data['fechaFin'])->format('d-m-Y');
 
         $notificacion->save();
+
+        DB::table('usuarios')
+                ->where('id', session('idUsuario'))
+                ->decrement('creditos');
+
+        $creditosActualizados = session('creditos') - 1;        
+
+        session(['creditos' => $creditosActualizados]);
+
+        DB::table('inscripcions')->where('id_subasta', $request->input('idSubasta'))->delete();        
 
         return redirect('/listarsubastas')->with(['exito' => 'Se ha adquirido el hospedaje con exito']);;
     }
