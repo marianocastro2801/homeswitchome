@@ -385,11 +385,14 @@ class SubastasController extends Controller
 
                 $request->session()->flash('exito', 'La subasta se cerro con exito, el ganador es '.$usuario->email);
 
+                //La elimino porque antes de entrar en el if la cree, y si hay ganador al elimino.
                 DB::table('hotsales')->where('id_subasta', $request->input('idSubasta'))->delete();
 
                 break;
             }
         }
+
+        DB::table('inscripcions')->where('id_subasta', $request->input('idSubasta'))->delete();
         
 
         return redirect('/');    
