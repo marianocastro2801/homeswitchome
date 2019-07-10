@@ -48,6 +48,9 @@
         <li class="nav-item">
             <a class="nav-link itemnav" href="/listarsubastas">Ver Subastas</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link itemnav" href="/listarhotsales">Ver Hotsale</a>
+        </li>
       </ul>
     </div>
 

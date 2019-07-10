@@ -3,7 +3,7 @@
 @section('content')
 
 @include('inc.mensajeError')
-<div class="containes col-md-12" style="margin-top: 20px; margin-bottom: 50px">
+<div class="container col-md-11" style="margin-top: 20px; margin-bottom: 50px">
          <h1 class="col-md-12 text-center bg-info" style=" margin-bottom: 30px;border-radius: 25px;border-style: double;"> Hotsales
          </h1>
 

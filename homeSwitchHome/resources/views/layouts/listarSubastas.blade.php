@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\DB;
 @extends('layouts.baseapp')
 
 @section('content')
-	<div class="container col-md-12" style="margin-bottom: 50px" >
+	<div class="container col-md-11" style="margin-bottom: 50px" >
 		<h1 class="col-md-12 text-center bg-info" style="margin-top: 20px ;margin-bottom: 30px;border-radius: 25px;border-style: double;"> Hospedajes </h1>
 			<div class="row">
 				<div class="col-md-2"></div>
@@ -100,12 +100,12 @@ use Illuminate\Support\Facades\DB;
 														<button class="col-md-4 col-group btn btn-success" type='submit'>
 															Adquirir hospedaje
 														</button>
-												</form>	
+												</form>
 												@include('inc.mensajeError')
 											@endif
 											<a class="btn btn-info float-right" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}">
 				                                    Ver detalles subasta
-				                            </a> 
+				                            </a>
 			              </div>
 		              </div>
 								</div>
