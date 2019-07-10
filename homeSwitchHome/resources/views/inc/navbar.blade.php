@@ -39,17 +39,20 @@
 
         @if (Session('nombreUsuario') == 'Andrea')
           <li class="nav-item ">
-            <a class="nav-link" href="/crearhospedaje">Crear Hospedajes</a>
+            <a class="nav-link" href="/crearhospedaje" style="margin-left: 30px;">Crear Hospedajes</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="/listarhospedajes">Ver Hospedajes</a>
+            <a class="nav-link" href="/listarhospedajes" style="margin-left: 30px;">Ver Hospedajes</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/candidatoshotsale" style="margin-left: 30px;">Ver Candidatos</a>
           </li>
         @endif
         <li class="nav-item">
-            <a class="nav-link itemnav" href="/listarsubastas">Ver Subastas</a>
+            <a class="nav-link itemnav" href="/listarsubastas" style="margin-left: 30px;">Ver Subastas</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link itemnav" href="/listarhotsales">Ver Hotsale</a>
+            <a class="nav-link itemnav" href="/listarhotsales" style="margin-left: 30px;">Ver Hotsale</a>
         </li>
       </ul>
     </div>
