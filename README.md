@@ -7,7 +7,5 @@ Proyecto 2019 Ingenieria de software II
 ### Open console in the project folder: ###
   * composer install
   * npm install
-  * php artisan make:migration "create_users_table"
-  * composer dump-autoload
-  * php artisan db:seed
+  * php artisan migration:refresh --seed
   
