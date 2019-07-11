@@ -22,11 +22,11 @@
         				->first();
         		?>
             <div class="col-md-4">
-              <div class="jumbotron">
+              <div class="jumbotron" style="border-radius: 35px;">
                 <div style="padding-top: 20px; padding-left: 20px">
-                  <h3>{{$hospedaje->titulo}}</h3>
+                  <h3 class="text-center" style="margin-top: -30px">{{$hospedaje->titulo}}</h3>
                   <hr>
-                  <img src="/images/{{ $hospedaje->imagen }}" width="250" height="160" style="display:block; margin:auto">
+                  <img src="/images/{{ $hospedaje->imagen }}" width="280" height="190" style="display:block; margin:auto">
                   <hr>
                   <p><b>Fecha de ingreso:</b> {{ Carbon\Carbon::parse($hotsale->fecha_inicio)->format('d-m-Y') }} </p>
                   <p><b>Fecha de egreso:</b> {{ Carbon\Carbon::parse($hotsale->fecha_fin)->format('d-m-Y') }}</p>
