@@ -210,6 +210,11 @@ class SubastasController extends Controller
             $data['montoMaximo'] = $maximaPuja->puja;               
         }
 
+        $data['participantes'] = DB::table('participas')
+                                    ->join('usuarios', 'usuarios.id', '=', 'participas.id_usuario')
+                                    ->orderBy('puja', 'desc')
+                                    ->get();
+
         $this->verificarSolictud();
         return view('detalleSubasta', $data);
     }
