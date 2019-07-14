@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 @extends('layouts.baseapp')
 @section('content')
 
-<div class="containes col-md-12" style="margin-top: 20px; margin-bottom: 50px">
+<div class="container col-md-10" style="margin-top: 20px; margin-bottom: 50px">
          <h1 class="col-md-12 text-center bg-info" style=" margin-bottom: 30px;border-radius: 25px;border-style: double;"> Hospedajes
          </h1>
 

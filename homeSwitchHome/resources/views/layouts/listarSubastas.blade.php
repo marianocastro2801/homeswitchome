@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\DB;
 @extends('layouts.baseapp')
 
 @section('content')
-	<div class="container col-md-11" style="margin-bottom: 50px" >
-		<h1 class="col-md-12 text-center bg-info" style="margin-top: 20px ;margin-bottom: 30px;border-radius: 25px;border-style: double;"> Hospedajes </h1>
-			@include('inc.mensajeExito')
+	<div class="container col-md-10" style="margin-bottom: 50px" >
+		<h1 class="col-md-12 text-center bg-info" style="margin-top: 20px ;margin-bottom: 30px;border-radius: 25px;border-style: double;"> Subastas </h1>
+      @include('inc.mensajeExito')
 			<div class="row">
 				<div class="col-md-2"></div>
 					<div class=" col-md-8 col-centered">
