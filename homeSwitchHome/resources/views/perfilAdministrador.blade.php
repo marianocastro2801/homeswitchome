@@ -27,12 +27,12 @@
 								<td class="text-center">
 									<a href="{{ url('/pasarapremium/'.$usuario->id) }}" class="btn btn-sm btn-primary">Pasar a premium</a>
 								</td>
-								@endif	
+								@endif
 							</tr>
-						@endforeach	
+						@endforeach
 					</tbody>
 				</table>
-			@endif			
+			@endif
 		</div>
 		<!--Todos los usuarios que pidieron ser premium-->
 		<div class="col-md-6">
@@ -55,11 +55,11 @@
 										<a href="{{ url('/rechazarsolicitante/'.$solicitante->id) }}" class="btn btn-sm btn-danger">Rechazar</a>
 									</td>
 								</tr>
-						@endforeach	
+						@endforeach
 					</tbody>
 				</table>
-			@endif		
-		</div>	
+			@endif
+		</div>
 	</div>
 </div>
 @endsection
