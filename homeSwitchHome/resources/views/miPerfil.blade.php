@@ -1,5 +1,5 @@
-<?php 
-    use Illuminate\Support\Facades\DB;                            
+<?php
+    use Illuminate\Support\Facades\DB;
 ?>
 @extends('layouts.baseapp')
 @section('content')
@@ -11,7 +11,7 @@
         border-bottom-left-radius:25px;
         border-bottom-right-radius: 25px;
         background: black;
-        margin-bottom: 60px;
+        margin-bottom: 30px;
     }
 
 </style>
@@ -51,6 +51,7 @@
 
         <!--Subastas inscriptas-->
         <div class="col-md-6">
+          @if(!session('esPremium'))
             <div class="fondo text-white">
                 <h3 class="text-center">Subastas en las que participa</h3>
                 <hr style="background: white">
@@ -63,7 +64,7 @@
                         <table class="table table-striped table-dark">
                             <thead>
                                 <tr>
-                                  <th scope="col" style="text-align: center">Titulo</th>  
+                                  <th scope="col" style="text-align: center">Titulo</th>
                                   <th scope="col" style="text-align: center">Comienzo subasta</th>
                                   <th scope="col" style="padding: 12px 20px 12px 20px;text-align: center">Fin subasta</th>
                                   <th scope="col" style="text-align: center">Detalle</th>
@@ -71,7 +72,7 @@
                             </thead>
                             <tbody>
                                 @foreach($subastas as $subasta)
-                                    <?php 
+                                    <?php
                                         $hospedaje = DB::table('hospedajes')
                                                     ->where('id', $subasta->id_hospedaje)
                                                     ->first();
@@ -96,6 +97,53 @@
                             </tbody>
                         </table>
                     @endif
+            </div>
+            @endif
+            <div style="border-radius: 25px; margin-top:20px" class="fondo text-white">
+              <h3 class="text-center">Mis reservas</h3>
+              <hr style="background-color:#fff">
+              @if(count($misReservas) == 0)
+                <div class="container text-center bg-info" style="border-radius: 25px; margin-top: 20px"><br><p><b>Por el momento no tiene reservas hechas</b></p><br></div>
+              @else
+              <table class="table table-striped table-dark">
+                  <thead>
+                      <tr>
+                        <th scope="col" style="text-align: center">Titulo</th>
+                        <th scope="col" style="text-align: center">Ingreso a Hospedaje</th>
+                        <th scope="col" style="padding: 12px 20px 12px 20px;text-align: center">Egreso del Hospedaje</th>
+                        <!--<th scope="col" style="text-align: center">Detalle</th>-->
+                      </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($misReservas as $reserva)
+                      <?php
+                          $subasta = DB::table('subastas')
+                                      ->where('id', $reserva->id_subasta)
+                                      ->first();
+                          $hospedaje = DB::table('hospedajes')
+                                      ->where('id', $subasta->id_hospedaje)
+                                      ->first();
+                      ?>
+                      <tr>
+                          <td style="text-align: center">
+                              {{ $hospedaje->titulo }}
+                          </td>
+                          <td style="text-align: center">
+                              {{ Carbon\Carbon::parse($subasta->fecha_inicio)->format('d-m-Y') }}
+                          </td style="text-align: center">
+                          <td>
+                             {{ Carbon\Carbon::parse($subasta->fecha_fin)->format('d-m-Y') }}
+                          </td>
+                          <!--<td>
+                              <a class=" btn btn-info text-center" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}">
+                                  Ir
+                              </a>
+                          </td>-->
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              @endif
             </div>
         </div>
     </div>

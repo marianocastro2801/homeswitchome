@@ -46,9 +46,9 @@ class SesionController extends Controller
         // $idSubastas = [-1];
         // foreach ($SubastasInscriptas as $SubastaInscriptas) {
         //      $idSubastas[] = $SubastaInscriptas->id_subasta;
-        // }                
+        // }
 
-        // $hoy = Carbon::today()->format('Y-m-d');                
+        // $hoy = Carbon::today()->format('Y-m-d');
 
         // $subastas = DB::table('subastas')
         //             ->whereNull('ganador')
@@ -66,7 +66,7 @@ class SesionController extends Controller
         //         'id_usuario' => session('idUsuario')],
         //         ['mensaje' => 'Comenzó una subasta para '.$hospedaje->titulo.' el día '.$fechaDeInicioPuja->format('d-m-Y') ,
         //         'created_at' => $fechaDeInicioPuja]);
-        // }                
+        // }
 
         $notificaciones = DB::table('notificacions')
                         ->where('id_usuario', session('idUsuario'))
@@ -77,11 +77,11 @@ class SesionController extends Controller
 
         foreach ($notificaciones as $notificacion) {
             $mensajes[$notificacion->id] = $notificacion->mensaje;
-        }                
+        }
 
         $usuario = DB::table('usuarios')
                     ->where('id', session('idUsuario'))
-                    ->first();               
+                    ->first();
 
         session(['esPremium' => $usuario->es_premium,
                  'mensajes' => $mensajes]);
@@ -90,8 +90,8 @@ class SesionController extends Controller
             session(['solicitud' => true]);
         }
         else{
-            session(['solicitud' => false]);   
-        }                        
+            session(['solicitud' => false]);
+        }
     }
 
     public function validarUsuario(Request $request){
@@ -348,7 +348,7 @@ class SesionController extends Controller
 
         $usuario->save();
 
-        $usuario = DB::table('usuaiso')
+        $usuario = DB::table('usuarios')
                     ->where('email', $request->input('email'))
                     ->first();
 
@@ -394,7 +394,7 @@ class SesionController extends Controller
         $data['misInscripciones'] = DB::table('inscripcions')
                                 ->join('subastas', 'subastas.id', '=', 'inscripcions.id_subasta')
                                 ->where('inscripcions.id_usuario', session('idUsuario'))
-                                ->get();                        
+                                ->get();
 
         $this->verificarSolictud();
 
@@ -629,7 +629,7 @@ class SesionController extends Controller
                                     ->whereDate('fecha_inicio', '>=', $fechaInicioAlojamiento)
                                     ->whereDate('fecha_fin', '<=', $fechaFinAlojamiento);
                     })
-                    ->get();  
+                    ->get();
         }
 
         return $this->listarInicio($subastas);
@@ -680,14 +680,14 @@ class SesionController extends Controller
                     ->get();
 
         $idSubastas = [-1];
-        
+
         foreach ($candidatosAHotsale as $candidatoAHotsale){
              $idSubastas[] = $candidatoAHotsale->id_subasta;
-        }            
+        }
 
         $data['candidatosAHotsales'] = DB::table('subastas')
                     ->whereIn('id', $idSubastas)
-                    ->get(); 
+                    ->get();
 
 
         return view('perfilAdministrador', $data);
@@ -776,7 +776,7 @@ class SesionController extends Controller
     public function notificarUsuarios(Request $request){
         $inscripciones = DB::table('inscripcions')
                     ->where('id_subasta', $request->input('idSubasta'))
-                    ->get();         
+                    ->get();
 
         foreach ($inscripciones as $inscripcion) {
 

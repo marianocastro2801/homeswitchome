@@ -56,7 +56,7 @@ use Illuminate\Support\Facades\DB;
 																	Notificar usuarios
 																</button>
 														</form>
-													@endif	
+													@endif
 											@endif
 												<a class="btn btn-info float-right" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}">
 																							Ver detalles subasta
@@ -133,6 +133,7 @@ use Illuminate\Support\Facades\DB;
 			<div class="col-md-2"></div>
 		</div>
 		<hr>
+		@if(Session('nombreUsuario') == 'Andrea')
 			<div class="row">
 				<div class="col-md-2"></div>
 					<div class=" col-md-8 col-centered">
@@ -183,5 +184,6 @@ use Illuminate\Support\Facades\DB;
 
 				<div class="col-md-2"></div>
 			</div>
+			@endif
 	</div>
 @endsection
