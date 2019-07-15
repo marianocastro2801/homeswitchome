@@ -16,7 +16,7 @@
 
 </style>
 
-<!------ Include the above in your HEAD tag ---------->
+<!-- Include the above in your HEAD tag ---------->
 
 <div class="container">
     <div class="row">

@@ -22,9 +22,9 @@ class HotsaleController extends Controller
         $idSubastas = [-1];
         foreach ($SubastasInscriptas as $SubastaInscriptas) {
              $idSubastas[] = $SubastaInscriptas->id_subasta;
-        }                
+        }
 
-        $hoy = Carbon::today()->format('Y-m-d');                
+        $hoy = Carbon::today()->format('Y-m-d');
 
         $subastas = DB::table('subastas')
                     ->whereNull('ganador')
@@ -42,7 +42,7 @@ class HotsaleController extends Controller
                 'id_usuario' => session('idUsuario')],
                 ['mensaje' => 'Comenzó una subasta para '.$hospedaje->titulo.' el día '.$fechaDeInicioPuja->format('d-m-Y') ,
                 'created_at' => $fechaDeInicioPuja]);
-        }                
+        }
 
         $notificaciones = DB::table('notificacions')
                         ->where('id_usuario', session('idUsuario'))
@@ -53,11 +53,11 @@ class HotsaleController extends Controller
 
         foreach ($notificaciones as $notificacion) {
             $mensajes[$notificacion->id] = $notificacion->mensaje;
-        }                
+        }
 
         $usuario = DB::table('usuarios')
                     ->where('id', session('idUsuario'))
-                    ->first();               
+                    ->first();
 
         session(['esPremium' => $usuario->es_premium,
                  'mensajes' => $mensajes]);
@@ -66,41 +66,41 @@ class HotsaleController extends Controller
             session(['solicitud' => true]);
         }
         else{
-            session(['solicitud' => false]);   
-        }                        
+            session(['solicitud' => false]);
+        }
     }
 
 
     public function listarCandidatosHotsale(){
-    	
+
     	$candidatosAHotsale = DB::table('hotsales')
                     ->where('candidato', true)
                     ->get();
 
         $idSubastas = [-1];
-        
+
         foreach ($candidatosAHotsale as $candidatoAHotsale){
              $idSubastas[] = $candidatoAHotsale->id_subasta;
-        }            
+        }
 
         $data['candidatosAHotsales'] = DB::table('subastas')
                     ->whereIn('id', $idSubastas)
-                    ->get(); 
+                    ->get();
 
-        $this->verificarSolictud();                       
+        $this->verificarSolictud();
 
-        return view('/layouts/listarCandidatosAHotsale', $data);                      
+        return view('/layouts/listarCandidatosAHotsale', $data);
     }
 
     public function obtenerInformacionHotsale($idSubasta){
-    
+
     	$subasta = DB::table('subastas')->where('id', $idSubasta)->first();
         $hospedaje = DB::table('hospedajes')->where('id', $subasta->id_hospedaje)->first();
 
         $data['tituloHospedaje'] = $hospedaje->titulo;
-        $data['maximasPersonas'] = $hospedaje->cantidad_maxima_personas; 
-        $data['descripcion'] = $hospedaje->descripcion;    
-        $data['nombreImagen'] = $hospedaje->imagen;   
+        $data['maximasPersonas'] = $hospedaje->cantidad_maxima_personas;
+        $data['descripcion'] = $hospedaje->descripcion;
+        $data['nombreImagen'] = $hospedaje->imagen;
         $data['idSubasta'] = $subasta->id;
         $data['fechaInicio'] = $subasta->fecha_inicio;
         $data['fechaFin'] = $subasta->fecha_fin;
@@ -121,11 +121,12 @@ class HotsaleController extends Controller
     public function guardarHotsale(Request $request){
 
     	$request->validate([
-                'precioBase' => 'required|bail|numeric'],
-                ['precioBase.required' => 'Por favor ingrese un precio base', 
-                 'precioBase.numeric' => 'Por favor ingrese un valor numérico'
+                'precioBase' => 'required|bail|numeric|bail|gt:0'],
+                ['precioBase.required' => 'Por favor ingrese un precio base',
+                 'precioBase.numeric' => 'Por favor ingrese un valor numérico',
+								 'precioBase.gt' => 'Porfavor ingrese un valor mayor a cero'
               ]);
-    	
+
     	DB::table('hotsales')
 	        ->where('id_subasta', $request->input('idSubasta'))
 	        ->update(['precio_base' => $request->input('precioBase'),
@@ -133,7 +134,7 @@ class HotsaleController extends Controller
 
 
 
-        return redirect('/candidatoshotsale')->with(['exito' => 'El hospedaje se pasó hotsale con exito']);                      
+        return redirect('/candidatoshotsale')->with(['exito' => 'El hospedaje se pasó hotsale con exito']);
     }
 
     public function listarHotsales(){
@@ -143,15 +144,15 @@ class HotsaleController extends Controller
                     ->get();
 
         $idSubastas = [-1];
-        
+
         foreach ($candidatosAHotsale as $candidatoAHotsale){
              $idSubastas[] = $candidatoAHotsale->id_subasta;
-        }            
+        }
 
         $data['hotsales'] = DB::table('subastas')
         			->join('hotsales', 'subastas.id', '=', 'hotsales.id_subasta')
                     ->whereIn('subastas.id', $idSubastas)
-                    ->get(); 
+                    ->get();
 
         $this->verificarSolictud();
 
@@ -176,7 +177,7 @@ class HotsaleController extends Controller
         $reserva->id_usuario = session('idUsuario');
         $reserva->id_subasta = $request->input('idSubasta');
 
-        $reserva->save(); 
+        $reserva->save();
 
         DB::table('hotsales')->where('id_subasta', $request->input('idSubasta'))->delete();
 
@@ -207,7 +208,7 @@ class HotsaleController extends Controller
         $reserva->id_usuario = session('idUsuario');
         $reserva->id_subasta = $request->input('idSubasta');
 
-        $reserva->save(); 
+        $reserva->save();
 
         $notificacion = new Notificacion;
         $notificacion->id_usuario = session('idUsuario');
@@ -219,14 +220,13 @@ class HotsaleController extends Controller
                 ->where('id', session('idUsuario'))
                 ->decrement('creditos');
 
-        $creditosActualizados = session('creditos') - 1;        
+        $creditosActualizados = session('creditos') - 1;
 
         session(['creditos' => $creditosActualizados]);
 
-        DB::table('inscripcions')->where('id_subasta', $request->input('idSubasta'))->delete();        
+        DB::table('inscripcions')->where('id_subasta', $request->input('idSubasta'))->delete();
 
         return redirect('/listarsubastas')->with(['exito' => 'Se ha adquirido el hospedaje con exito']);;
     }
 
 }
-  

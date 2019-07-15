@@ -74,7 +74,7 @@ class SubastasSeeder extends Seeder
             'fecha_inicio_inscripcion' => '2018-12-09',
             'fecha_inicio_subasta' => '2019-06-06',
             'fecha_fin_subasta' => '2019-06-09',
-        ]);    
+        ]);
 
 
         //Para poder pujar y mostrar que se muestra en el perfil EN QUILMES
@@ -87,7 +87,7 @@ class SubastasSeeder extends Seeder
             'fecha_inicio_inscripcion' => '2018-12-23',
             'fecha_inicio_subasta' => '2019-06-20',
             'fecha_fin_subasta' => '2019-06-23',
-        ]);    
+        ]);
 
 
         //Para poder mostrar que se puede pujar el monto base EN LA PLATA
@@ -95,11 +95,23 @@ class SubastasSeeder extends Seeder
             'id' => '7',
             'monto_base' => '24000',
             'id_hospedaje' => '2',
-            'fecha_inicio' => '2019-12-23',
-            'fecha_fin' => '2019-12-29',
-            'fecha_inicio_inscripcion' => '2018-12-23',
-            'fecha_inicio_subasta' => '2019-06-20',
+            'fecha_inicio' => '2019-12-23',//ENTRADA
+            'fecha_fin' => '2019-12-29',//SALIDA
+            'fecha_inicio_inscripcion' => '2018-12-23',//INSCRIPCION
+            'fecha_inicio_subasta' => '2019-06-20',//SUBASTA
             'fecha_fin_subasta' => '2019-06-23',
+        ]);
+
+        //En periodo de puja 15/07 hasta 18/07. En Bera
+        DB::table('subastas')->insert([
+            'id' => '8',
+            'monto_base' => '20000',
+            'id_hospedaje' => '1',
+            'fecha_inicio' => '2020-01-18',//ENTRADA
+            'fecha_fin' => '2020-01-25',//SALIDA
+            'fecha_inicio_inscripcion' => '2019-01-18',//INSCRIPCION
+            'fecha_inicio_subasta' => '2019-07-15',//SUBASTA
+            'fecha_fin_subasta' => '2019-07-18',
         ]);
 
     }
