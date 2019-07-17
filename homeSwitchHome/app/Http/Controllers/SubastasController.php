@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -28,9 +28,9 @@ class SubastasController extends Controller
         $idSubastas = [-1];
         foreach ($SubastasInscriptas as $SubastaInscriptas) {
              $idSubastas[] = $SubastaInscriptas->id_subasta;
-        }                
+        }
 
-        $hoy = Carbon::today()->format('Y-m-d');                
+        $hoy = Carbon::today()->format('Y-m-d');
 
         $subastas = DB::table('subastas')
                     ->whereNull('ganador')
@@ -48,7 +48,7 @@ class SubastasController extends Controller
                 'id_usuario' => session('idUsuario')],
                 ['mensaje' => 'Comenzó una subasta para '.$hospedaje->titulo.' el día '.$fechaDeInicioPuja->format('d-m-Y') ,
                 'created_at' => $fechaDeInicioPuja]);
-        }                
+        }
 
         $notificaciones = DB::table('notificacions')
                         ->where('id_usuario', session('idUsuario'))
@@ -59,11 +59,11 @@ class SubastasController extends Controller
 
         foreach ($notificaciones as $notificacion) {
             $mensajes[$notificacion->id] = $notificacion->mensaje;
-        }                
+        }
 
         $usuario = DB::table('usuarios')
                     ->where('id', session('idUsuario'))
-                    ->first();               
+                    ->first();
 
         session(['esPremium' => $usuario->es_premium,
                  'mensajes' => $mensajes]);
@@ -72,12 +72,12 @@ class SubastasController extends Controller
             session(['solicitud' => true]);
         }
         else{
-            session(['solicitud' => false]);   
-        }                        
+            session(['solicitud' => false]);
+        }
     }
 
     public function crearSubasta($idHospedaje){
-        
+
         $hospedaje = DB::table('hospedajes')
                     ->where('id', $idHospedaje)
                     ->first();
@@ -86,16 +86,16 @@ class SubastasController extends Controller
                     ->where('id_hospedaje', $idHospedaje)
                     ->whereNull('ganador')
                     ->orderBy('fecha_inicio')
-                    ->get();          
+                    ->get();
 
         $data['titulo'] = $hospedaje->titulo;
         $data['idHospedaje'] = $hospedaje->id;
-        $data['fechaInicioHospedaje'] = $hospedaje->fecha_inicio;   
-        $data['fechaFinHospedaje'] = $hospedaje->fecha_fin; 
-        $data['subastas'] = $subastas;         
+        $data['fechaInicioHospedaje'] = $hospedaje->fecha_inicio;
+        $data['fechaFinHospedaje'] = $hospedaje->fecha_fin;
+        $data['subastas'] = $subastas;
 
         return view('crearSubasta', $data);
-    } 
+    }
 
     public function validar(Request $request){
 
@@ -114,7 +114,7 @@ class SubastasController extends Controller
             'montoBase' => 'required|numeric|gt:0',
             'fechaInicio' => 'required|after_or_equal:fechaInicioHospedaje',
             'fechaFin' => 'before_or_equal:fechaFinHospedaje'],
-            ['montoBase.required' => 'Por favor ingrese un monto base', 
+            ['montoBase.required' => 'Por favor ingrese un monto base',
              'montoBase.numeric' => 'Por favor ingrese un valor numérico',
              'montoBase.gt' => 'Por favor ingrese un monto mayor a 0',
              'fechaInicio.required' => 'Por favor ingrese una fecha de inicio',
@@ -153,7 +153,7 @@ class SubastasController extends Controller
         $subasta = DB::table('subastas')->where('id', $idSubasta)->first();
         $hospedaje = DB::table('hospedajes')->where('id', $subasta->id_hospedaje)->first();
         $hoy = Carbon::today();
-        
+
         if($hoy < $subasta->fecha_inicio_subasta){
             $data['diferencia'] = Carbon::create($subasta->fecha_inicio_subasta)->diffInDays($hoy);
             $data['diferencia'] = 'La subasta comienza el '.Carbon::create($subasta->fecha_inicio_subasta)->format('d-m-Y');
@@ -165,12 +165,12 @@ class SubastasController extends Controller
             $data['diferencia'] = $hoy->diffInDays(Carbon::create($subasta->fecha_fin_subasta));
             $data['diferencia'] = 'Faltan '.$data['diferencia'].' días para que la subasta termine';
         }
-                
+
         $data['tituloHospedaje'] = $hospedaje->titulo;
-        $data['maximasPersonas'] = $hospedaje->cantidad_maxima_personas; 
-        $data['descripcion'] = $hospedaje->descripcion;    
-        $data['nombreImagen'] = $hospedaje->imagen;   
-        $data['idSubasta'] = $subasta->id;
+        $data['maximasPersonas'] = $hospedaje->cantidad_maxima_personas;
+        $data['descripcion'] = $hospedaje->descripcion;
+        $data['nombreImagen'] = $hospedaje->imagen;
+        $data['idSubasta'] = $idSubasta;
         $data['montoBase'] = $subasta->monto_base;
         $data['fechaInicioInscripcion'] = $subasta->fecha_inicio_inscripcion;
         $data['fechaInicioSubasta'] = $subasta->fecha_inicio_subasta;
@@ -184,7 +184,7 @@ class SubastasController extends Controller
                     ->where('id_subasta', $subasta->id)
                     ->whereRaw('puja = (SELECT MAX(puja) as puja FROM participas
                                 WHERE id_subasta = ?)', [$subasta->id])
-                    ->first();  
+                    ->first();
 
         $inscripto = DB::table('inscripcions')
                     ->where('id_subasta', $subasta->id)
@@ -196,7 +196,7 @@ class SubastasController extends Controller
         }
         else{
             $data['inscripto'] = false;
-        } 
+        }
 
         if(is_null($maximaPuja)){
             $data['maximoUsuario'] = 'no hay usuario';
@@ -205,9 +205,9 @@ class SubastasController extends Controller
         else {
             $maximoUsuario = DB::table('usuarios')
                     ->where('id', $maximaPuja->id_usuario)
-                    ->first();       
+                    ->first();
             $data['maximoUsuario'] = $maximoUsuario->email;
-            $data['montoMaximo'] = $maximaPuja->puja;               
+            $data['montoMaximo'] = $maximaPuja->puja;
         }
 
         $data['participantes'] = DB::table('participas')
@@ -242,7 +242,7 @@ class SubastasController extends Controller
                 //Queda comentado hasta saber si el credito tarjeta es en pujar o cerrar
                 //,'nombreUsuario' => 'different:nombreInvalido'
                 ],
-                ['valorPuja.required' => 'Por favor ingrese un monto a pujar', 
+                ['valorPuja.required' => 'Por favor ingrese un monto a pujar',
                  'valorPuja.numeric' => 'Por favor ingrese un valor numérico',
                   'valorPuja.gt' => 'El valor debe ser mas grande que la puja base'
               ]);
@@ -265,7 +265,7 @@ class SubastasController extends Controller
 
         $puja->save();
 
-        
+
         $id = $request->input('idSubasta');
         return redirect()->route('cargardetallesubasta', [$id]);
     }
@@ -292,8 +292,8 @@ class SubastasController extends Controller
                             ->whereNull('ganador')
                             ->whereDate('fecha_fin_subasta', '<=' , $hoy)
                             ->orderBy('fecha_inicio', 'asc')
-                            ->get();                    
-        
+                            ->get();
+
         $this->verificarSolictud();
         return view('/layouts/listarSubastas', $data);
     }
@@ -305,7 +305,7 @@ class SubastasController extends Controller
                     ->first();
 
         //Usuario sin crédito en la tarjeta
-        $request['usuarioInvalido'] = 2; 
+        $request['usuarioInvalido'] = 2;
         $request['hoy'] = Carbon::today();
         //Agregado para poder tirar el error correspondiente
         $request['diaAnteriorAlIncio'] = Carbon::create($subasta->fecha_inicio_subasta)->subDay();
@@ -314,7 +314,7 @@ class SubastasController extends Controller
                 'hoy' => 'after:diaAnteriorAlIncio|bail|after_or_equal:'.$subasta->fecha_fin_subasta],
                 ['hoy.after' => 'La subasta todavía no comenzó',
                  'hoy.after_or_equal' => 'La subasta todavía no terminó',
-                    ]); 
+                    ]);
 
         // Codigo para obtener el maximo de algo
         // $pujas = DB::table('participas')
@@ -328,7 +328,7 @@ class SubastasController extends Controller
                     ->select('id_usuario','puja')
                     ->where('id_subasta', $subasta->id)
                     ->orderBy('puja', 'desc')
-                    ->get();           
+                    ->get();
 
         DB::table('subastas')
         ->where('id', $subasta->id)
@@ -342,7 +342,7 @@ class SubastasController extends Controller
         $candidatoHotsale->save();
 
         foreach ($pujas as $puja){
-            
+
             $tieneReservaEnLaSemana = false;
 
             $usuario = DB::table('usuarios')
@@ -351,7 +351,7 @@ class SubastasController extends Controller
 
             $reservas = DB::table('reservas')
                 ->where('id_usuario', $puja->id_usuario)
-                ->get();    
+                ->get();
 
             foreach ($reservas as $reserva){
                     $subastaDeReserva = DB::table('subastas')
@@ -361,7 +361,7 @@ class SubastasController extends Controller
                     if($subastaDeReserva->fecha_inicio == $subasta->fecha_inicio){
                         $tieneReservaEnLaSemana = true;
                     }
-                }  
+                }
 
             if(($usuario->id != $request->input('usuarioInvalido') &&  ($usuario->creditos > 0) && (!$tieneReservaEnLaSemana))){
                 DB::table('subastas')
@@ -376,7 +376,7 @@ class SubastasController extends Controller
                 $reserva->id_usuario = $puja->id_usuario;
                 $reserva->id_subasta = $subasta->id;
 
-                $reserva->save(); 
+                $reserva->save();
 
                 $hospedaje = DB::table('hospedajes')
                             ->where('id', $request->input('idSubasta'))
@@ -386,7 +386,7 @@ class SubastasController extends Controller
                 $notificacion->id_usuario = $puja->id_usuario;
                 $notificacion->mensaje = "Gano la subasta ".$hospedaje->titulo." para alojarse desde ".Carbon::parse($subasta->fecha_inicio)->format('d-m-Y')." hasta ".Carbon::parse($subasta->fecha_fin)->format('d-m-Y');
 
-                $notificacion->save(); 
+                $notificacion->save();
 
                 $request->session()->flash('exito', 'La subasta se cerro con exito, el ganador es '.$usuario->email);
 
@@ -398,9 +398,9 @@ class SubastasController extends Controller
         }
 
         DB::table('inscripcions')->where('id_subasta', $request->input('idSubasta'))->delete();
-        
 
-        return redirect('/');    
+
+        return redirect('/');
     }
 
     public function inscribirse(Request $request){
