@@ -112,7 +112,18 @@
 				@if(Session('nombreUsuario')=='Andrea')
 					<div class="col-md-6">
 						<div class="jumbotron bg-dark" style="border-radius:25px">
-							@if(count($participantes) == 0)
+							<?php $vacio = true ?>
+							@foreach($participantes as $participante)
+							<?php
+									$user = DB::table('usuarios')
+															->where('id', $participante->id_usuario)
+															->first();
+									if($participante->id_subasta == $idSubasta){
+										$vacio = false;
+									}
+								?>
+							@endforeach
+							@if($vacio)
 							<div class="container">
 								<div class="container text-center bg-info" style="border-radius: 25px; margin-top: 20px"><br><p><b>Ningun usuario pujo todavia</b></p><br></div>
 							</div>
@@ -130,15 +141,18 @@
 									<tbody>
 										@foreach($participantes as $participante)
 										<tr>
+
+										@if($participante->id_subasta == $idSubasta)
 											<td>
 												<?php
 														$user = DB::table('usuarios')
-																				->where('id', $participante->id_usuario) //devuelve todos, cambiar a solo usuarios de la publicacion
+																				->where('id', $participante->id_usuario)
 																				->first();
 													?>
 												<h5>{{ $user->nombre }}</h5>
 											</td>
 											<td>{{ $participante->puja}}</td>
+											@endif
 										</tr>
 
 										@endforeach
@@ -150,4 +164,7 @@
 				@endif
 	</div>
 </div>
+</div>
+</div>
+
 @endsection

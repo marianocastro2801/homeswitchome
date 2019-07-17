@@ -49,11 +49,10 @@
 
 
 
-        <!--Subastas inscriptas-->
+        <!--Subastas abiertas-->
         <div class="col-md-6">
-          @if(!session('esPremium'))
             <div class="fondo text-white">
-                <h3 class="text-center">Subastas en las que participa</h3>
+                <h3 class="text-center">Subastas abiertas</h3>
                 <hr style="background: white">
                     @if(count($subastas) == 0)
                         <!--Si no hay publicacion-->
@@ -98,8 +97,57 @@
                         </table>
                     @endif
             </div>
-            @endif
+
+
+            <!--Esto son las inscripciones para futuras subastas-->
+            @if(!Session('esPremium'))
             <div style="border-radius: 25px; margin-top:20px" class="fondo text-white">
+              <h3 class="text-center">Subastas sin comenzar</h3>
+              <hr style="background-color:#fff">
+              @if(count($misInscripciones) == 0)
+                <div class="container text-center bg-info" style="border-radius: 25px; margin-top: 20px"><br><p><b>Por el momento no tiene reservas hechas</b></p><br></div>
+              @else
+              <table class="table table-striped table-dark">
+                  <thead>
+                      <tr>
+                        <th scope="col" style="text-align: center">Titulo</th>
+                        <th scope="col" style="text-align: center">Inicio de Subasta</th>>
+                        <!--<th scope="col" style="text-align: center">Detalle</th>-->
+                      </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($misInscripciones as $reserva)
+                      <?php
+                          $subasta = DB::table('subastas')
+                                      ->where('id', $reserva->id_subasta)
+                                      ->first();
+                          $hospedaje = DB::table('hospedajes')
+                                      ->where('id', $subasta->id_hospedaje)
+                                      ->first();
+                      ?>
+                      <tr>
+                          <td style="text-align: center">
+                              {{ $hospedaje->titulo }}
+                          </td>
+                          <td style="text-align: center">
+                              {{ Carbon\Carbon::parse($subasta->fecha_inicio_subasta)->format('d-m-Y') }}
+                          </td style="text-align: center">
+                          <!--<td>
+                              <a class=" btn btn-info text-center" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}">
+                                  Ir
+                              </a>
+                          </td>-->
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              @endif
+            </div>
+            @endif
+
+
+            <!--Estas son mis reservas-->
+            <div style="border-radius: 25px; margin-top:20px; margin-bottom: 70px" class="fondo text-white">
               <h3 class="text-center">Mis reservas</h3>
               <hr style="background-color:#fff">
               @if(count($misReservas) == 0)
