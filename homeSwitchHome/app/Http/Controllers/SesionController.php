@@ -397,7 +397,7 @@ class SesionController extends Controller
                                 ->get();
 
         $this->verificarSolictud();
-
+        
         return view('miPerfil', $data);
 
     }
