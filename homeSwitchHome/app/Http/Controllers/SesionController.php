@@ -382,7 +382,6 @@ class SesionController extends Controller
         }
 
         $data['subastas'] = DB::table('subastas')
-                                ->whereNull('ganador')
                                 ->whereIn('id', $idSubastas)
                                 ->get();
 

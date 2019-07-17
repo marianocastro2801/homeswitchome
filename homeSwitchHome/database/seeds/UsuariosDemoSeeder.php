@@ -1,6 +1,6 @@
 <?php
 
-    
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +26,8 @@ class UsuariosDemoSeeder extends Seeder
             'anio_vencimiento'=> '20',
             'codigo_seguridad'=> '345',
             'contrasenia' => 'andreaperez',
-    		'fecha_nacimiento'=> '1990-06-04'
+    		'fecha_nacimiento'=> '1990-06-04',
+        'created_at' => '1990-06-04'
     	]);
 
         //Usuarios del sistema
@@ -44,7 +45,8 @@ class UsuariosDemoSeeder extends Seeder
             'anio_vencimiento'=> '23',
             'codigo_seguridad'=> '778',
             'contrasenia' => 'carlosrivero',
-    		'fecha_nacimiento'=> '1996-06-15'
+    		'fecha_nacimiento'=> '1996-06-15',
+        'created_at' => '1990-06-04'
     	]);
 
 
@@ -62,7 +64,8 @@ class UsuariosDemoSeeder extends Seeder
             'codigo_seguridad'=> '543',
             'contrasenia' => 'leonelmandarino',
     		'fecha_nacimiento'=> '1996-05-29',
-            'creditos' => 1
+            'creditos' => 1,
+            'created_at' => '1990-06-04'
     	]);
 
         //Usuario para mostrar que no puede reservas dos hospedajes en la misma semana
@@ -78,7 +81,8 @@ class UsuariosDemoSeeder extends Seeder
             'codigo_seguridad'=> '365',
             'contrasenia' => 'marcospereyra',
     		'fecha_nacimiento'=> '1996-10-04',
-            'creditos' => 2
+            'creditos' => 2,
+            'created_at' => '1990-06-04'
     	]);
     }
 }

@@ -16,7 +16,9 @@
 
 </style>
 
+
 <!-- Include the above in your HEAD tag ---------->
+
 
 <div class="container">
     <div class="row">
@@ -35,6 +37,7 @@
                 @else
                     <p class="text-center bg-danger" style=" border-radius: 10px">Usted aun no es usuario premium</p>
                 @endif
+
                 <hr style="background: white">
                 <div class="btn-group row col-md-12">
                     <div class="col-md-8"></div>
@@ -52,7 +55,7 @@
         <!--Subastas abiertas-->
         <div class="col-md-6">
             <div class="fondo text-white">
-                <h3 class="text-center">Subastas abiertas</h3>
+                <h3 class="text-center">Subastas Iniciadas</h3>
                 <hr style="background: white">
                     @if(count($subastas) == 0)
                         <!--Si no hay publicacion-->
@@ -93,6 +96,34 @@
                                         </td>
                                     </tr>
                                 @endforeach
+                                @foreach($misInscripciones as $reserva)
+                                  <?php
+                                      $subasta = DB::table('subastas')
+                                                  ->where('id', $reserva->id_subasta)
+                                                  ->first();
+                                      $hospedaje = DB::table('hospedajes')
+                                                  ->where('id', $subasta->id_hospedaje)
+                                                  ->first();
+                                  ?>
+                                  @if($subasta->fecha_inicio_subasta <= Carbon\Carbon::today())
+                                  <tr>
+                                      <td style="text-align: center">
+                                          {{ $hospedaje->titulo }}
+                                      </td>
+                                      <td style="text-align: center">
+                                          {{ Carbon\Carbon::parse($subasta->fecha_inicio_subasta)->format('d-m-Y') }}
+                                      </td>
+                                      <td>
+                                         {{ Carbon\Carbon::parse($subasta->fecha_fin_subasta)->format('d-m-Y') }}
+                                      </td>
+                                      <td>
+                                          <a class=" btn btn-info text-center" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}">
+                                              Ir
+                                          </a>
+                                      </td>
+                                  </tr>
+                                  @endif
+                                @endforeach
                             </tbody>
                         </table>
                     @endif
@@ -104,7 +135,18 @@
             <div style="border-radius: 25px; margin-top:20px" class="fondo text-white">
               <h3 class="text-center">Subastas sin comenzar</h3>
               <hr style="background-color:#fff">
-              @if(count($misInscripciones) == 0)
+              <?php $noHaySubasta= 0 ?>
+              @foreach($misInscripciones as $reserva)
+                <?php
+                    $subasta = DB::table('subastas')
+                                ->where('id', $reserva->id_subasta)
+                                ->first();
+                ?>
+                @if($subasta->fecha_inicio_subasta > Carbon\Carbon::today())
+                  <?php  $noHaySubasta++ ?>
+                @endif
+              @endforeach
+              @if($noHaySubasta==0)
                 <div class="container text-center bg-info" style="border-radius: 25px; margin-top: 20px"><br><p><b>Por el momento no tiene reservas hechas</b></p><br></div>
               @else
               <table class="table table-striped table-dark">
@@ -125,19 +167,21 @@
                                       ->where('id', $subasta->id_hospedaje)
                                       ->first();
                       ?>
+                      @if($subasta->fecha_inicio_subasta > Carbon\Carbon::today())
                       <tr>
                           <td style="text-align: center">
                               {{ $hospedaje->titulo }}
                           </td>
                           <td style="text-align: center">
                               {{ Carbon\Carbon::parse($subasta->fecha_inicio_subasta)->format('d-m-Y') }}
-                          </td style="text-align: center">
+                          </td>
                           <!--<td>
                               <a class=" btn btn-info text-center" href="{{ url('/cargardetallesubasta/'.$subasta->id) }}">
                                   Ir
                               </a>
                           </td>-->
                       </tr>
+                      @endif
                     @endforeach
                   </tbody>
                 </table>

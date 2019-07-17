@@ -171,7 +171,10 @@
                           <h6>2- ¿Un mismo usuario puede hacer a múltiples reservas?</h6>
                           <p>Si, pero se maneja mediante un sistema de créditos. Este crédito será adquirido a cada usuario una vez se registren. El usuario recibirá la suma de dos créditos cada 1 año, y se descontará uno al reservar un hospedaje, ya sea por ganar una subasta, reservar un Hotsale o reservar directo siendo usuario Premium.
                             Se tiene pensado que haya un mecanismo de comprar créditos, pero no será implementado por el momento.</p>
-
+                            <h6>3- ¿Qué sucede con los usuarios que no tengan suficiente saldo para pagar la cuota mensual?</h6>
+                            <p>Se le informa que no tienen suficiente crédito como para usar el sistema y se le da la opción de cambiar de tarjeta.</p>
+                            <h6>4- ¿Cuál es la demografía y alcance que apuntan?</h6>
+                            <p>Personas mayores de 18 años en América.</p>
                         </div>
                       </div>
                     </div>

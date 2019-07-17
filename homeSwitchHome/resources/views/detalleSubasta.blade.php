@@ -67,7 +67,7 @@
 					@if(( Session('nombreUsuario') != 'Andrea') && ($fechaInicioSubasta <= $hoy) && ($fechaFinSubasta > $hoy))
 						<form class='form' method='post' action='/pujarsubasta'>
 							{{ csrf_field() }}
-							<div class="col-group col-md-12">
+							<div class="col-group row">
 								<span class="col-md-1 col-group glyphicon glyphicon-usd" style="margin-top: 10px">
 								</span>
 								<input type="text"  class="form-control col-md-6 col-group" name="valorPuja" placeholder="Ingrese monto">
