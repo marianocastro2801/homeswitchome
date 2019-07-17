@@ -41,5 +41,13 @@ class ParticipasSeeder extends Seeder
             'id_subasta' => '5'
         ]);
 
+        // Usuario Mandarino Leonel
+        DB::table('participas')->insert([
+            'id' => '4',
+            'id_usuario' => '3',
+            'puja' => '10000',
+            'id_subasta' => '3'
+        ]);
+
     }
 }

@@ -114,6 +114,18 @@ class SubastasSeeder extends Seeder
             'fecha_fin_subasta' => '2019-07-20',
         ]);
 
+        //Subasta para inscribirse en BERA. En periodo de inscripcion
+        DB::table('subastas')->insert([
+        	'id' => '9',
+        	'monto_base' => '19000',
+            'id_hospedaje' => '3',
+            'fecha_inicio' => '2020-03-15',
+            'fecha_fin' => '2020-03-21',
+            'fecha_inicio_inscripcion' => '2019-03-15',
+            'fecha_inicio_subasta' => '2019-09-12',
+            'fecha_fin_subasta' => '2019-09-15',
+        ]);
+
 
     }
 }
