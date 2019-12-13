@@ -96,3 +96,5 @@ Route::get('/listarhotsales', 'HotsaleController@listarHotsales');
 Route::post('/reservarhotsale', 'HotsaleController@reservarHotsale');
 
 Route::post('/adquirircomopremium', 'HotsaleController@adquirirComoPremium');
+
+Route::post('/notificarusuarios', 'SesionController@notificarUsuarios');

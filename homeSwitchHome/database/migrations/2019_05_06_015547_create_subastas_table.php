@@ -24,6 +24,7 @@ class CreateSubastasTable extends Migration
             $table->float('monto_maximo', 8, 2)->nullable();
             $table->integer('ganador')->nullable();
             $table->integer('id_hospedaje')->unsigned();
+            $table->boolean('notificada')->default($value = false);
             $table->timestamps();
 
             $table->foreign('id_hospedaje')

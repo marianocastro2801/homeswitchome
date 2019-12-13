@@ -39,34 +39,34 @@ class SesionController extends Controller
                         ->where('id_usuario', session('idUsuario'))
                         ->first();
 
-        $SubastasInscriptas = DB::table('inscripcions')
-                                ->where('id_usuario', session('idUsuario'))
-                                ->get();
+        // $SubastasInscriptas = DB::table('inscripcions')
+        //                         ->where('id_usuario', session('idUsuario'))
+        //                         ->get();
 
-        $idSubastas = [-1];
-        foreach ($SubastasInscriptas as $SubastaInscriptas) {
-             $idSubastas[] = $SubastaInscriptas->id_subasta;
-        }                
+        // $idSubastas = [-1];
+        // foreach ($SubastasInscriptas as $SubastaInscriptas) {
+        //      $idSubastas[] = $SubastaInscriptas->id_subasta;
+        // }                
 
-        $hoy = Carbon::today()->format('Y-m-d');                
+        // $hoy = Carbon::today()->format('Y-m-d');                
 
-        $subastas = DB::table('subastas')
-                    ->whereNull('ganador')
-                    ->whereDate('fecha_inicio_subasta', '<=' , $hoy)
-                    ->whereIn('id', $idSubastas)
-                    ->get();
+        // $subastas = DB::table('subastas')
+        //             ->whereNull('ganador')
+        //             ->whereDate('fecha_inicio_subasta', '<=' , $hoy)
+        //             ->whereIn('id', $idSubastas)
+        //             ->get();
 
-        foreach ($subastas as $subasta) {
+        // foreach ($subastas as $subasta) {
 
-            $hospedaje = DB::table('hospedajes')->where('id', $subasta->id_hospedaje)->first();
-            $fechaDeInicioPuja = Carbon::parse($subasta->fecha_inicio_subasta);
+        //     $hospedaje = DB::table('hospedajes')->where('id', $subasta->id_hospedaje)->first();
+        //     $fechaDeInicioPuja = Carbon::parse($subasta->fecha_inicio_subasta);
 
-            Notificacion::updateOrCreate(
-                ['id_subasta' => $subasta->id,
-                'id_usuario' => session('idUsuario')],
-                ['mensaje' => 'Comenzó una subasta para '.$hospedaje->titulo.' el día '.$fechaDeInicioPuja->format('d-m-Y') ,
-                'created_at' => $fechaDeInicioPuja]);
-        }                
+        //     Notificacion::updateOrCreate(
+        //         ['id_subasta' => $subasta->id,
+        //         'id_usuario' => session('idUsuario')],
+        //         ['mensaje' => 'Comenzó una subasta para '.$hospedaje->titulo.' el día '.$fechaDeInicioPuja->format('d-m-Y') ,
+        //         'created_at' => $fechaDeInicioPuja]);
+        // }                
 
         $notificaciones = DB::table('notificacions')
                         ->where('id_usuario', session('idUsuario'))
@@ -132,34 +132,34 @@ class SesionController extends Controller
 
         //Obteniendo notificaciones de subastas en periodo puja
 
-        $SubastasInscriptas = DB::table('inscripcions')
-                                ->where('id_usuario', $usuario->id)
-                                ->get();
+        // $SubastasInscriptas = DB::table('inscripcions')
+        //                         ->where('id_usuario', $usuario->id)
+        //                         ->get();
 
-        $idSubastas = [-1];
-        foreach ($SubastasInscriptas as $SubastaInscriptas) {
-             $idSubastas[] = $SubastaInscriptas->id_subasta;
-        }
+        // $idSubastas = [-1];
+        // foreach ($SubastasInscriptas as $SubastaInscriptas) {
+        //      $idSubastas[] = $SubastaInscriptas->id_subasta;
+        // }
 
-        $hoy = Carbon::today()->format('Y-m-d');
+        // $hoy = Carbon::today()->format('Y-m-d');
 
-        $subastas = DB::table('subastas')
-                    ->whereNull('ganador')
-                    ->whereDate('fecha_inicio_subasta', '<=' , $hoy)
-                    ->whereIn('id', $idSubastas)
-                    ->get();
+        // $subastas = DB::table('subastas')
+        //             ->whereNull('ganador')
+        //             ->whereDate('fecha_inicio_subasta', '<=' , $hoy)
+        //             ->whereIn('id', $idSubastas)
+        //             ->get();
 
-        foreach ($subastas as $subasta) {
+        // foreach ($subastas as $subasta) {
 
-            $hospedaje = DB::table('hospedajes')->where('id', $subasta->id_hospedaje)->first();
-            $fechaDeInicioPuja = Carbon::parse($subasta->fecha_inicio_subasta);
+        //     $hospedaje = DB::table('hospedajes')->where('id', $subasta->id_hospedaje)->first();
+        //     $fechaDeInicioPuja = Carbon::parse($subasta->fecha_inicio_subasta);
 
-            Notificacion::updateOrCreate(
-                ['id_subasta' => $subasta->id,
-                'id_usuario' => $usuario->id],
-                ['mensaje' => 'Comenzó una subasta para '.$hospedaje->titulo.' el día '.$fechaDeInicioPuja->format('d-m-Y') ,
-                'created_at' => $fechaDeInicioPuja]);
-        }
+        //     Notificacion::updateOrCreate(
+        //         ['id_subasta' => $subasta->id,
+        //         'id_usuario' => $usuario->id],
+        //         ['mensaje' => 'Comenzó una subasta para '.$hospedaje->titulo.' el día '.$fechaDeInicioPuja->format('d-m-Y') ,
+        //         'created_at' => $fechaDeInicioPuja]);
+        // }
 
         $notificaciones = DB::table('notificacions')
                         ->where('id_usuario', $usuario->id)
@@ -343,8 +343,8 @@ class SesionController extends Controller
             $usuario->numero_tarjeta = $request->input('numeroTarjeta');
             $usuario->fecha_nacimiento = $request->input('fechaNacimiento');
             $usuario->mes_vencimiento = $request->input('mesVencimiento');
-            $usuario->anio_vencimiento = $request->input('anioVencimiento');;
-            $usuario->codigo_seguridad = $request->input('codigoSeguridad');;;
+            $usuario->anio_vencimiento = $request->input('anioVencimiento');
+            $usuario->codigo_seguridad = $request->input('codigoSeguridad');
 
         $usuario->save();
 
@@ -387,11 +387,13 @@ class SesionController extends Controller
                                 ->get();
 
         $data['misReservas'] = DB::table('reservas')
-                                ->where('id', session('idUsuario'))
+                                ->join('subastas', 'subastas.id', '=', 'reservas.id_subasta')
+                                ->where('reservas.id_usuario', session('idUsuario'))
                                 ->get();
 
         $data['misInscripciones'] = DB::table('inscripcions')
-                                ->where('id', session('idUsuario'))
+                                ->join('subastas', 'subastas.id', '=', 'inscripcions.id_subasta')
+                                ->where('inscripcions.id_usuario', session('idUsuario'))
                                 ->get();                        
 
         $this->verificarSolictud();
@@ -769,5 +771,31 @@ class SesionController extends Controller
     public function listarLogin(){
         $data = $this->obtenerListas();
         return view('login', $data);
+    }
+
+    public function notificarUsuarios(Request $request){
+        $inscripciones = DB::table('inscripcions')
+                    ->where('id_subasta', $request->input('idSubasta'))
+                    ->get();         
+
+        foreach ($inscripciones as $inscripcion) {
+
+            $subasta = DB::table('subastas')->where('id', $inscripcion->id_subasta)->first();
+            $hospedaje = DB::table('hospedajes')->where('id', $subasta->id_hospedaje)->first();
+
+            $notificacion = new Notificacion;
+            $notificacion->id_subasta = $inscripcion->id_subasta;
+            $notificacion->id_usuario = $inscripcion->id_usuario;
+            $notificacion->mensaje = 'Comenzó una subasta para '.$hospedaje->titulo.' el día '.Carbon::parse($subasta->fecha_inicio_subasta)->format('d-m-Y');
+
+            $notificacion->save();
+        }
+
+        DB::table('subastas')
+            ->where('id', $request->input('idSubasta'))
+            ->update(['notificada' => true]);
+
+        return redirect('/listarsubastas')->with('exito', 'Los usuarios fueron notificados exitosamente');
+
     }
 }
