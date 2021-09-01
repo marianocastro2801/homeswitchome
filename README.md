@@ -7,5 +7,5 @@ Proyecto 2019 Ingenieria de software II
 ### Open console in the project folder: ###
   * composer install
   * npm install
-  * php artisan migration:refresh --seed
+  * php artisan migrate:refresh --seed
   
